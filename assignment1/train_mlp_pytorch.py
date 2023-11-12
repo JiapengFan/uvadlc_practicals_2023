@@ -113,7 +113,7 @@ def evaluate_model(model, data_loader, num_classes=10):
     
     conf_mat = confusion_matrix(np.array(data_prob), np.array(data_y))
     for beta in betas:
-      metrics = confusion_matrix_to_metrics(conf_mat)
+      metrics = confusion_matrix_to_metrics(conf_mat, beta)
     #######################
     # END OF YOUR CODE    #
     #######################
@@ -240,7 +240,7 @@ def train(hidden_dims, lr, use_batch_norm, batch_size, epochs, seed, data_dir):
         logging_dict['loss_val'].append(val_loss)
         logging_dict['accuracy_val'].append(val_acc)
 
-        print(f'Epoch: {epoch+1}, Training accuracy: {training_acc:.2f}, Training loss: {training_loss:.4f}, Validation accuracy: {val_acc:.2f}, Validation loss: {val_loss:.4f}')
+        print(f'Epoch: {epoch+1}, Training accuracy: {np.round(training_acc,2)}, Training loss: {training_loss:.4f}, Validation accuracy: {np.round(val_acc,2)}, Validation loss: {val_loss:.4f}')
 
     print('Training finished.')
     val_accuracies = logging_dict['accuracy_val']

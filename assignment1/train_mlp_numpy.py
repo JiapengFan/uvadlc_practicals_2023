@@ -106,13 +106,17 @@ def confusion_matrix_to_metrics(confusion_matrix, beta=1.):
       f1_beta[i] = (1 + beta**2) * (precision[i] * recall[i]) / (beta**2 * precision[i] + recall[i])
     
     metrics = {
-        "accuracy": accuracy,
-        "precision": precision,
-        "recall": recall,
-        "f1_beta": f1_beta
+        "accuracy": np.round(accuracy,2),
+        "precision": np.round(precision,2),
+        "recall": np.round(recall,2),
+        "f1_beta": np.round(f1_beta,2)
     }
 
-    print(f'The f1 score with beta {beta} for the best model on the test dataset is {f1_beta}.')
+    print(f'The f1 score with beta {beta} for the best model on the test dataset is {metrics['f1_beta']}.\
+          \nAssociated recall: {metrics['recall']}.\nAssociated precision: {metrics['precision']}.\
+          \nThe top-3 classes with the highest recall are: {np.argsort(metrics['recall'])[::-1][:3]}\n \
+          \nThe top-3 classes with the highest precision are: {np.argsort(metrics['recall'])[::-1][:3]}\n \
+          \nThe top-3 classes with the highest f1 are: {np.argsort(metrics['f1_beta'])[::-1][:3]}\n')
     #######################
     # END OF YOUR CODE    #
     #######################
@@ -263,7 +267,7 @@ def train(hidden_dims, lr, batch_size, epochs, seed, data_dir):
       logging_dict['loss_val'].append(val_loss)
       logging_dict['accuracy_val'].append(val_acc)
 
-      print(f'Epoch: {epoch+1}, Training accuracy: {training_acc:.2f}, Training loss: {training_loss:.4f}, Validation accuracy: {val_acc:.2f}, Validation loss: {val_loss:.4f}')
+      print(f'Epoch: {epoch+1}, Training accuracy: {np.round(training_acc,2)}, Training loss: {training_loss:.4f}, Validation accuracy: {np.round(val_acc,2)}, Validation loss: {val_loss:.4f}')
     
     print('Training is finished.')
 
