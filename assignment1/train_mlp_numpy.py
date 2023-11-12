@@ -28,7 +28,9 @@ from tqdm.auto import tqdm
 from copy import deepcopy
 from mlp_numpy import MLP
 from modules import CrossEntropyModule
+import matplotlib.pyplot as plt
 import cifar10_utils
+import seaborn as sns
 
 import torch
 
@@ -48,6 +50,21 @@ def confusion_matrix(predictions, targets):
     #######################
     # PUT YOUR CODE HERE  #
     #######################
+    n_classes = predictions.shape[1]
+    conf_mat = np.zeros((n_classes, n_classes))
+
+    pred = np.argmax(predictions, axis=1)
+
+    for true_class in range(n_classes):
+        for predicted_class in range(n_classes):
+            conf_mat[true_class, predicted_class] = np.sum(np.logical_and(targets == true_class, pred == predicted_class))
+
+    plt.figure(figsize=(10, 8))
+    sns.heatmap(conf_mat, annot=True, fmt='g', cmap='Blues', cbar=False)
+    plt.xlabel('Predicted')
+    plt.ylabel('True')
+    plt.title('Confusion Matrix of best model on the test dataset')
+    plt.show()
 
     #######################
     # END OF YOUR CODE    #
@@ -69,7 +86,33 @@ def confusion_matrix_to_metrics(confusion_matrix, beta=1.):
     #######################
     # PUT YOUR CODE HERE  #
     #######################
+    n_samples = np.sum(confusion_matrix)
+    correct_pred = np.trace(confusion_matrix)
+    accuracy = correct_pred / n_samples
+    
+    n_class = confusion_matrix.shape[0]
+    precision = np.zeros(n_class)
+    recall = np.zeros(n_class)
+    f1_beta = np.zeros(n_class)
 
+    for i in range(n_class):
+      true_positives = confusion_matrix[i, i]
+      false_positives = np.sum(confusion_matrix[:, i]) - true_positives
+      false_negatives = np.sum(confusion_matrix[i, :]) - true_positives
+
+      precision[i] = true_positives / (true_positives + false_positives)
+      recall[i] = true_positives / (true_positives + false_negatives)
+      
+      f1_beta[i] = (1 + beta**2) * (precision[i] * recall[i]) / (beta**2 * precision[i] + recall[i])
+    
+    metrics = {
+        "accuracy": accuracy,
+        "precision": precision,
+        "recall": recall,
+        "f1_beta": f1_beta
+    }
+
+    print(f'The f1 score with beta {beta} for the best model on the test dataset is {f1_beta}.')
     #######################
     # END OF YOUR CODE    #
     #######################
@@ -96,7 +139,16 @@ def evaluate_model(model, data_loader, num_classes=10):
     #######################
     # PUT YOUR CODE HERE  #
     #######################
-
+    data_prob = []
+    data_y = []
+    for batch in data_loader:
+      x, y = batch
+      prob = model.forward(x.reshape(x.shape[0], -1))
+      data_y.extend(y.tolist())
+      data_prob.extend(prob.tolist())
+    
+    conf_mat = confusion_matrix(np.array(data_prob), np.array(data_y))
+    metrics = confusion_matrix_to_metrics(conf_mat)
     #######################
     # END OF YOUR CODE    #
     #######################
@@ -150,19 +202,85 @@ def train(hidden_dims, lr, batch_size, epochs, seed, data_dir):
     #######################
 
     # TODO: Initialize model and loss module
-    model = ...
-    loss_module = ...
+    print('Starting training.')
+    logging_dict = {'loss_train': [], 'accuracy_train': [], 'loss_val': [], 'accuracy_val': []}
+    best_val_acc = -1
+    best_val_epoch = -1
+
+    img_size = cifar10['train'][0][0].shape
+    model = MLP(np.array(img_size).prod(), hidden_dims, 10)
+    loss_module = CrossEntropyModule()
+
+    n_samples_train = len(cifar10['train'])
+    n_samples_validation = len(cifar10['validation'])
+    num_batches_train = int(np.ceil(n_samples_train/batch_size))
+    num_batches_val = int(np.ceil(n_samples_validation/batch_size))
+
+    weights_train = np.array([batch_size] * (num_batches_train - 1) + [n_samples_train % batch_size or batch_size])
+    weights_train_sum = weights_train.sum()
+    weights_val = np.array([batch_size] * (num_batches_val - 1) + [n_samples_validation % batch_size or batch_size])
+    weights_val_sum = weights_val.sum()
+
+    for epoch in range(epochs):
+      epoch_loss_val = 0
+      epoch_acc_val = 0
+      epoch_loss_train = 0
+      epoch_acc_train = 0
+      for i, sample in enumerate(cifar10_loader['train']):
+        x, y = sample
+        prob = model.forward(x.reshape(x.shape[0], -1))
+        pred_class = np.argmax(prob, axis=1)
+        epoch_acc_train += weights_train[i] * np.equal(pred_class, y).mean()
+        epoch_loss_train += weights_train[i] * loss_module.forward(prob, y)
+        dout = loss_module.backward(prob, y)
+        model.backward(dout)
+        for layer in model.layers:
+          if hasattr(layer, 'params'):
+            layer.params['weight'] -= lr*layer.grads['weight']
+            layer.params['bias'] -= lr*layer.grads['bias']
+
+        model.clear_cache()
+
+      for i, sample in enumerate(cifar10_loader['validation']):
+        x, y = sample
+        prob = model.forward(x.reshape(x.shape[0], -1))
+        pred_class = np.argmax(prob, axis=1)
+        epoch_acc_val += weights_val[i] * np.equal(pred_class, y).mean()
+        epoch_loss_val += weights_val[i] * loss_module.forward(prob, y)
+
+      training_acc = epoch_acc_train/weights_train_sum
+      training_loss = epoch_loss_train/weights_train_sum
+      val_acc = epoch_acc_val/weights_val_sum
+      val_loss = epoch_loss_val/weights_val_sum
+
+      if val_acc > best_val_acc:
+        best_model = deepcopy(model)
+        best_val_epoch = epoch
+        best_val_acc = val_acc
+
+      logging_dict['loss_train'].append(training_loss)
+      logging_dict['accuracy_train'].append(training_acc)
+      logging_dict['loss_val'].append(val_loss)
+      logging_dict['accuracy_val'].append(val_acc)
+
+      print(f'Epoch: {epoch+1}, Training accuracy: {training_acc:.2f}, Training loss: {training_loss:.4f}, Validation accuracy: {val_acc:.2f}, Validation loss: {val_loss:.4f}')
+    
+    print('Training is finished.')
+
     # TODO: Training loop including validation
-    val_accuracies = ...
+    val_accuracies = logging_dict['accuracy_val']
     # TODO: Test best model
-    test_accuracy = ...
+    metrics_test = evaluate_model(best_model if best_model is not None else model, cifar10_loader['test'])
+    test_accuracy = metrics_test['accuracy']
+    print(f'The final test accuracy of the best model at epoch {best_val_epoch} is {test_accuracy}.')
     # TODO: Add any information you might want to save for plotting
-    logging_info = ...
+    logging_dict['metrics_test'] = metrics_test
+    logging_info = logging_dict
     #######################
     # END OF YOUR CODE    #
     #######################
 
-    return model, val_accuracies, test_accuracy, logging_dict
+    return model, val_accuracies, test_accuracy, logging_info
 
 
 if __name__ == '__main__':
@@ -190,6 +308,35 @@ if __name__ == '__main__':
     args = parser.parse_args()
     kwargs = vars(args)
 
-    train(**kwargs)
+    _, _, test_acc, logging_info = train(**kwargs)
+    loss_train = logging_info['loss_train']
+    acc_train = logging_info['accuracy_train']
+    loss_val = logging_info['loss_val']
+    acc_val = logging_info['accuracy_val']
+
+    plt.figure(figsize=(10, 5))
+
+    epochs = range(1, len(loss_train) + 1)
+
+    plt.figure(figsize=(10, 5))
+
+    plt.subplot(1, 2, 1)
+    plt.plot(epochs, loss_train, marker='o', label='Training Loss')
+    plt.plot(epochs, loss_val, marker='o', label='Validation Loss')
+    plt.title('Training and Validation Loss')
+    plt.xlabel('Epochs')
+    plt.ylabel('Loss')
+    plt.legend()
+
+    plt.subplot(1, 2, 2)
+    plt.plot(epochs, acc_train, marker='o', label='Training Accuracy')
+    plt.plot(epochs, acc_val, marker='o', label='Validation Accuracy')
+    plt.title('Training and Validation Accuracy')
+    plt.xlabel('Epochs')
+    plt.ylabel('Accuracy')
+    plt.legend()
+
+    plt.tight_layout()
+    plt.show()
     # Feel free to add any additional functions, such as plotting of the loss curve here
     

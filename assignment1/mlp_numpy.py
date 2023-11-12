@@ -52,7 +52,17 @@ class MLP(object):
         #######################
         # PUT YOUR CODE HERE  #
         #######################
-        pass
+        self.layers = []
+  
+        for i, num_neurons in enumerate(n_hidden):
+            if i == 0 :
+              linear_module = LinearModule(n_inputs, num_neurons, True)
+            else:
+              linear_module = LinearModule(n_hidden[i-1], num_neurons)
+            module = [linear_module, ELUModule()] 
+
+            self.layers.extend(module)
+        self.layers.extend([LinearModule(n_hidden[-1], n_classes), SoftMaxModule()])
         #######################
         # END OF YOUR CODE    #
         #######################
@@ -74,7 +84,10 @@ class MLP(object):
         #######################
         # PUT YOUR CODE HERE  #
         #######################
+        out = x
 
+        for layer in self.layers:
+          out = layer.forward(out)
         #######################
         # END OF YOUR CODE    #
         #######################
@@ -95,7 +108,8 @@ class MLP(object):
         #######################
         # PUT YOUR CODE HERE  #
         #######################
-        pass
+        for layer in self.layers[::-1]:  
+           dout = layer.backward(dout)
         #######################
         # END OF YOUR CODE    #
         #######################
@@ -112,7 +126,8 @@ class MLP(object):
         #######################
         # PUT YOUR CODE HERE  #
         #######################
-        pass
+        for layer in self.layers:
+           layer.clear_cache()
         #######################
         # END OF YOUR CODE    #
         #######################

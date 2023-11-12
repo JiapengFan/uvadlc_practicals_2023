@@ -27,7 +27,9 @@ import os
 from copy import deepcopy
 from tqdm.auto import tqdm
 from mlp_pytorch import MLP
+from train_mlp_numpy import confusion_matrix as confusion_matrix_np, confusion_matrix_to_metrics as confusion_matrix_to_metrics_np
 import cifar10_utils
+import matplotlib.pyplot as plt
 
 import torch
 import torch.nn as nn
@@ -49,7 +51,7 @@ def confusion_matrix(predictions, targets):
     #######################
     # PUT YOUR CODE HERE  #
     #######################
-
+    conf_mat = confusion_matrix_np(predictions, targets)
     #######################
     # END OF YOUR CODE    #
     #######################
@@ -70,7 +72,7 @@ def confusion_matrix_to_metrics(confusion_matrix, beta=1.):
     #######################
     # PUT YOUR CODE HERE  #
     #######################
-
+    metrics = confusion_matrix_to_metrics_np(confusion_matrix, beta)
     #######################
     # END OF YOUR CODE    #
     #######################
@@ -97,7 +99,21 @@ def evaluate_model(model, data_loader, num_classes=10):
     #######################
     # PUT YOUR CODE HERE  #
     #######################
-
+    betas = [0.1, 1, 10]
+    model.eval()
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    data_prob = []
+    data_y = []
+    for imgs, labels in data_loader:
+      x, y = imgs.to(device), labels.to(device)
+      with torch.no_grad():
+          preds = model(x)
+          data_y.extend(y.tolist())
+          data_prob.extend(preds.tolist())
+    
+    conf_mat = confusion_matrix(np.array(data_prob), np.array(data_y))
+    for beta in betas:
+      metrics = confusion_matrix_to_metrics(conf_mat)
     #######################
     # END OF YOUR CODE    #
     #######################
@@ -157,17 +173,83 @@ def train(hidden_dims, lr, use_batch_norm, batch_size, epochs, seed, data_dir):
     #######################
     # PUT YOUR CODE HERE  #
     #######################
-
+    
     # TODO: Initialize model and loss module
-    model = ...
-    loss_module = ...
+    n_inputs = np.array(cifar10['train'][0][0].shape).prod()
+    model = MLP(n_inputs, hidden_dims, 10, use_batch_norm)
+    loss_module = nn.CrossEntropyLoss()
+
     # TODO: Training loop including validation
     # TODO: Do optimization with the simple SGD optimizer
-    val_accuracies = ...
+    logging_dict = {'loss_train': [], 'accuracy_train': [], 'loss_val': [], 'accuracy_val': []}
+
+    n_samples_train = len(cifar10['train'])
+    n_samples_validation = len(cifar10['validation'])
+    num_batches_train = int(np.ceil(n_samples_train/batch_size))
+    num_batches_val = int(np.ceil(n_samples_validation/batch_size))
+
+    weights_train = np.array([batch_size] * (num_batches_train - 1) + [n_samples_train % batch_size or batch_size])
+    weights_train_sum = weights_train.sum()
+    weights_val = np.array([batch_size] * (num_batches_val - 1) + [n_samples_validation % batch_size or batch_size])
+    weights_val_sum = weights_val.sum()
+
+    optimizer = optim.SGD(model.parameters(), lr=lr)
+    best_val_acc = -1
+    best_val_epoch = -1
+    print('Starting training.')
+    for epoch in range(epochs):
+        epoch_loss_val = 0
+        epoch_acc_val = 0
+        epoch_loss_train = 0
+        epoch_acc_train = 0
+        model.train()
+        for i, (imgs, labels) in enumerate(cifar10_loader['train']):
+            x, y = imgs.to(device), labels.to(device)
+            optimizer.zero_grad()
+            preds = model(x)
+            pred_class = (preds.argmax(dim=-1) == y).float()
+            train_loss = loss_module(preds, y)
+            train_loss.backward()
+            optimizer.step()
+
+            epoch_acc_train += weights_train[i] * pred_class.mean()
+            epoch_loss_train += weights_train[i] * train_loss.detach().numpy()
+
+        model.eval()
+        for i, (imgs, labels) in enumerate(cifar10_loader['validation']):
+            x, y = imgs.to(device), labels.to(device)
+            with torch.no_grad():
+                preds = model(x)
+                pred_class = (preds.argmax(dim=-1) == y).float()
+                val_loss = loss_module(preds, y)
+                epoch_acc_val += weights_val[i] * pred_class.mean()
+                epoch_loss_val += weights_val[i] * val_loss.detach().numpy()
+
+        training_acc = epoch_acc_train/weights_train_sum
+        training_loss = epoch_loss_train/weights_train_sum
+        val_acc = epoch_acc_val/weights_val_sum
+        val_loss = epoch_loss_val/weights_val_sum
+
+        if val_acc > best_val_acc:
+          best_model = deepcopy(model)
+          best_val_epoch = epoch
+          best_val_acc = val_acc
+
+        logging_dict['loss_train'].append(training_loss)
+        logging_dict['accuracy_train'].append(training_acc)
+        logging_dict['loss_val'].append(val_loss)
+        logging_dict['accuracy_val'].append(val_acc)
+
+        print(f'Epoch: {epoch+1}, Training accuracy: {training_acc:.2f}, Training loss: {training_loss:.4f}, Validation accuracy: {val_acc:.2f}, Validation loss: {val_loss:.4f}')
+
+    print('Training finished.')
+    val_accuracies = logging_dict['accuracy_val']
     # TODO: Test best model
-    test_accuracy = ...
+    test_metrics = evaluate_model(best_model if best_model is not None else model, cifar10_loader['test'])
+    test_accuracy = test_metrics['accuracy']
+    print(f'The final test accuracy of the best model at epoch {best_val_epoch} is {test_accuracy}.')
     # TODO: Add any information you might want to save for plotting
-    logging_info = ...
+    logging_info = logging_dict
     #######################
     # END OF YOUR CODE    #
     #######################
@@ -202,6 +284,35 @@ if __name__ == '__main__':
     args = parser.parse_args()
     kwargs = vars(args)
 
-    train(**kwargs)
+    _, _, _, logging_info = train(**kwargs)
+    loss_train = logging_info['loss_train']
+    acc_train = logging_info['accuracy_train']
+    loss_val = logging_info['loss_val']
+    acc_val = logging_info['accuracy_val']
+
+    plt.figure(figsize=(10, 5))
+
+    epochs = range(1, len(loss_train) + 1)
+
+    plt.figure(figsize=(10, 5))
+
+    plt.subplot(1, 2, 1)
+    plt.plot(epochs, loss_train, marker='o', label='Training Loss')
+    plt.plot(epochs, loss_val, marker='o', label='Validation Loss')
+    plt.title('Training and Validation Loss')
+    plt.xlabel('Epochs')
+    plt.ylabel('Loss')
+    plt.legend()
+
+    plt.subplot(1, 2, 2)
+    plt.plot(epochs, acc_train, marker='o', label='Training Accuracy')
+    plt.plot(epochs, acc_val, marker='o', label='Validation Accuracy')
+    plt.title('Training and Validation Accuracy')
+    plt.xlabel('Epochs')
+    plt.ylabel('Accuracy')
+    plt.legend()
+
+    plt.tight_layout()
+    plt.show()
     # Feel free to add any additional functions, such as plotting of the loss curve here
     
