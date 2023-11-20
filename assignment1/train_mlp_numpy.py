@@ -112,11 +112,14 @@ def confusion_matrix_to_metrics(confusion_matrix, beta=1.):
         "f1_beta": np.round(f1_beta,2)
     }
 
-    print(f'The f1 score with beta {beta} for the best model on the test dataset is {metrics['f1_beta']}.\
+    print(f"The f1 score with beta {beta} for the best model on the test dataset is {metrics['f1_beta']}.\
           \nAssociated recall: {metrics['recall']}.\nAssociated precision: {metrics['precision']}.\
           \nThe top-3 classes with the highest recall are: {np.argsort(metrics['recall'])[::-1][:3]}\n \
-          \nThe top-3 classes with the highest precision are: {np.argsort(metrics['recall'])[::-1][:3]}\n \
-          \nThe top-3 classes with the highest f1 are: {np.argsort(metrics['f1_beta'])[::-1][:3]}\n')
+          \nThe associated recalls are: {np.sort(metrics['recall'])[::-1][:3]}\n \
+          \nThe top-3 classes with the highest precision are: {np.argsort(metrics['precision'])[::-1][:3]}\n \
+          \nThe associated precision are: {np.sort(metrics['precision'])[::-1][:3]}\n \
+          \nThe top-3 classes with the highest f1 are: {np.argsort(metrics['f1_beta'])[::-1][:3]}\n \
+          \nThe associated f1 scores are: {np.sort(metrics['f1_beta'])[::-1][:3]}\n")
     #######################
     # END OF YOUR CODE    #
     #######################
@@ -143,6 +146,7 @@ def evaluate_model(model, data_loader, num_classes=10):
     #######################
     # PUT YOUR CODE HERE  #
     #######################
+    betas = [0.1, 1, 10]
     data_prob = []
     data_y = []
     for batch in data_loader:
@@ -152,7 +156,8 @@ def evaluate_model(model, data_loader, num_classes=10):
       data_prob.extend(prob.tolist())
     
     conf_mat = confusion_matrix(np.array(data_prob), np.array(data_y))
-    metrics = confusion_matrix_to_metrics(conf_mat)
+    for beta in betas:
+      metrics = confusion_matrix_to_metrics(conf_mat, beta)
     #######################
     # END OF YOUR CODE    #
     #######################
@@ -221,9 +226,10 @@ def train(hidden_dims, lr, batch_size, epochs, seed, data_dir):
     num_batches_val = int(np.ceil(n_samples_validation/batch_size))
 
     weights_train = np.array([batch_size] * (num_batches_train - 1) + [n_samples_train % batch_size or batch_size])
-    weights_train_sum = weights_train.sum()
+    # since drop last is true
+    weights_train_sum = weights_train[:-1].sum()
     weights_val = np.array([batch_size] * (num_batches_val - 1) + [n_samples_validation % batch_size or batch_size])
-    weights_val_sum = weights_val.sum()
+    weights_val_sum = weights_val[:-1].sum()
 
     for epoch in range(epochs):
       epoch_loss_val = 0

@@ -32,13 +32,16 @@ class AddGaussianNoise(torch.nn.Module):
         #######################
 
         # TODO: Add Gaussian noise to an image.
+        normal_noise = torch.randn(img.shape)
+        noise = torch.sqrt(self.std)*normal_noise + self.mean
+        new_img = img + noise
 
         # Hints:
         # - You can use torch.randn() to sample z ~ N(0, 1).
         # - Then, you can transform z s.t. it is sampled from N(self.mean, self.std)
         # - Finally, you can add the noise to the image.
 
-        raise NotImplementedError
+        raise new_img
         #######################
         # END OF YOUR CODE    #
         #######################
@@ -56,11 +59,21 @@ def add_augmentation(augmentation_name, transform_list):
     # PUT YOUR CODE HERE  #
     #######################
 
+    new_aug = None
     # Create a new transformation based on the augmentation_name.
-    pass
+    if augmentation_name == 'horizontal_flip':
+        new_aug = transforms.RandomHorizontalFlip()
+    elif augmentation_name == 'vertical_flip':
+        new_aug = transforms.RandomVerticalFlip()
+    elif augmentation_name == 'rotation':
+        new_aug = transforms.RandomRotation()
+    elif augmentation_name == 'test_noise':
+        new_aug = AddGaussianNoise()
+    else:
+        raise ValueError('Type of transform not supported')
 
     # Add the new transformation to the list.
-    pass
+    transform_list.append(new_aug)
 
     #######################
     # END OF YOUR CODE    #

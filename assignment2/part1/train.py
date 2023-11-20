@@ -21,9 +21,11 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.utils.data as data
 import torchvision.models as models
+from torch.utils.data import DataLoader
+import os
+import json
 
 from cifar100_utils import get_train_validation_set, get_test_set
-
 
 def set_seed(seed):
     """
@@ -52,10 +54,17 @@ def get_model(num_classes=100):
     #######################
 
     # Get the pretrained ResNet18 model on ImageNet from torchvision.models
-    pass
+    model = models.resnet18(weights = models.ResNet18_Weights.IMAGENET1K_V1)
+    for param in model.parameters():
+        param.requires_grad = False
 
     # Randomly initialize and modify the model's last layer for CIFAR100.
-    pass
+    num_in = model.fc.in_features
+    model.fc = nn.Linear(num_in, num_classes)
+    for param in model.fc.parameters():
+        param.requires_grad = True
+    torch.nn.init.normal_(model.fc.weight, mean=0.0, std=0.01)
+    torch.nn.init.zeros_(model.fc.bias)
 
     #######################
     # END OF YOUR CODE    #
@@ -63,6 +72,43 @@ def get_model(num_classes=100):
 
     return model
 
+def get_dataloader_train_val(dataset, batch_size):
+    train_dataloader      = DataLoader(dataset=dataset["train"], batch_size=batch_size, shuffle=True, drop_last=True)
+    validation_dataloader = DataLoader(dataset=dataset["validation"], batch_size=batch_size, shuffle=False, drop_last=False)
+    return {"train": train_dataloader, "validation": validation_dataloader}
+
+def get_dataloader_test(dataset, batch_size):
+    test_dataloader = DataLoader(dataset=dataset, batch_size=batch_size, shuffle=False, drop_last=False)
+    return test_dataloader
+
+def _get_config_file(model_path, model_name):
+    # Name of the file for storing hyperparameter details
+    return os.path.join(model_path, model_name + ".config")
+
+def _get_model_file(model_path, model_name):
+    # Name of the file for storing network parameters
+    return os.path.join(model_path, model_name + ".tar")
+
+def load_model(model, model_path, model_name):
+    """
+    Loads a saved model from disk.
+    """
+    config_file, model_file = _get_config_file(model_path, model_name), _get_model_file(model_path, model_name)
+    assert os.path.isfile(config_file), f"Could not find the config file \"{config_file}\". Are you sure this is the correct path and you have your model config stored here?"
+    assert os.path.isfile(model_file), f"Could not find the model file \"{model_file}\". Are you sure this is the correct path and you have your model stored here?"
+    model.load_state_dict(torch.load(model_file))
+    return model
+
+def save_model(model, model_path, model_name):
+    """
+    Given a model, we save the state_dict and hyperparameters.
+    """
+    config_dict = model.config
+    os.makedirs(model_path, exist_ok=True)
+    config_file, model_file = _get_config_file(model_path, model_name), _get_model_file(model_path, model_name)
+    with open(config_file, "w") as f:
+        json.dump(config_dict, f)
+    torch.save(model.state_dict(), model_file)
 
 def train_model(model, lr, batch_size, epochs, data_dir, checkpoint_name, device, augmentation_name=None):
     """
@@ -84,17 +130,72 @@ def train_model(model, lr, batch_size, epochs, data_dir, checkpoint_name, device
     # PUT YOUR CODE HERE  #
     #######################
 
+    model_path = 'saved_models'
+
     # Load the datasets
-    pass
+    cifar10_train, cifar_val = get_train_validation_set(data_dir, augmentation_name=augmentation_name)
+    cifar10 = {'train': cifar10_train, 'validation': cifar_val}
+    cifar10_dataloader = get_dataloader_train_val(cifar10, batch_size)
 
     # Initialize the optimizer (Adam) to train the last layer of the model.
-    pass
-
+    optimizer = torch.optim.Adam(model.parameters(), lr=lr)
+    loss_module = nn.CrossEntropyLoss()
+    
     # Training loop with validation after each epoch. Save the best model.
-    pass
+    n_samples_train = len(cifar10['train'])
+    n_samples_validation = len(cifar10['validation'])
+    num_batches_train = int(np.floor(n_samples_train/batch_size))   # Drop last is true
+    num_batches_val = int(np.ceil(n_samples_validation/batch_size))
+
+    weights_train = np.array([batch_size] * (num_batches_train - 1) + [batch_size % batch_size or batch_size])
+    weights_train_sum = weights_train[:-1].sum()    # Drop last is true
+    weights_val = np.array([batch_size] * (num_batches_val - 1) + [n_samples_validation % batch_size or batch_size])
+    weights_val_sum = weights_val.sum()     # Drop last is false
+    print('Starting training.')
+    for epoch in range(epochs):
+        epoch_loss_val = 0
+        epoch_acc_val = 0
+        epoch_loss_train = 0
+        epoch_acc_train = 0
+        model.train()
+        for i, (imgs, labels) in enumerate(cifar10_dataloader['train']):
+            x, y = imgs.to(device), labels.to(device)
+            optimizer.zero_grad()
+            preds = model(x)
+            pred_class = (preds.argmax(dim=-1) == y).float()
+            train_loss = loss_module(preds, y)
+            train_loss.backward()
+            optimizer.step()
+
+            epoch_acc_train += weights_train[i] * pred_class.mean()
+            epoch_loss_train += weights_train[i] * train_loss.detach().numpy()
+
+        model.eval()
+        for i, (imgs, labels) in enumerate(cifar_val['validation']):
+            x, y = imgs.to(device), labels.to(device)
+            with torch.no_grad():
+                preds = model(x)
+                pred_class = (preds.argmax(dim=-1) == y).float()
+                val_loss = loss_module(preds, y)
+                epoch_acc_val += weights_val[i] * pred_class.mean()
+                epoch_loss_val += weights_val[i] * val_loss.detach().numpy()
+
+        training_acc = epoch_acc_train/weights_train_sum
+        training_loss = epoch_loss_train/weights_train_sum
+        val_acc = epoch_acc_val/weights_val_sum
+        val_loss = epoch_loss_val/weights_val_sum
+
+        if val_acc > best_val_acc:
+          save_model(model, model_path, checkpoint_name)
+          best_val_epoch = epoch
+          best_val_acc = val_acc
+
+        print(f'Epoch: {epoch+1}, Training accuracy: {np.round(training_acc,2)}, Training loss: {training_loss:.4f}, Validation accuracy: {np.round(val_acc,2)}, Validation loss: {val_loss:.4f}')
+    print('Training finished.')
 
     # Load the best model on val accuracy and return it.
-    pass
+    print(f'Loading the best performing model on the validation data at Epoch {best_val_epoch} with validation accuracy {val_acc}.')
+    model = load_model(model, model_path, checkpoint_name)
 
     #######################
     # END OF YOUR CODE    #
@@ -118,12 +219,23 @@ def evaluate_model(model, data_loader, device):
     #######################
     # PUT YOUR CODE HERE  #
     #######################
+
     # Set model to evaluation mode (Remember to set it back to training mode in the training loop)
-    pass
+    model.eval()
 
     # Loop over the dataset and compute the accuracy. Return the accuracy
     # Remember to use torch.no_grad().
-    pass
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    data_prob = []
+    data_y = []
+    for imgs, labels in data_loader:
+      x, y = imgs.to(device), labels.to(device)
+      with torch.no_grad():
+          preds = model(x)
+          data_y.extend(y.tolist())
+          data_prob.extend(preds.tolist())
+
+    accuracy = (np.array(data_y) == np.array(data_prob)).mean()
 
     #######################
     # END OF YOUR CODE    #
@@ -148,22 +260,26 @@ def main(lr, batch_size, epochs, data_dir, seed, augmentation_name, test_noise):
     # PUT YOUR CODE HERE  #
     #######################
     # Set the seed for reproducibility
-    pass
+    set_seed(seed)
 
     # Set the device to use for training
-    pass
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     # Load the model
-    pass
+    model = get_model()
+    model.to(device)
+    model_name = model.__class__.__name__
 
     # Get the augmentation to use
-    pass
+    cifar10_test = get_test_set(data_dir, test_noise)
+    cifar10_dataloader = get_dataloader_test(cifar10_test, batch_size)
 
     # Train the model
-    pass
+    model = train_model(model, lr, batch_size, epochs, data_dir, model_name, device, augmentation_name)
 
     # Evaluate the model on the test set
-    pass
+    acc = evaluate_model(model, cifar10_dataloader, device)
+    print(f'The test accuracy of the best performing model is {acc}.')
 
     #######################
     # END OF YOUR CODE    #
