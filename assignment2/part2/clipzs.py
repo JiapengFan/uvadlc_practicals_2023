@@ -170,9 +170,11 @@ class ZeroshotCLIP(nn.Module):
         # - Read the CLIP API documentation for more details:
         #   https://github.com/openai/CLIP#api
 
-        # remove this line once you implement the function
-        raise NotImplementedError("Implement the precompute_text_features function.")
+        tokenized_prompts = clip.tokenize(prompts)
+        text_features = clip_model.encode_text(tokenized_prompts)
+        text_features_normalized = text_features/text_features.norm(dim=-1, keepdim=True)
 
+        return text_features_normalized
         #######################
         # END OF YOUR CODE    #
         #######################
@@ -209,8 +211,11 @@ class ZeroshotCLIP(nn.Module):
         # - Read the CLIP API documentation for more details:
         #   https://github.com/openai/CLIP#api
 
-        # remove this line once you implement the function
-        raise NotImplementedError("Implement the model_inference function.")
+        image_features = self.clip_model.encode_image(image)
+        image_features_normalized = image_features/image_features.norm(dim=-1, keepdim=True)
+        similarity_logits = (self.clip_model.logit_scale * image_features_normalized @ self.text_features.T)
+
+        return similarity_logits
 
         #######################
         # END OF YOUR CODE    #
@@ -371,8 +376,12 @@ def main():
     # - Updating the accuracy meter is as simple as calling top1.update(accuracy, batch_size)
     # - You can use the model_inference method of the ZeroshotCLIP class to get the logits
 
-    # you can remove the following line once you have implemented the inference loop
-    raise NotImplementedError("Implement the inference loop")
+    for imgs, labels in loader:
+        imgs, labels = imgs.to(device), labels.to(device)
+        preds = clipzs.model_inference(imgs).softmax(dim=-1)
+        pred_class = (preds.argmax(dim=-1) == labels).float()
+        acc = pred_class.mean()
+        top1.update(acc, args.batch_size)
 
     #######################
     # END OF YOUR CODE    #

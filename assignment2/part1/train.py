@@ -126,7 +126,7 @@ def train_model(model, lr, batch_size, epochs, data_dir, checkpoint_name, device
 
     # Load the datasets
     cifar10_train, cifar_val = get_train_validation_set(data_dir, augmentation_name=augmentation_name)
-    cifar10 = {'train': cifar10_train, 'validation': cifar_val}
+    cifar10 = {'train': np.array(cifar10_train), 'validation': np.array(cifar_val)}
     cifar10_dataloader = get_dataloader_train_val(cifar10, batch_size)
 
     # Initialize the optimizer (Adam) to train the last layer of the model.
@@ -156,12 +156,12 @@ def train_model(model, lr, batch_size, epochs, data_dir, checkpoint_name, device
             x, y = imgs.to(device), labels.to(device)
             optimizer.zero_grad()
             preds = model(x)
-            pred_class = (preds.argmax(dim=-1) == y).float()
+            bool_pred = (preds.argmax(dim=-1) == y).float()
             train_loss = loss_module(preds, y)
             train_loss.backward()
             optimizer.step()
 
-            epoch_acc_train += weights_train[i] * pred_class.mean().detach().cpu().numpy()
+            epoch_acc_train += weights_train[i] * bool_pred.mean()
             epoch_loss_train += weights_train[i] * train_loss.detach().cpu().numpy()
 
         model.eval()
