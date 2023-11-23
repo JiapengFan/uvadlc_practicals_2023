@@ -81,10 +81,6 @@ def get_dataloader_test(dataset, batch_size):
     test_dataloader = DataLoader(dataset=dataset, batch_size=batch_size, shuffle=False, drop_last=False)
     return test_dataloader
 
-def _get_config_file(model_path, model_name):
-    # Name of the file for storing hyperparameter details
-    return os.path.join(model_path, model_name + ".config")
-
 def _get_model_file(model_path, model_name):
     # Name of the file for storing network parameters
     return os.path.join(model_path, model_name + ".tar")
@@ -93,8 +89,7 @@ def load_model(model, model_path, model_name):
     """
     Loads a saved model from disk.
     """
-    config_file, model_file = _get_config_file(model_path, model_name), _get_model_file(model_path, model_name)
-    assert os.path.isfile(config_file), f"Could not find the config file \"{config_file}\". Are you sure this is the correct path and you have your model config stored here?"
+    model_file = _get_model_file(model_path, model_name)
     assert os.path.isfile(model_file), f"Could not find the model file \"{model_file}\". Are you sure this is the correct path and you have your model stored here?"
     model.load_state_dict(torch.load(model_file))
     return model
@@ -103,11 +98,8 @@ def save_model(model, model_path, model_name):
     """
     Given a model, we save the state_dict and hyperparameters.
     """
-    config_dict = model.config
     os.makedirs(model_path, exist_ok=True)
-    config_file, model_file = _get_config_file(model_path, model_name), _get_model_file(model_path, model_name)
-    with open(config_file, "w") as f:
-        json.dump(config_dict, f)
+    model_file = os.path.join(model_path, model_name + '.tar')
     torch.save(model.state_dict(), model_file)
 
 def train_model(model, lr, batch_size, epochs, data_dir, checkpoint_name, device, augmentation_name=None):
@@ -151,6 +143,8 @@ def train_model(model, lr, batch_size, epochs, data_dir, checkpoint_name, device
     weights_train_sum = weights_train[:-1].sum()    # Drop last is true
     weights_val = np.array([batch_size] * (num_batches_val - 1) + [n_samples_validation % batch_size or batch_size])
     weights_val_sum = weights_val.sum()     # Drop last is false
+    best_val_acc = -1
+    best_val_epoch = -1
     print('Starting training.')
     for epoch in range(epochs):
         epoch_loss_val = 0
@@ -167,18 +161,18 @@ def train_model(model, lr, batch_size, epochs, data_dir, checkpoint_name, device
             train_loss.backward()
             optimizer.step()
 
-            epoch_acc_train += weights_train[i] * pred_class.mean()
-            epoch_loss_train += weights_train[i] * train_loss.detach().numpy()
+            epoch_acc_train += weights_train[i] * pred_class.mean().detach().cpu().numpy()
+            epoch_loss_train += weights_train[i] * train_loss.detach().cpu().numpy()
 
         model.eval()
-        for i, (imgs, labels) in enumerate(cifar_val['validation']):
+        for i, (imgs, labels) in enumerate(cifar10_dataloader['validation']):
             x, y = imgs.to(device), labels.to(device)
             with torch.no_grad():
                 preds = model(x)
                 pred_class = (preds.argmax(dim=-1) == y).float()
                 val_loss = loss_module(preds, y)
-                epoch_acc_val += weights_val[i] * pred_class.mean()
-                epoch_loss_val += weights_val[i] * val_loss.detach().numpy()
+                epoch_acc_val += weights_val[i] * pred_class.mean().detach().cpu().numpy()
+                epoch_loss_val += weights_val[i] * val_loss.detach().cpu().numpy()
 
         training_acc = epoch_acc_train/weights_train_sum
         training_loss = epoch_loss_train/weights_train_sum
@@ -226,16 +220,17 @@ def evaluate_model(model, data_loader, device):
     # Loop over the dataset and compute the accuracy. Return the accuracy
     # Remember to use torch.no_grad().
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    data_prob = []
+    data_pred = []
     data_y = []
     for imgs, labels in data_loader:
       x, y = imgs.to(device), labels.to(device)
       with torch.no_grad():
-          preds = model(x)
-          data_y.extend(y.tolist())
-          data_prob.extend(preds.tolist())
+        preds = model(x)
+        pred_class = (preds.argmax(dim=-1) == y).float()
+        data_y.extend(y.tolist())
+        data_pred.extend(pred_class.tolist())
 
-    accuracy = (np.array(data_y) == np.array(data_prob)).mean()
+    accuracy = np.mean(np.array(data_y) == np.array(data_prob))
 
     #######################
     # END OF YOUR CODE    #
@@ -272,13 +267,13 @@ def main(lr, batch_size, epochs, data_dir, seed, augmentation_name, test_noise):
 
     # Get the augmentation to use
     cifar10_test = get_test_set(data_dir, test_noise)
-    cifar10_dataloader = get_dataloader_test(cifar10_test, batch_size)
+    cifar10_test_dataloader = get_dataloader_test(cifar10_test, batch_size)
 
     # Train the model
     model = train_model(model, lr, batch_size, epochs, data_dir, model_name, device, augmentation_name)
 
     # Evaluate the model on the test set
-    acc = evaluate_model(model, cifar10_dataloader, device)
+    acc = evaluate_model(model, cifar10_test_dataloader, device)
     print(f'The test accuracy of the best performing model is {acc}.')
 
     #######################

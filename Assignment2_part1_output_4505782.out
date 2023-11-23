@@ -1,0 +1,76 @@
+============================================================================================== 
+Warning! Mixing Conda and module environments may lead to corruption of the
+user environment. 
+We do not recommend users mixing those two environments unless absolutely
+necessary. Note that 
+SURF does not provide any support for Conda environment.
+For more information, please refer to our software policy page:
+https://servicedesk.surf.nl/wiki/display/WIKI/Software+policy+Snellius+and+Lisa#SoftwarepolicySnelliusandLisa-UseofAnacondaandMinicondaenvironmentsonSnellius 
+
+Remember that many packages have already been installed on the system and can
+be loaded using 
+the 'module load <package__name>' command. If you are uncertain if a package is
+already available 
+on the system, please use 'module avail' or 'module spider' to search for it.
+============================================================================================== 
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+Starting training.
+/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torch/nn/modules/conv.py:456: UserWarning: Applied workaround for CuDNN issue, install nvrtc.so (Triggered internally at /opt/conda/conda-bld/pytorch_1695392026823/work/aten/src/ATen/native/cudnn/Conv_v8.cpp:80.)
+  return F.conv2d(input, weight, bias, self.stride,
+Traceback (most recent call last):
+  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/numpy/core/fromnumeric.py", line 57, in _wrapfunc
+    return bound(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^
+TypeError: round() received an invalid combination of arguments - got (out=NoneType, decimals=int, ), but expected one of:
+ * ()
+ * (*, int decimals)
+      didn't match because some of the keywords were incorrect: out
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/gpfs/home6/scur1301/uvadlc_practicals_2023/assignment2/part1/train.py", line 305, in <module>
+    main(**kwargs)
+  File "/gpfs/home6/scur1301/uvadlc_practicals_2023/assignment2/part1/train.py", line 272, in main
+    model = train_model(model, lr, batch_size, epochs, data_dir, model_name, device, augmentation_name)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/gpfs/home6/scur1301/uvadlc_practicals_2023/assignment2/part1/train.py", line 187, in train_model
+    print(f'Epoch: {epoch+1}, Training accuracy: {np.round(training_acc,2)}, Training loss: {training_loss:.4f}, Validation accuracy: {np.round(val_acc,2)}, Validation loss: {val_loss:.4f}')
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<__array_function__ internals>", line 200, in round_
+  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/numpy/core/fromnumeric.py", line 3763, in round_
+    return around(a, decimals=decimals, out=out)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<__array_function__ internals>", line 200, in around
+  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/numpy/core/fromnumeric.py", line 3337, in around
+    return _wrapfunc(a, 'round', decimals=decimals, out=out)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/numpy/core/fromnumeric.py", line 66, in _wrapfunc
+    return _wrapit(obj, method, *args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/numpy/core/fromnumeric.py", line 43, in _wrapit
+    result = getattr(asarray(obj), method)(*args, **kwds)
+                     ^^^^^^^^^^^^
+  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torch/_tensor.py", line 1030, in __array__
+    return self.numpy()
+           ^^^^^^^^^^^^
+TypeError: can't convert cuda:0 device type tensor to numpy. Use Tensor.cpu() to copy the tensor to host memory first.
+srun: error: gcn32: task 0: Exited with exit code 1
+srun: Terminating StepId=4505782.0
+
+JOB STATISTICS
+==============
+Job ID: 4505782
+Cluster: snellius
+User/Group: scur1301/scur1301
+State: FAILED (exit code 1)
+Nodes: 1
+Cores per node: 18
+CPU Utilized: 00:16:28
+CPU Efficiency: 73.19% of 00:22:30 core-walltime
+Job Wall-clock time: 00:01:15
+Memory Utilized: 1.30 GB
+Memory Efficiency: 1.08% of 120.00 GB
