@@ -377,11 +377,12 @@ def main():
     # - You can use the model_inference method of the ZeroshotCLIP class to get the logits
 
     for imgs, labels in loader:
-        imgs, labels = imgs.to(device), labels.to(device)
+        imgs, labels = imgs[:2].to(device), labels[:2].to(device)
         preds = clipzs.model_inference(imgs).softmax(dim=-1)
         pred_class = (preds.argmax(dim=-1) == labels).float()
         acc = pred_class.mean()
         top1.update(acc, args.batch_size)
+        break
 
     #######################
     # END OF YOUR CODE    #

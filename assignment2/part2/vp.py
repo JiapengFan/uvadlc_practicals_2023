@@ -23,7 +23,7 @@ import numpy as np
 class FixedPatchPrompter(nn.Module):
     """
     Defines visual-prompt as a fixed patch over an image.
-    For refernece, this prompt should look like Fig 2(a) in the PDF.
+    For reference, this prompt should look like Fig 2(a) in the PDF.
     """
     def __init__(self, args):
         super(FixedPatchPrompter, self).__init__()
@@ -45,7 +45,8 @@ class FixedPatchPrompter(nn.Module):
         # - You can define variable parameters using torch.nn.Parameter
         # - You can initialize the patch randomly in N(0, 1) using torch.randn
 
-        raise NotImplementedError
+        self.prompt_size = args.prompt_size
+        self.patch = nn.Parameter(torch.randn((1, 3, self.prompt_size, self.prompt_size)))
         #######################
         # END OF YOUR CODE    #
         #######################
@@ -60,8 +61,10 @@ class FixedPatchPrompter(nn.Module):
         # - First define the prompt. Then add it to the batch of images.
         # - It is always advisable to implement and then visualize if
         #   your prompter does what you expect it to do.
+        x_copy = x.clone()
+        for i, img in enumerate(x):
+            x_copy[i, :, :self.prompt_size, :self.prompt_size] += self.patch
 
-        raise NotImplementedError
         #######################
         # END OF YOUR CODE    #
         #######################
@@ -69,7 +72,7 @@ class FixedPatchPrompter(nn.Module):
 class PadPrompter(nn.Module):
     """
     Defines visual-prompt as a parametric padding over an image.
-    For refernece, this prompt should look like Fig 2(c) in the PDF.
+    For reference, this prompt should look like Fig 2(c) in the PDF.
     """
     def __init__(self, args):
         super(PadPrompter, self).__init__()
@@ -88,7 +91,12 @@ class PadPrompter(nn.Module):
         # - Shape of self.pad_up and self.pad_down should be (1, 3, pad_size, image_size)
         # - See Fig 2.(g)/(h) and think about the shape of self.pad_left and self.pad_right
 
-        raise NotImplementedError
+        self.pad_size = pad_size
+        self.pad_left = nn.Parameter(torch.randn((1, 3, image_size-2*pad_size, pad_size)))
+        self.pad_right = nn.Parameter(torch.randn((1, 3, image_size-2*pad_size, pad_size)))
+        self.pad_up = nn.Parameter(torch.randn((1, 3, pad_size, image_size)))
+        self.pad_down = nn.Parameter(torch.randn((1, 3, pad_size, image_size)))
+
         #######################
         # END OF YOUR CODE    #
         #######################
@@ -104,7 +112,18 @@ class PadPrompter(nn.Module):
         # - It is always advisable to implement and then visualize if
         #   your prompter does what you expect it to do.
 
-        raise NotImplementedError
+        batch_size, _, height, width = x_copy.size()
+
+        padded_x = torch.zeros((batch_size, 3, height + 2*self.pad_size, width + 2*self.pad_size))
+
+        for i in range(batch_size):
+            padded_x[i, :, self.pad_size:-self.pad_size, self.pad_size:-self.pad_size] = x[i]
+            padded_x[i, :, self.pad_size:-self.pad_size, :self.pad_size] = self.pad_left
+            padded_x[i, :, self.pad_size:-self.pad_size, -self.pad_size:] = self.pad_right
+            padded_x[i, :, :self.pad_size, :] = self.pad_up
+            padded_x[i, :, -self.pad_size:, :] = self.pad_down
+
+        return padded_x
         #######################
         # END OF YOUR CODE    #
         #######################

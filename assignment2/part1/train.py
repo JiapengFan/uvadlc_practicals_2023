@@ -230,7 +230,7 @@ def evaluate_model(model, data_loader, device):
         data_y.extend(y.tolist())
         data_pred.extend(pred_class.tolist())
 
-    accuracy = np.mean(np.array(data_y) == np.array(data_prob))
+    accuracy = np.mean(np.array(data_y) == np.array(data_pred))
 
     #######################
     # END OF YOUR CODE    #

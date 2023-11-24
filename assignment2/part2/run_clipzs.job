@@ -24,8 +24,10 @@ code_dir=./
 python $code_dir/clipzs.py --dataset cifar10 --split test --root $root
 
 # Run 2: Zero-shot CLIP on CIFAR-100 with standard text prompt
-code_dir=./
 python $code_dir/clipzs.py --dataset cifar100 --split test --root $root
 
-# Run 2: identify primary color in images of CIFAR-10
-python $code_dir/clipzs.py --dataset cifar10 --split test --root $root --
+# Run 3: Identify primary color in images of CIFAR-10
+python $code_dir/clipzs.py --dataset cifar10 --split test --root $root --prompt_template "The primary color of the image is {}" --class_names red blue green --visualize_predictions
+
+# Run 3: Identify human_made/nature object in images of CIFAR-10
+python $code_dir/clipzs.py --dataset cifar10 --split test --root $root --prompt_template "The object in this image is {}" --class_names human-made nature --visualize_predictions

@@ -72,8 +72,20 @@ class Learner:
         # TODO: Turn off gradients in both the image and the text encoder
         # Note: You need to keep the visual/deep prompt's parameters trainable
         # Hint: Check for "prompt_learner" and "deep_prompt" in the parameters' names
+        
+        for name, param in self.clip.named_parameters():
+            if "prompt_learner" in name or "deep_prompt" in name:
+                param.requires_grad = True  # Keep parameters of the prompt_learner and deep_prompt trainable
+            else:
+                param.requires_grad = False  # Turn off gradients for other parameters
 
-        raise NotImplementedError
+        # Double check
+        enabled = set()
+        for name, param in self.clip.named_parameters():
+            if param.requires_grad:
+                enabled.add(name)
+        print(f"Parameters to be updated:")
+        print(f"Parameters to be updated: {enabled}")
         #######################
         # END OF YOUR CODE    #
         #######################
