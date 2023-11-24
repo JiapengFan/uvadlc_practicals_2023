@@ -227,10 +227,10 @@ def evaluate_model(model, data_loader, device):
       with torch.no_grad():
         preds = model(x)
         pred_class = (preds.argmax(dim=-1) == y).float()
-        data_y.extend(y.tolist())
-        data_pred.extend(pred_class.tolist())
+        data_y.extend(y.detach().cpu().tolist())
+        data_pred.extend(pred_class.cpu().tolist())
 
-    accuracy = np.mean(np.array(data_y) == np.array(data_prob))
+    accuracy = np.mean(np.array(data_y) == np.array(data_pred))
 
     #######################
     # END OF YOUR CODE    #
