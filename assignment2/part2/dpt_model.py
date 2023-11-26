@@ -84,6 +84,8 @@ class DeepPromptCLIP(nn.Module):
 
         # TODO: Initialize the learnable deep prompt.
         # Hint: consider the shape required for the deep prompt to be compatible with the CLIP model 
+        # Hint: CLIP uses different datatypes for CPU (float32) and GPU (float16)
+        # Hint: use args.prompt_num to specify the number of deep prompts to use
 
         D = 768
         self.deep_prompt = nn.Parameter(torch.randn((args.prompt_num, 1, D)))
