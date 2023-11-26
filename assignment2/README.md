@@ -16,5 +16,5 @@ When submitting your code, __make sure to not include the trained models and/or 
 * Prompt CLIP on two new downstream tasks by changing the text template (`--prompt`) and class labels (`--class_names`). You can visualize your predictions with `--visualize_predictions`.
 * Learn visual prompts for the CIFAR-10 and CIFAR-100 datasets (`learner.py`, `vpt_model.py`, `vp.py`).
 * Experiment with the prompt design to get near-random performance on CIFAR-100.
-* Evaluate the robustness of the learnt prompts to distributional shifts (`robustness.py`).
+* Evaluate the robustness of the learnt prompts  todistributional shifts (`robustness.py`).
 * Evaluate each dataset's learnt prompt on the concatenation of both CIFAR-10 and CIFAR-100 (`cross_dataset.py`).

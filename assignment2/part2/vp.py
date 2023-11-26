@@ -61,9 +61,11 @@ class FixedPatchPrompter(nn.Module):
         # - First define the prompt. Then add it to the batch of images.
         # - It is always advisable to implement and then visualize if
         #   your prompter does what you expect it to do.
-        x += self.patch
+        x_copy = x.clone()
+        # Broadcasting is done automatically
+        x_copy[:, :, :self.prompt_size, :self.prompt_size] += self.patch
 
-        return x
+        return x_copy
         #######################
         # END OF YOUR CODE    #
         #######################
@@ -91,10 +93,10 @@ class PadPrompter(nn.Module):
         # - See Fig 2.(g)/(h) and think about the shape of self.pad_left and self.pad_right
 
         self.pad_size = pad_size
-        self.pad_left = nn.Parameter(torch.randn((1, 3, image_size-2*pad_size, pad_size)))
-        self.pad_right = nn.Parameter(torch.randn((1, 3, image_size-2*pad_size, pad_size)))
-        self.pad_up = nn.Parameter(torch.randn((1, 3, pad_size, image_size)))
-        self.pad_down = nn.Parameter(torch.randn((1, 3, pad_size, image_size)))
+        self.pad_left = nn.Parameter(torch.randn((1, 3, image_size, pad_size)))
+        self.pad_right = nn.Parameter(torch.randn((1, 3, image_size, pad_size)))
+        self.pad_up = nn.Parameter(torch.randn((1, 3, pad_size, image_size+2*pad_size)))
+        self.pad_down = nn.Parameter(torch.randn((1, 3, pad_size, image_size+2*pad_size)))
 
         #######################
         # END OF YOUR CODE    #
@@ -111,15 +113,14 @@ class PadPrompter(nn.Module):
         # - It is always advisable to implement and then visualize if
         #   your prompter does what you expect it to do.
 
-        batch_size, _, height, width = x_copy.size()
+        batch_size, _, height, width = x.size()
 
-        padded_x = torch.zeros((batch_size, 3, height + 2*self.pad_size, width + 2*self.pad_size))
-        for i in range(batch_size):
-            padded_x[i, :, self.pad_size:-self.pad_size, self.pad_size:-self.pad_size] = x[i]
-            padded_x[i, :, self.pad_size:-self.pad_size, :self.pad_size] = self.pad_left
-            padded_x[i, :, self.pad_size:-self.pad_size, -self.pad_size:] = self.pad_right
-            padded_x[i, :, :self.pad_size, :] = self.pad_up
-            padded_x[i, :, -self.pad_size:, :] = self.pad_down
+        padded_x = torch.zeros((batch_size, 3, height + 2*self.pad_size, width + 2*self.pad_size)).to(x.device)
+        padded_x[:, :, self.pad_size:-self.pad_size, self.pad_size:-self.pad_size] = x
+        padded_x[:, :, self.pad_size:-self.pad_size, :self.pad_size] = self.pad_left
+        padded_x[:, :, self.pad_size:-self.pad_size, -self.pad_size:] = self.pad_right
+        padded_x[:, :, :self.pad_size, :] = self.pad_up
+        padded_x[:, :, -self.pad_size:, :] = self.pad_down
 
         return padded_x
         #######################

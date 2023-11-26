@@ -64,9 +64,9 @@ class DeepPromptCLIP(nn.Module):
         # - Given a list of prompts, compute the text features for each prompt.
         # - Return a tensor of shape (num_prompts, 512).
 
-        tokenized_prompts = clip.tokenize(prompts)
-        text_features = clip_model.encode_text(tokenized_prompts)
-        text_features /= text_features.norm(dim=-1, keepdim=True)
+        with torch.no_grad():
+            text_features = clip_model.encode_text(prompts)
+            text_features = text_features / text_features.norm(dim=-1, keepdim=True)
 
         #######################
         # END OF YOUR CODE    #
@@ -85,8 +85,8 @@ class DeepPromptCLIP(nn.Module):
         # TODO: Initialize the learnable deep prompt.
         # Hint: consider the shape required for the deep prompt to be compatible with the CLIP model 
 
-        D = 0
-        self.deep_prompt = nn.Parameter(torch.randn((1, 1, D)))
+        D = 768
+        self.deep_prompt = nn.Parameter(torch.randn((args.prompt_num, 1, D)))
         #######################
         # END OF YOUR CODE    #
         #######################
@@ -110,7 +110,7 @@ class DeepPromptCLIP(nn.Module):
 
         image_features = self.custom_encode_image(image)
         image_features = image_features / image_features.norm(dim=-1, keepdim=True)
-        similarity_logits = (self.clip_model.logit_scale * image_features @ self.text_features.T)
+        similarity_logits = (self.logit_scale * image_features @ self.text_features.T)
 
         return similarity_logits
 
@@ -152,9 +152,9 @@ class DeepPromptCLIP(nn.Module):
             x = block(x)
 
             if i == self.injection_layer:
-                print(x.shape)
-                x = block(x, self.deep_prompt)
-                print(x)
+                B = x.shape[1]
+                broadcasted_deep_prompt = self.deep_prompt.expand(self.deep_prompt.shape[0], B, -1).to(x.dtype)
+                x = block(torch.cat((x, broadcasted_deep_prompt), dim=0))
 
 
         #######################

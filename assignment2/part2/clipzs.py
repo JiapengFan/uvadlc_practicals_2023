@@ -170,10 +170,11 @@ class ZeroshotCLIP(nn.Module):
         # - Read the CLIP API documentation for more details:
         #   https://github.com/openai/CLIP#api
 
-        tokenized_prompts = clip.tokenize(prompts)
-        tokenized_prompts = tokenized_prompts.to(device)
-        text_features = clip_model.encode_text(tokenized_prompts)
-        text_features_normalized = text_features/text_features.norm(dim=-1, keepdim=True)
+        with torch.no_grad():
+            tokenized_prompts = clip.tokenize(prompts)
+            tokenized_prompts = tokenized_prompts.to(device)
+            text_features = clip_model.encode_text(tokenized_prompts)
+            text_features_normalized = text_features/text_features.norm(dim=-1, keepdim=True)
 
         return text_features_normalized
         #######################
@@ -214,7 +215,7 @@ class ZeroshotCLIP(nn.Module):
 
         image_features = self.clip_model.encode_image(image)
         image_features_normalized = image_features/image_features.norm(dim=-1, keepdim=True)
-        similarity_logits = (self.clip_model.logit_scale * image_features_normalized @ self.text_features.T)
+        similarity_logits = (self.logit_scale * image_features_normalized @ self.text_features.T)
 
         return similarity_logits
 

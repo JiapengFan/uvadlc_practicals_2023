@@ -208,7 +208,6 @@ class Learner:
         num_batches_per_epoch = len(self.train_loader)
 
         end = time.time()
-        torch.autograd.set_detect_anomaly(True)
         for i, (images, target) in enumerate(tqdm(self.train_loader)):
 
             # Measure data loading time
@@ -232,9 +231,9 @@ class Learner:
             # - Perform a backward pass
             # - Update the parameters
 
-            self.clip.zero_grad()
+            self.optimizer.zero_grad()
             images, target = images.to(self.device), target.to(self.device)
-            output = self.clip(images)
+            output = self.clip.forward(images)
             loss = self.criterion(output, target)
             loss.backward()
             self.optimizer.step()
@@ -303,8 +302,8 @@ class Learner:
                 # - Forward pass (using self.clip)
                 # - Compute the loss (using self.criterion)
 
-                images, target = images.to(device), target.to(device)
-                output = self.clip(images)
+                images, target = images.to(self.device), target.to(self.device)
+                output = self.clip.forward(images)
                 loss = self.criterion(output, target)
                 #######################
                 # END OF YOUR CODE    #

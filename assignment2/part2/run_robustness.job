@@ -1,0 +1,21 @@
+#!/bin/bash
+
+#SBATCH --partition=gpu
+#SBATCH --gpus=1
+#SBATCH --job-name=Assignment2_part1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=18
+#SBATCH --time=00:45:00
+#SBATCH --output=clivp_robust_output_%A.out
+
+module purge
+module load 2022
+module load Anaconda3/2022.05
+
+source activate dl2023
+
+code_dir=$HOME/uvadlc_practicals_2023/assignment2/part2
+
+srun $code_dir/python -u robustness.py --dataset cifar10 --method fixed --resume --test_noise --evaluate
+srun $code_dir/python -u robustness.py --dataset cifar10 --method padding --test_noise --evaluate
+srun $code_dir/python -u robustness.py --dataset cifar10 --resume --prompt_type deep_prompt --test_noise --evaluate

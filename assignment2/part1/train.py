@@ -126,7 +126,7 @@ def train_model(model, lr, batch_size, epochs, data_dir, checkpoint_name, device
 
     # Load the datasets
     cifar10_train, cifar_val = get_train_validation_set(data_dir, augmentation_name=augmentation_name)
-    cifar10 = {'train': np.array(cifar10_train), 'validation': np.array(cifar_val)}
+    cifar10 = {'train': cifar10_train, 'validation': cifar_val}
     cifar10_dataloader = get_dataloader_train_val(cifar10, batch_size)
 
     # Initialize the optimizer (Adam) to train the last layer of the model.
@@ -156,12 +156,12 @@ def train_model(model, lr, batch_size, epochs, data_dir, checkpoint_name, device
             x, y = imgs.to(device), labels.to(device)
             optimizer.zero_grad()
             preds = model(x)
-            bool_pred = (preds.argmax(dim=-1) == y).float()
+            bool_pred = (preds.argmax(dim=-1) == y).detach().cpu().numpy()
             train_loss = loss_module(preds, y)
             train_loss.backward()
             optimizer.step()
 
-            epoch_acc_train += weights_train[i] * bool_pred.mean()
+            epoch_acc_train += weights_train[i] * np.mean(bool_pred)
             epoch_loss_train += weights_train[i] * train_loss.detach().cpu().numpy()
 
         model.eval()
@@ -220,17 +220,15 @@ def evaluate_model(model, data_loader, device):
     # Loop over the dataset and compute the accuracy. Return the accuracy
     # Remember to use torch.no_grad().
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    data_pred = []
-    data_y = []
+    all_pred_bool = []
     for imgs, labels in data_loader:
       x, y = imgs.to(device), labels.to(device)
       with torch.no_grad():
         preds = model(x)
-        pred_class = (preds.argmax(dim=-1) == y).float()
-        data_y.extend(y.detach().cpu().tolist())
-        data_pred.extend(pred_class.cpu().tolist())
+        pred_bool = (preds.argmax(dim=-1) == y).detach().cpu().tolist()
+        all_pred_bool.extend(pred_bool)
 
-    accuracy = np.mean(np.array(data_y) == np.array(data_pred))
+    accuracy = np.mean(all_pred_bool)
 
     #######################
     # END OF YOUR CODE    #
@@ -265,7 +263,6 @@ def main(lr, batch_size, epochs, data_dir, seed, augmentation_name, test_noise):
     model.to(device)
     model_name = model.__class__.__name__
 
-    # Get the augmentation to use
     cifar10_test = get_test_set(data_dir, test_noise)
     cifar10_test_dataloader = get_dataloader_test(cifar10_test, batch_size)
 

@@ -1,61 +1,0 @@
-============================================================================================== 
-Warning! Mixing Conda and module environments may lead to corruption of the
-user environment. 
-We do not recommend users mixing those two environments unless absolutely
-necessary. Note that 
-SURF does not provide any support for Conda environment.
-For more information, please refer to our software policy page:
-https://servicedesk.surf.nl/wiki/display/WIKI/Software+policy+Snellius+and+Lisa#SoftwarepolicySnelliusandLisa-UseofAnacondaandMinicondaenvironmentsonSnellius 
-
-Remember that many packages have already been installed on the system and can
-be loaded using 
-the 'module load <package__name>' command. If you are uncertain if a package is
-already available 
-on the system, please use 'module avail' or 'module spider' to search for it.
-============================================================================================== 
-Running experiment on cifar10 with fixed_patch and prompt size 1
-Namespace(print_freq=10, save_freq=50, batch_size=128, num_workers=16, epochs=20, square_size=8, optim='sgd', learning_rate=40, weight_decay=0, warmup=1000, momentum=0.9, patience=1000, model='clip', arch='ViT-B/32', prompt_type='visual_prompt', prompt_num=4, injection_layer=0, method='fixed_patch', prompt_size=1, text_prompt_template='This is a photo of a {}', visualize_prompt=False, root='/scratch-local/scur1301', dataset='cifar10', image_size=224, test_noise=False, seed=0, model_dir='./save/models', image_dir='./save/images', filename='fixed_patch_1_cifar10_clip_ViT-B/32_sgd_lr_40_decay_0_bsz_128_warmup_1000_trial_1', trial=1, resume=None, evaluate=False, gpu=None, use_wandb=False, device='cuda', model_folder='./save/models/fixed_patch_1_cifar10_clip_ViT-B/32_sgd_lr_40_decay_0_bsz_128_warmup_1000_trial_1')
-Downloading https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz to /scratch-local/scur1301/cifar-10-python.tar.gz
-  0%|          | 0/170498071 [00:00<?, ?it/s]  0%|          | 65536/170498071 [00:00<07:18, 388623.83it/s]  0%|          | 229376/170498071 [00:00<03:55, 722638.08it/s]  1%|          | 917504/170498071 [00:00<01:16, 2225018.19it/s]  2%|▏         | 3178496/170498071 [00:00<00:21, 7843046.49it/s]  4%|▎         | 6258688/170498071 [00:00<00:11, 14318216.68it/s]  6%|▌         | 10420224/170498071 [00:00<00:07, 22154572.60it/s]  8%|▊         | 14155776/170498071 [00:00<00:06, 22933281.45it/s] 11%|█         | 18448384/170498071 [00:01<00:05, 28208238.69it/s] 13%|█▎        | 22315008/170498071 [00:01<00:04, 31035336.45it/s] 16%|█▌        | 26640384/170498071 [00:01<00:04, 34439880.02it/s] 18%|█▊        | 30277632/170498071 [00:01<00:04, 30477294.75it/s] 20%|██        | 34603008/170498071 [00:01<00:04, 33823519.03it/s] 22%|██▏       | 38338560/170498071 [00:01<00:03, 34781470.80it/s] 25%|██▍       | 42532864/170498071 [00:01<00:03, 36773964.47it/s] 27%|██▋       | 46333952/170498071 [00:01<00:03, 32235413.64it/s] 30%|██▉       | 50364416/170498071 [00:01<00:03, 34319520.57it/s] 32%|███▏      | 54329344/170498071 [00:02<00:03, 35765845.59it/s] 34%|███▍      | 58654720/170498071 [00:02<00:02, 37850616.54it/s] 37%|███▋      | 62554112/170498071 [00:02<00:03, 33179104.89it/s] 39%|███▉      | 66813952/170498071 [00:02<00:02, 35128768.38it/s] 42%|████▏     | 71008256/170498071 [00:02<00:02, 36927549.21it/s] 44%|████▍     | 75038720/170498071 [00:02<00:02, 33024987.25it/s] 47%|████▋     | 79396864/170498071 [00:02<00:02, 35717365.88it/s] 49%|████▉     | 83132416/170498071 [00:02<00:02, 35962784.17it/s] 51%|█████▏    | 87490560/170498071 [00:02<00:02, 38059288.74it/s] 54%|█████▎    | 91422720/170498071 [00:03<00:02, 33464105.09it/s] 56%|█████▌    | 95780864/170498071 [00:03<00:02, 36076855.41it/s] 58%|█████▊    | 99549184/170498071 [00:03<00:01, 36319494.84it/s] 61%|██████    | 103841792/170498071 [00:03<00:01, 38122673.86it/s] 63%|██████▎   | 107773952/170498071 [00:03<00:01, 33497676.46it/s] 66%|██████▌   | 112033792/170498071 [00:03<00:01, 35862189.79it/s] 68%|██████▊   | 115769344/170498071 [00:03<00:01, 36191706.67it/s] 70%|███████   | 120160256/170498071 [00:03<00:01, 33099817.43it/s] 73%|███████▎  | 124551168/170498071 [00:04<00:01, 35845607.85it/s] 75%|███████▌  | 128286720/170498071 [00:04<00:01, 36091284.15it/s] 78%|███████▊  | 132644864/170498071 [00:04<00:00, 38134645.45it/s] 80%|████████  | 136577024/170498071 [00:04<00:01, 33486156.98it/s] 83%|████████▎ | 140902400/170498071 [00:04<00:00, 35433275.40it/s] 85%|████████▌ | 145162240/170498071 [00:04<00:00, 37343671.78it/s] 87%|████████▋ | 149028864/170498071 [00:04<00:00, 32994638.55it/s] 90%|████████▉ | 153387008/170498071 [00:04<00:00, 35706646.30it/s] 92%|█████████▏| 157417472/170498071 [00:04<00:00, 36335659.36it/s] 95%|█████████▍| 161775616/170498071 [00:05<00:00, 38310915.80it/s] 97%|█████████▋| 165707776/170498071 [00:05<00:00, 33802037.17it/s]100%|█████████▉| 170065920/170498071 [00:05<00:00, 36335392.51it/s]100%|██████████| 170498071/170498071 [00:05<00:00, 31948695.09it/s]
-Extracting /scratch-local/scur1301/cifar-10-python.tar.gz to /scratch-local/scur1301
-Files already downloaded and verified
-Building custom CLIP
-Loading CLIP (backbone: ViT-B/32)
-  0%|                                               | 0.00/338M [00:00<?, ?iB/s]  2%|▋                                     | 6.00M/338M [00:00<00:05, 62.7MiB/s]  4%|█▎                                    | 12.0M/338M [00:00<00:05, 58.2MiB/s]  6%|██                                    | 18.6M/338M [00:00<00:05, 62.5MiB/s]  7%|██▊                                   | 25.1M/338M [00:00<00:05, 64.7MiB/s]  9%|███▌                                  | 31.9M/338M [00:00<00:04, 66.7MiB/s] 11%|████▎                                 | 38.4M/338M [00:00<00:04, 67.1MiB/s] 13%|█████                                 | 44.9M/338M [00:00<00:04, 67.3MiB/s] 15%|█████▊                                | 51.3M/338M [00:01<00:07, 39.2MiB/s] 17%|██████▎                               | 56.6M/338M [00:01<00:06, 42.5MiB/s] 19%|███████                               | 63.3M/338M [00:01<00:05, 48.7MiB/s] 21%|███████▊                              | 69.9M/338M [00:01<00:05, 53.7MiB/s] 22%|████████▌                             | 75.8M/338M [00:01<00:05, 54.6MiB/s] 24%|█████████▏                            | 81.5M/338M [00:01<00:05, 51.3MiB/s] 26%|█████████▉                            | 87.9M/338M [00:01<00:04, 55.2MiB/s] 29%|███████████                           | 97.8M/338M [00:01<00:03, 68.1MiB/s] 31%|████████████                           | 105M/338M [00:01<00:03, 66.7MiB/s] 33%|████████████▊                          | 111M/338M [00:02<00:04, 55.7MiB/s] 35%|█████████████▋                         | 118M/338M [00:02<00:03, 59.6MiB/s] 37%|██████████████▍                        | 125M/338M [00:02<00:03, 62.8MiB/s] 39%|███████████████▏                       | 132M/338M [00:02<00:03, 64.0MiB/s] 41%|███████████████▉                       | 138M/338M [00:02<00:03, 64.2MiB/s] 43%|████████████████▋                      | 144M/338M [00:02<00:03, 65.4MiB/s] 45%|█████████████████▍                     | 151M/338M [00:02<00:03, 57.1MiB/s] 47%|██████████████████▏                    | 157M/338M [00:02<00:03, 59.8MiB/s] 48%|██████████████████▉                    | 163M/338M [00:02<00:02, 61.2MiB/s] 50%|███████████████████▌                   | 169M/338M [00:03<00:02, 60.9MiB/s] 52%|████████████████████▎                  | 175M/338M [00:03<00:02, 61.3MiB/s] 54%|████████████████████▉                  | 181M/338M [00:03<00:02, 61.3MiB/s] 56%|█████████████████████▉                 | 190M/338M [00:03<00:02, 70.5MiB/s] 58%|██████████████████████▊                | 197M/338M [00:03<00:02, 66.4MiB/s] 60%|███████████████████████▌               | 204M/338M [00:03<00:02, 67.8MiB/s] 62%|████████████████████████▎              | 210M/338M [00:03<00:01, 67.4MiB/s] 64%|█████████████████████████              | 217M/338M [00:03<00:01, 68.0MiB/s] 66%|█████████████████████████▊             | 224M/338M [00:03<00:01, 68.4MiB/s] 68%|██████████████████████████▋            | 231M/338M [00:03<00:01, 68.6MiB/s] 70%|███████████████████████████▍           | 237M/338M [00:04<00:01, 66.4MiB/s] 72%|████████████████████████████           | 243M/338M [00:04<00:01, 66.0MiB/s] 74%|████████████████████████████▉          | 250M/338M [00:04<00:01, 66.7MiB/s] 76%|█████████████████████████████▋         | 257M/338M [00:04<00:01, 67.1MiB/s] 78%|██████████████████████████████▍        | 263M/338M [00:04<00:01, 66.3MiB/s] 80%|███████████████████████████████        | 269M/338M [00:04<00:01, 44.0MiB/s] 82%|███████████████████████████████▊       | 276M/338M [00:04<00:01, 48.9MiB/s] 83%|████████████████████████████████▍      | 281M/338M [00:05<00:01, 39.8MiB/s] 85%|█████████████████████████████████▏     | 287M/338M [00:05<00:01, 44.6MiB/s] 87%|█████████████████████████████████▊     | 293M/338M [00:05<00:00, 47.8MiB/s] 89%|██████████████████████████████████▌    | 299M/338M [00:05<00:00, 52.2MiB/s] 90%|███████████████████████████████████▎   | 305M/338M [00:05<00:00, 55.6MiB/s] 92%|████████████████████████████████████   | 312M/338M [00:05<00:00, 58.2MiB/s] 94%|████████████████████████████████████▋  | 318M/338M [00:05<00:00, 58.8MiB/s] 96%|█████████████████████████████████████▎ | 323M/338M [00:05<00:00, 59.4MiB/s] 98%|██████████████████████████████████████▏| 330M/338M [00:05<00:00, 63.3MiB/s]100%|██████████████████████████████████████▉| 337M/338M [00:06<00:00, 63.0MiB/s]100%|███████████████████████████████████████| 338M/338M [00:06<00:00, 58.7MiB/s]
-List of prompts:
-['This is a photo of a airplane',
- 'This is a photo of a automobile',
- 'This is a photo of a bird',
- 'This is a photo of a cat',
- 'This is a photo of a deer',
- 'This is a photo of a dog',
- 'This is a photo of a frog',
- 'This is a photo of a horse',
- 'This is a photo of a ship',
- 'This is a photo of a truck']
-Turning off gradients in both the image and the text encoder
-Parameters to be updated:
-Traceback (most recent call last):
-  File "/gpfs/home6/scur1301/uvadlc_practicals_2023/assignment2/part2/.//main.py", line 153, in <module>
-    main()
-  File "/gpfs/home6/scur1301/uvadlc_practicals_2023/assignment2/part2/.//main.py", line 142, in main
-    learn = Learner(args)
-            ^^^^^^^^^^^^^
-  File "/gpfs/home6/scur1301/uvadlc_practicals_2023/assignment2/part2/learner.py", line 83, in __init__
-    print(f"Parameters to be updated: {enabled}")
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-UnboundLocalError: cannot access local variable 'enabled' where it is not associated with a value
-
-JOB STATISTICS
-==============
-Job ID: 4526347
-Cluster: snellius
-User/Group: scur1301/scur1301
-State: FAILED (exit code 1)
-Nodes: 1
-Cores per node: 18
-CPU Utilized: 00:00:17
-CPU Efficiency: 2.42% of 00:11:42 core-walltime
-Job Wall-clock time: 00:00:39
-Memory Utilized: 1.20 MB
-Memory Efficiency: 0.00% of 31.25 GB

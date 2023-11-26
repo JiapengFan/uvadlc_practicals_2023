@@ -1,112 +1,0 @@
-============================================================================================== 
-Warning! Mixing Conda and module environments may lead to corruption of the
-user environment. 
-We do not recommend users mixing those two environments unless absolutely
-necessary. Note that 
-SURF does not provide any support for Conda environment.
-For more information, please refer to our software policy page:
-https://servicedesk.surf.nl/wiki/display/WIKI/Software+policy+Snellius+and+Lisa#SoftwarepolicySnelliusandLisa-UseofAnacondaandMinicondaenvironmentsonSnellius 
-
-Remember that many packages have already been installed on the system and can
-be loaded using 
-the 'module load <package__name>' command. If you are uncertain if a package is
-already available 
-on the system, please use 'module avail' or 'module spider' to search for it.
-============================================================================================== 
-mkdir: cannot create directory '/scratch': Permission denied
-  0%|                                               | 0.00/338M [00:00<?, ?iB/s]  3%|█▎                                     | 11.8M/338M [00:00<00:02, 123MiB/s]  7%|██▋                                    | 23.5M/338M [00:00<00:02, 123MiB/s] 12%|████▌                                  | 39.6M/338M [00:00<00:02, 144MiB/s] 16%|██████▍                                | 55.6M/338M [00:00<00:01, 153MiB/s] 21%|████████▎                              | 71.4M/338M [00:00<00:01, 158MiB/s] 26%|██████████▎                            | 88.9M/338M [00:00<00:01, 166MiB/s] 32%|████████████▋                           | 107M/338M [00:00<00:01, 175MiB/s] 37%|██████████████▊                         | 125M/338M [00:00<00:01, 178MiB/s] 42%|████████████████▊                       | 142M/338M [00:00<00:01, 175MiB/s] 47%|██████████████████▊                     | 159M/338M [00:01<00:01, 154MiB/s] 51%|████████████████████▌                   | 174M/338M [00:01<00:01, 155MiB/s] 56%|██████████████████████▎                 | 189M/338M [00:01<00:01, 140MiB/s] 61%|████████████████████████▎               | 205M/338M [00:01<00:00, 148MiB/s] 66%|██████████████████████████▏             | 221M/338M [00:01<00:00, 155MiB/s] 71%|████████████████████████████▍           | 240M/338M [00:01<00:00, 166MiB/s] 76%|██████████████████████████████▍         | 257M/338M [00:01<00:00, 169MiB/s] 81%|████████████████████████████████▍       | 273M/338M [00:01<00:00, 170MiB/s] 86%|██████████████████████████████████▍     | 290M/338M [00:01<00:00, 172MiB/s] 91%|████████████████████████████████████▍   | 307M/338M [00:01<00:00, 174MiB/s] 96%|██████████████████████████████████████▍ | 324M/338M [00:02<00:00, 159MiB/s]100%|████████████████████████████████████████| 338M/338M [00:02<00:00, 160MiB/s]
-Traceback (most recent call last):
-  File "/gpfs/home6/scur1301/uvadlc_practicals_2023/assignment2/part2/.//clipzs.py", line 396, in <module>
-    main()
-  File "/gpfs/home6/scur1301/uvadlc_practicals_2023/assignment2/part2/.//clipzs.py", line 331, in main
-    dataset = load_dataset(args.dataset, args.root, args.split, preprocess)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/gpfs/home6/scur1301/uvadlc_practicals_2023/assignment2/part2/.//clipzs.py", line 263, in load_dataset
-    dataset = DATASET[dataset](
-              ^^^^^^^^^^^^^^^^^
-  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torchvision/datasets/cifar.py", line 65, in __init__
-    self.download()
-  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torchvision/datasets/cifar.py", line 139, in download
-    download_and_extract_archive(self.url, self.root, filename=self.filename, md5=self.tgz_md5)
-  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torchvision/datasets/utils.py", line 434, in download_and_extract_archive
-    download_url(url, download_root, filename, md5)
-  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torchvision/datasets/utils.py", line 123, in download_url
-    os.makedirs(root, exist_ok=True)
-  File "<frozen os>", line 215, in makedirs
-  File "<frozen os>", line 225, in makedirs
-PermissionError: [Errno 13] Permission denied: '/scratch'
-Traceback (most recent call last):
-  File "/gpfs/home6/scur1301/uvadlc_practicals_2023/assignment2/part2/.//clipzs.py", line 396, in <module>
-    main()
-  File "/gpfs/home6/scur1301/uvadlc_practicals_2023/assignment2/part2/.//clipzs.py", line 331, in main
-    dataset = load_dataset(args.dataset, args.root, args.split, preprocess)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/gpfs/home6/scur1301/uvadlc_practicals_2023/assignment2/part2/.//clipzs.py", line 263, in load_dataset
-    dataset = DATASET[dataset](
-              ^^^^^^^^^^^^^^^^^
-  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torchvision/datasets/cifar.py", line 65, in __init__
-    self.download()
-  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torchvision/datasets/cifar.py", line 139, in download
-    download_and_extract_archive(self.url, self.root, filename=self.filename, md5=self.tgz_md5)
-  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torchvision/datasets/utils.py", line 434, in download_and_extract_archive
-    download_url(url, download_root, filename, md5)
-  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torchvision/datasets/utils.py", line 123, in download_url
-    os.makedirs(root, exist_ok=True)
-  File "<frozen os>", line 215, in makedirs
-  File "<frozen os>", line 225, in makedirs
-PermissionError: [Errno 13] Permission denied: '/scratch'
-Traceback (most recent call last):
-  File "/gpfs/home6/scur1301/uvadlc_practicals_2023/assignment2/part2/.//clipzs.py", line 396, in <module>
-    main()
-  File "/gpfs/home6/scur1301/uvadlc_practicals_2023/assignment2/part2/.//clipzs.py", line 331, in main
-    dataset = load_dataset(args.dataset, args.root, args.split, preprocess)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/gpfs/home6/scur1301/uvadlc_practicals_2023/assignment2/part2/.//clipzs.py", line 263, in load_dataset
-    dataset = DATASET[dataset](
-              ^^^^^^^^^^^^^^^^^
-  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torchvision/datasets/cifar.py", line 65, in __init__
-    self.download()
-  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torchvision/datasets/cifar.py", line 139, in download
-    download_and_extract_archive(self.url, self.root, filename=self.filename, md5=self.tgz_md5)
-  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torchvision/datasets/utils.py", line 434, in download_and_extract_archive
-    download_url(url, download_root, filename, md5)
-  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torchvision/datasets/utils.py", line 123, in download_url
-    os.makedirs(root, exist_ok=True)
-  File "<frozen os>", line 215, in makedirs
-  File "<frozen os>", line 225, in makedirs
-PermissionError: [Errno 13] Permission denied: '/scratch'
-Traceback (most recent call last):
-  File "/gpfs/home6/scur1301/uvadlc_practicals_2023/assignment2/part2/.//clipzs.py", line 396, in <module>
-    main()
-  File "/gpfs/home6/scur1301/uvadlc_practicals_2023/assignment2/part2/.//clipzs.py", line 331, in main
-    dataset = load_dataset(args.dataset, args.root, args.split, preprocess)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/gpfs/home6/scur1301/uvadlc_practicals_2023/assignment2/part2/.//clipzs.py", line 263, in load_dataset
-    dataset = DATASET[dataset](
-              ^^^^^^^^^^^^^^^^^
-  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torchvision/datasets/cifar.py", line 65, in __init__
-    self.download()
-  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torchvision/datasets/cifar.py", line 139, in download
-    download_and_extract_archive(self.url, self.root, filename=self.filename, md5=self.tgz_md5)
-  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torchvision/datasets/utils.py", line 434, in download_and_extract_archive
-    download_url(url, download_root, filename, md5)
-  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torchvision/datasets/utils.py", line 123, in download_url
-    os.makedirs(root, exist_ok=True)
-  File "<frozen os>", line 215, in makedirs
-  File "<frozen os>", line 225, in makedirs
-PermissionError: [Errno 13] Permission denied: '/scratch'
-
-JOB STATISTICS
-==============
-Job ID: 4514919
-Cluster: snellius
-User/Group: scur1301/scur1301
-State: RUNNING
-Nodes: 1
-Cores per node: 18
-CPU Utilized: 00:00:00
-CPU Efficiency: 0.00% of 00:11:42 core-walltime
-Job Wall-clock time: 00:00:39
-Memory Utilized: 0.00 MB (estimated maximum)
-Memory Efficiency: 0.00% of 31.25 GB (31.25 GB/node)
-WARNING: Efficiency statistics may be misleading for RUNNING jobs.
