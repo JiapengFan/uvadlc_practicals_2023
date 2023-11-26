@@ -82,7 +82,7 @@ class VisualPromptCLIP(nn.Module):
         # - Given a list of prompts, compute the text features for each prompt.
         # - Return a tensor of shape (num_prompts, 512).
 
-        tokenized_prompts = clip.tokenize(prompts)
+        tokenized_prompts = clip.tokenize(prompts).to(args.device)
         text_features = clip_model.encode_text(tokenized_prompts)
         text_features /= text_features.norm(dim=-1, keepdim=True)
 
@@ -118,10 +118,10 @@ class VisualPromptCLIP(nn.Module):
         # - You need to multiply the similarity logits with the logit scale (clip_model.logit_scale).
         # - Return logits of shape (batch size, number of classes).
 
-        image_prompt = self.prompt_learner.forward(image)
+        image = self.prompt_learner.forward(image)
         image_features = self.clip_model.encode_image(image)
-        image_features /= image_features.norm(dim=-1, keepdim=True)
-        similarity_logits = (self.clip_model.logit_scale * image_features_normalized @ self.text_features.T)
+        image_features = image_features / image_features.norm(dim=-1, keepdim=True)
+        similarity_logits = (self.clip_model.logit_scale * image_features @ self.text_features.T)
 
         return similarity_logits
 

@@ -64,8 +64,9 @@ class DeepPromptCLIP(nn.Module):
         # - Given a list of prompts, compute the text features for each prompt.
         # - Return a tensor of shape (num_prompts, 512).
 
-        # remove this line once you implement the function
-        raise NotImplementedError("Write the code to compute text features.")
+        tokenized_prompts = clip.tokenize(prompts)
+        text_features = clip_model.encode_text(tokenized_prompts)
+        text_features /= text_features.norm(dim=-1, keepdim=True)
 
         #######################
         # END OF YOUR CODE    #
@@ -84,11 +85,8 @@ class DeepPromptCLIP(nn.Module):
         # TODO: Initialize the learnable deep prompt.
         # Hint: consider the shape required for the deep prompt to be compatible with the CLIP model 
 
-        self.deep_prompt = 
-
-        # remove this line once you implement the function
-        raise NotImplementedError("Write the code to compute text features.")
-
+        D = 0
+        self.deep_prompt = nn.Parameter(torch.randn((1, 1, D)))
         #######################
         # END OF YOUR CODE    #
         #######################
@@ -110,8 +108,11 @@ class DeepPromptCLIP(nn.Module):
         # - You need to multiply the similarity logits with the logit scale (clip_model.logit_scale).
         # - Return logits of shape (batch size, number of classes).
 
-        # remove this line once you implement the function
-        raise NotImplementedError("Implement the model_inference function.")
+        image_features = self.custom_encode_image(image)
+        image_features = image_features / image_features.norm(dim=-1, keepdim=True)
+        similarity_logits = (self.clip_model.logit_scale * image_features @ self.text_features.T)
+
+        return similarity_logits
 
         #######################
         # END OF YOUR CODE    #
@@ -147,8 +148,14 @@ class DeepPromptCLIP(nn.Module):
 
         # Hint: Beware of the batch size (the deep prompt is the same for all images in the batch).
 
-        # remove this line once you implement the function
-        raise NotImplementedError("Implement the model_inference function.")
+        for i, block in enumerate(image_encoder.transformer.resblocks):
+            x = block(x)
+
+            if i == self.injection_layer:
+                print(x.shape)
+                x = block(x, self.deep_prompt)
+                print(x)
+
 
         #######################
         # END OF YOUR CODE    #

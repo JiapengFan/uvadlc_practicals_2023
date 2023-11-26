@@ -61,10 +61,9 @@ class FixedPatchPrompter(nn.Module):
         # - First define the prompt. Then add it to the batch of images.
         # - It is always advisable to implement and then visualize if
         #   your prompter does what you expect it to do.
-        x_copy = x.clone()
-        for i, img in enumerate(x):
-            x_copy[i, :, :self.prompt_size, :self.prompt_size] += self.patch
+        x += self.patch
 
+        return x
         #######################
         # END OF YOUR CODE    #
         #######################
@@ -115,7 +114,6 @@ class PadPrompter(nn.Module):
         batch_size, _, height, width = x_copy.size()
 
         padded_x = torch.zeros((batch_size, 3, height + 2*self.pad_size, width + 2*self.pad_size))
-
         for i in range(batch_size):
             padded_x[i, :, self.pad_size:-self.pad_size, self.pad_size:-self.pad_size] = x[i]
             padded_x[i, :, self.pad_size:-self.pad_size, :self.pad_size] = self.pad_left

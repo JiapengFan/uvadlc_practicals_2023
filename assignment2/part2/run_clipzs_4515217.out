@@ -1,0 +1,293 @@
+============================================================================================== 
+Warning! Mixing Conda and module environments may lead to corruption of the
+user environment. 
+We do not recommend users mixing those two environments unless absolutely
+necessary. Note that 
+SURF does not provide any support for Conda environment.
+For more information, please refer to our software policy page:
+https://servicedesk.surf.nl/wiki/display/WIKI/Software+policy+Snellius+and+Lisa#SoftwarepolicySnelliusandLisa-UseofAnacondaandMinicondaenvironmentsonSnellius 
+
+Remember that many packages have already been installed on the system and can
+be loaded using 
+the 'module load <package__name>' command. If you are uncertain if a package is
+already available 
+on the system, please use 'module avail' or 'module spider' to search for it.
+============================================================================================== 
+Downloading https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz to /scratch-local/scur1301/cifar-10-python.tar.gz
+  0%|          | 0/170498071 [00:00<?, ?it/s]  0%|          | 65536/170498071 [00:00<07:24, 383581.97it/s]  0%|          | 229376/170498071 [00:00<03:57, 717475.25it/s]  0%|          | 720896/170498071 [00:00<01:21, 2095424.08it/s]  1%|          | 1835008/170498071 [00:00<00:36, 4621838.94it/s]  2%|▏         | 3702784/170498071 [00:00<00:20, 8291850.53it/s]  4%|▍         | 7602176/170498071 [00:00<00:09, 17031766.17it/s]  7%|▋         | 11567104/170498071 [00:00<00:06, 23331190.88it/s]  9%|▉         | 15564800/170498071 [00:00<00:05, 28149388.53it/s] 11%|█▏        | 19431424/170498071 [00:01<00:05, 27421531.51it/s] 14%|█▍        | 23691264/170498071 [00:01<00:04, 31484849.79it/s] 16%|█▌        | 27328512/170498071 [00:01<00:04, 32323417.49it/s] 19%|█▊        | 31621120/170498071 [00:01<00:03, 35266468.97it/s] 21%|██        | 35323904/170498071 [00:01<00:04, 31643986.55it/s] 23%|██▎       | 39550976/170498071 [00:01<00:03, 34441561.87it/s] 26%|██▌       | 43810816/170498071 [00:01<00:03, 36670674.72it/s] 28%|██▊       | 47611904/170498071 [00:01<00:03, 34989726.77it/s] 30%|███       | 51773440/170498071 [00:02<00:03, 36792038.91it/s] 33%|███▎      | 55541760/170498071 [00:02<00:03, 34062691.09it/s] 35%|███▌      | 59801600/170498071 [00:02<00:03, 36367293.54it/s] 37%|███▋      | 63537152/170498071 [00:02<00:03, 34655905.87it/s] 40%|███▉      | 67796992/170498071 [00:02<00:02, 36792879.70it/s] 42%|████▏     | 71565312/170498071 [00:02<00:02, 34056779.22it/s] 44%|████▍     | 75792384/170498071 [00:02<00:02, 36244873.01it/s] 47%|████▋     | 79527936/170498071 [00:02<00:02, 34576702.31it/s] 49%|████▉     | 83755008/170498071 [00:02<00:02, 36673111.22it/s] 51%|█████▏    | 87490560/170498071 [00:03<00:02, 33901452.32it/s] 54%|█████▍    | 91783168/170498071 [00:03<00:02, 36314597.79it/s] 56%|█████▌    | 95518720/170498071 [00:03<00:02, 34420004.90it/s] 58%|█████▊    | 99057664/170498071 [00:03<00:02, 34589954.76it/s] 60%|██████    | 102760448/170498071 [00:03<00:02, 33253258.49it/s] 63%|██████▎   | 107020288/170498071 [00:03<00:01, 35785700.88it/s] 65%|██████▍   | 110657536/170498071 [00:03<00:01, 32887677.66it/s] 67%|██████▋   | 114884608/170498071 [00:03<00:01, 35387711.06it/s] 70%|██████▉   | 118554624/170498071 [00:03<00:01, 34169682.28it/s] 72%|███████▏  | 122847232/170498071 [00:04<00:01, 36553824.15it/s] 74%|███████▍  | 126582784/170498071 [00:04<00:01, 33407654.56it/s] 77%|███████▋  | 130842624/170498071 [00:04<00:01, 35855345.17it/s] 79%|███████▉  | 134545408/170498071 [00:04<00:01, 34588878.34it/s] 81%|████████▏ | 138838016/170498071 [00:04<00:00, 36848370.68it/s] 84%|████████▎ | 142606336/170498071 [00:04<00:00, 33572436.55it/s] 86%|████████▌ | 146800640/170498071 [00:04<00:00, 35778150.47it/s] 88%|████████▊ | 150503424/170498071 [00:04<00:00, 34719193.93it/s] 91%|█████████ | 154730496/170498071 [00:04<00:00, 36785762.69it/s] 93%|█████████▎| 158498816/170498071 [00:05<00:00, 33502064.03it/s] 95%|█████████▌| 162693120/170498071 [00:05<00:00, 35751454.02it/s] 98%|█████████▊| 166363136/170498071 [00:05<00:00, 34678724.22it/s]100%|██████████| 170498071/170498071 [00:05<00:00, 31562267.10it/s]
+Extracting /scratch-local/scur1301/cifar-10-python.tar.gz to /scratch-local/scur1301
+Using prompt template: This is a photo of a {}
+Using device: cuda
+Loading CLIP (backbone: ViT-B/32)
+  0%|                                               | 0.00/338M [00:00<?, ?iB/s]  2%|▉                                     | 8.44M/338M [00:00<00:03, 88.5MiB/s]  5%|█▉                                    | 16.9M/338M [00:00<00:04, 79.7MiB/s]  7%|██▊                                   | 24.5M/338M [00:00<00:04, 74.5MiB/s]  9%|███▌                                  | 31.7M/338M [00:00<00:04, 64.2MiB/s] 11%|████▎                                 | 38.0M/338M [00:00<00:04, 63.6MiB/s] 13%|█████▏                                | 45.6M/338M [00:00<00:04, 68.4MiB/s] 17%|██████▎                               | 56.1M/338M [00:00<00:03, 80.9MiB/s] 19%|███████▏                              | 64.0M/338M [00:00<00:03, 81.0MiB/s] 21%|████████                              | 71.8M/338M [00:01<00:03, 78.4MiB/s] 24%|█████████                             | 80.3M/338M [00:01<00:03, 81.6MiB/s] 26%|█████████▉                            | 88.3M/338M [00:01<00:03, 82.2MiB/s] 29%|██████████▊                           | 96.2M/338M [00:01<00:03, 68.4MiB/s] 31%|███████████▉                           | 103M/338M [00:01<00:03, 67.9MiB/s] 33%|████████████▋                          | 110M/338M [00:01<00:03, 67.2MiB/s] 35%|█████████████▌                         | 117M/338M [00:01<00:03, 70.2MiB/s] 37%|██████████████▎                        | 124M/338M [00:01<00:03, 70.0MiB/s] 39%|███████████████▎                       | 133M/338M [00:01<00:02, 75.4MiB/s] 41%|████████████████▏                      | 140M/338M [00:02<00:02, 72.0MiB/s] 44%|█████████████████                      | 148M/338M [00:02<00:02, 75.3MiB/s] 46%|█████████████████▉                     | 155M/338M [00:02<00:02, 69.2MiB/s] 48%|██████████████████▋                    | 162M/338M [00:02<00:02, 69.2MiB/s] 50%|███████████████████▍                   | 169M/338M [00:02<00:02, 64.5MiB/s] 52%|████████████████████▏                  | 175M/338M [00:02<00:02, 61.9MiB/s] 55%|█████████████████████▎                 | 184M/338M [00:02<00:02, 69.9MiB/s] 57%|██████████████████████▏                | 192M/338M [00:02<00:02, 71.5MiB/s] 59%|██████████████████████▉                | 199M/338M [00:03<00:03, 47.6MiB/s] 61%|███████████████████████▊               | 206M/338M [00:03<00:02, 52.4MiB/s] 63%|████████████████████████▍              | 212M/338M [00:03<00:02, 48.3MiB/s] 65%|█████████████████████████▏             | 218M/338M [00:03<00:02, 53.2MiB/s] 67%|██████████████████████████▏            | 227M/338M [00:03<00:01, 62.9MiB/s] 69%|███████████████████████████            | 234M/338M [00:03<00:01, 63.9MiB/s] 71%|███████████████████████████▊           | 241M/338M [00:03<00:01, 67.2MiB/s] 74%|████████████████████████████▊          | 249M/338M [00:03<00:01, 71.4MiB/s] 76%|█████████████████████████████▌         | 256M/338M [00:03<00:01, 72.5MiB/s] 78%|██████████████████████████████▍        | 263M/338M [00:04<00:01, 71.2MiB/s] 80%|███████████████████████████████▏       | 270M/338M [00:04<00:01, 59.3MiB/s] 82%|███████████████████████████████▉       | 276M/338M [00:04<00:01, 49.8MiB/s] 83%|████████████████████████████████▌      | 282M/338M [00:04<00:01, 48.8MiB/s] 86%|█████████████████████████████████▍     | 289M/338M [00:04<00:00, 55.8MiB/s] 88%|██████████████████████████████████▏    | 296M/338M [00:04<00:00, 60.0MiB/s] 90%|███████████████████████████████████    | 304M/338M [00:04<00:00, 66.0MiB/s] 93%|████████████████████████████████████   | 313M/338M [00:04<00:00, 72.3MiB/s] 95%|████████████████████████████████████▉  | 320M/338M [00:05<00:00, 73.7MiB/s] 97%|█████████████████████████████████████▉ | 328M/338M [00:05<00:00, 76.0MiB/s] 99%|██████████████████████████████████████▋| 335M/338M [00:05<00:00, 71.7MiB/s]100%|███████████████████████████████████████| 338M/338M [00:05<00:00, 66.8MiB/s]
+
+
+List of prompts:
+['This is a photo of a airplane',
+ 'This is a photo of a automobile',
+ 'This is a photo of a bird',
+ 'This is a photo of a cat',
+ 'This is a photo of a deer',
+ 'This is a photo of a dog',
+ 'This is a photo of a frog',
+ 'This is a photo of a horse',
+ 'This is a photo of a ship',
+ 'This is a photo of a truck']
+Precomputing text features
+Traceback (most recent call last):
+  File "/gpfs/home6/scur1301/uvadlc_practicals_2023/assignment2/part2/.//clipzs.py", line 396, in <module>
+    main()
+  File "/gpfs/home6/scur1301/uvadlc_practicals_2023/assignment2/part2/.//clipzs.py", line 339, in main
+    clipzs = ZeroshotCLIP(args=args, dataset=dataset, template=args.prompt_template)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/gpfs/home6/scur1301/uvadlc_practicals_2023/assignment2/part2/.//clipzs.py", line 132, in __init__
+    text_features = self.precompute_text_features(clip_model, prompts, args.device)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/gpfs/home6/scur1301/uvadlc_practicals_2023/assignment2/part2/.//clipzs.py", line 174, in precompute_text_features
+    text_features = clip_model.encode_text(tokenized_prompts)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/clip/model.py", line 344, in encode_text
+    x = self.token_embedding(text).type(self.dtype)  # [batch_size, n_ctx, d_model]
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torch/nn/modules/sparse.py", line 162, in forward
+    return F.embedding(
+           ^^^^^^^^^^^^
+  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torch/nn/functional.py", line 2233, in embedding
+    return torch.embedding(weight, input, padding_idx, scale_grad_by_freq, sparse)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu! (when checking argument for argument index in method wrapper_CUDA__index_select)
+Downloading https://www.cs.toronto.edu/~kriz/cifar-100-python.tar.gz to /scratch-local/scur1301/cifar-100-python.tar.gz
+  0%|          | 0/169001437 [00:00<?, ?it/s]  0%|          | 65536/169001437 [00:00<07:15, 387596.35it/s]  0%|          | 229376/169001437 [00:00<03:53, 722392.67it/s]  1%|          | 917504/169001437 [00:00<01:15, 2217023.62it/s]  2%|▏         | 3047424/169001437 [00:00<00:22, 7459085.62it/s]  3%|▎         | 4915200/169001437 [00:00<00:15, 10602578.46it/s]  5%|▍         | 8355840/169001437 [00:00<00:09, 17424127.74it/s]  7%|▋         | 11796480/169001437 [00:00<00:07, 22286312.51it/s]  9%|▉         | 15269888/169001437 [00:01<00:05, 25869173.25it/s] 11%|█         | 18612224/169001437 [00:01<00:05, 26097932.31it/s] 13%|█▎        | 22183936/169001437 [00:01<00:05, 28725154.00it/s] 15%|█▌        | 25690112/169001437 [00:01<00:04, 30407547.26it/s] 17%|█▋        | 29130752/169001437 [00:01<00:04, 31561061.49it/s] 19%|█▉        | 32374784/169001437 [00:01<00:04, 31062811.21it/s] 21%|██        | 35782656/169001437 [00:01<00:04, 31919379.51it/s] 23%|██▎       | 39190528/169001437 [00:01<00:03, 32541261.52it/s] 25%|██▌       | 42631168/169001437 [00:01<00:03, 33017663.73it/s] 27%|██▋       | 45973504/169001437 [00:01<00:03, 31144606.17it/s] 29%|██▉       | 49348608/169001437 [00:02<00:03, 31884897.41it/s] 31%|███       | 52723712/169001437 [00:02<00:03, 32419033.00it/s] 33%|███▎      | 56131584/169001437 [00:02<00:03, 32828367.64it/s] 35%|███▌      | 59441152/169001437 [00:02<00:03, 31842600.03it/s] 37%|███▋      | 62685184/169001437 [00:02<00:03, 31952874.94it/s] 39%|███▉      | 66027520/169001437 [00:02<00:03, 32303895.73it/s] 41%|████      | 69271552/169001437 [00:02<00:03, 31917332.73it/s] 43%|████▎     | 72613888/169001437 [00:02<00:03, 31489171.54it/s] 45%|████▍     | 75988992/169001437 [00:02<00:02, 32032307.69it/s] 47%|████▋     | 79495168/169001437 [00:03<00:02, 32814067.70it/s] 49%|████▉     | 83001344/169001437 [00:03<00:02, 31068447.28it/s] 52%|█████▏    | 87326720/169001437 [00:03<00:02, 34466232.22it/s] 54%|█████▎    | 90832896/169001437 [00:03<00:02, 33012499.18it/s] 56%|█████▌    | 94797824/169001437 [00:03<00:02, 34862096.52it/s] 58%|█████▊    | 98566144/169001437 [00:03<00:02, 32275013.05it/s] 61%|██████    | 102268928/169001437 [00:03<00:01, 33531464.98it/s] 63%|██████▎   | 106364928/169001437 [00:03<00:01, 33975529.45it/s] 65%|██████▌   | 110460928/169001437 [00:03<00:01, 35874012.26it/s] 68%|██████▊   | 114098176/169001437 [00:04<00:01, 32815908.41it/s] 70%|███████   | 118423552/169001437 [00:04<00:01, 35592241.44it/s] 72%|███████▏  | 122159104/169001437 [00:04<00:01, 34372543.69it/s] 75%|███████▍  | 126320640/169001437 [00:04<00:01, 36340723.92it/s] 77%|███████▋  | 130023424/169001437 [00:04<00:01, 36238732.60it/s] 79%|███████▉  | 133693440/169001437 [00:04<00:01, 33868726.98it/s] 82%|████████▏ | 137920512/169001437 [00:04<00:00, 36174838.61it/s] 84%|████████▍ | 141623296/169001437 [00:04<00:00, 34057494.65it/s] 86%|████████▌ | 145752064/169001437 [00:04<00:00, 32670576.30it/s] 89%|████████▊ | 149684224/169001437 [00:05<00:00, 34397426.62it/s] 91%|█████████ | 153223168/169001437 [00:05<00:00, 34647306.16it/s] 93%|█████████▎| 156762112/169001437 [00:05<00:00, 34248788.51it/s] 95%|█████████▍| 160333824/169001437 [00:05<00:00, 34649203.16it/s] 97%|█████████▋| 164593664/169001437 [00:05<00:00, 33506913.84it/s]100%|█████████▉| 168329216/169001437 [00:05<00:00, 34500355.94it/s]100%|██████████| 169001437/169001437 [00:05<00:00, 30160656.22it/s]
+Extracting /scratch-local/scur1301/cifar-100-python.tar.gz to /scratch-local/scur1301
+Using prompt template: This is a photo of a {}
+Using device: cuda
+Loading CLIP (backbone: ViT-B/32)
+
+
+List of prompts:
+['This is a photo of a apple',
+ 'This is a photo of a aquarium fish',
+ 'This is a photo of a baby',
+ 'This is a photo of a bear',
+ 'This is a photo of a beaver',
+ 'This is a photo of a bed',
+ 'This is a photo of a bee',
+ 'This is a photo of a beetle',
+ 'This is a photo of a bicycle',
+ 'This is a photo of a bottle',
+ 'This is a photo of a bowl',
+ 'This is a photo of a boy',
+ 'This is a photo of a bridge',
+ 'This is a photo of a bus',
+ 'This is a photo of a butterfly',
+ 'This is a photo of a camel',
+ 'This is a photo of a can',
+ 'This is a photo of a castle',
+ 'This is a photo of a caterpillar',
+ 'This is a photo of a cattle',
+ 'This is a photo of a chair',
+ 'This is a photo of a chimpanzee',
+ 'This is a photo of a clock',
+ 'This is a photo of a cloud',
+ 'This is a photo of a cockroach',
+ 'This is a photo of a couch',
+ 'This is a photo of a crab',
+ 'This is a photo of a crocodile',
+ 'This is a photo of a cup',
+ 'This is a photo of a dinosaur',
+ 'This is a photo of a dolphin',
+ 'This is a photo of a elephant',
+ 'This is a photo of a flatfish',
+ 'This is a photo of a forest',
+ 'This is a photo of a fox',
+ 'This is a photo of a girl',
+ 'This is a photo of a hamster',
+ 'This is a photo of a house',
+ 'This is a photo of a kangaroo',
+ 'This is a photo of a keyboard',
+ 'This is a photo of a lamp',
+ 'This is a photo of a lawn mower',
+ 'This is a photo of a leopard',
+ 'This is a photo of a lion',
+ 'This is a photo of a lizard',
+ 'This is a photo of a lobster',
+ 'This is a photo of a man',
+ 'This is a photo of a maple tree',
+ 'This is a photo of a motorcycle',
+ 'This is a photo of a mountain',
+ 'This is a photo of a mouse',
+ 'This is a photo of a mushroom',
+ 'This is a photo of a oak tree',
+ 'This is a photo of a orange',
+ 'This is a photo of a orchid',
+ 'This is a photo of a otter',
+ 'This is a photo of a palm tree',
+ 'This is a photo of a pear',
+ 'This is a photo of a pickup truck',
+ 'This is a photo of a pine tree',
+ 'This is a photo of a plain',
+ 'This is a photo of a plate',
+ 'This is a photo of a poppy',
+ 'This is a photo of a porcupine',
+ 'This is a photo of a possum',
+ 'This is a photo of a rabbit',
+ 'This is a photo of a raccoon',
+ 'This is a photo of a ray',
+ 'This is a photo of a road',
+ 'This is a photo of a rocket',
+ 'This is a photo of a rose',
+ 'This is a photo of a sea',
+ 'This is a photo of a seal',
+ 'This is a photo of a shark',
+ 'This is a photo of a shrew',
+ 'This is a photo of a skunk',
+ 'This is a photo of a skyscraper',
+ 'This is a photo of a snail',
+ 'This is a photo of a snake',
+ 'This is a photo of a spider',
+ 'This is a photo of a squirrel',
+ 'This is a photo of a streetcar',
+ 'This is a photo of a sunflower',
+ 'This is a photo of a sweet pepper',
+ 'This is a photo of a table',
+ 'This is a photo of a tank',
+ 'This is a photo of a telephone',
+ 'This is a photo of a television',
+ 'This is a photo of a tiger',
+ 'This is a photo of a tractor',
+ 'This is a photo of a train',
+ 'This is a photo of a trout',
+ 'This is a photo of a tulip',
+ 'This is a photo of a turtle',
+ 'This is a photo of a wardrobe',
+ 'This is a photo of a whale',
+ 'This is a photo of a willow tree',
+ 'This is a photo of a wolf',
+ 'This is a photo of a woman',
+ 'This is a photo of a worm']
+Precomputing text features
+Traceback (most recent call last):
+  File "/gpfs/home6/scur1301/uvadlc_practicals_2023/assignment2/part2/.//clipzs.py", line 396, in <module>
+    main()
+  File "/gpfs/home6/scur1301/uvadlc_practicals_2023/assignment2/part2/.//clipzs.py", line 339, in main
+    clipzs = ZeroshotCLIP(args=args, dataset=dataset, template=args.prompt_template)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/gpfs/home6/scur1301/uvadlc_practicals_2023/assignment2/part2/.//clipzs.py", line 132, in __init__
+    text_features = self.precompute_text_features(clip_model, prompts, args.device)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/gpfs/home6/scur1301/uvadlc_practicals_2023/assignment2/part2/.//clipzs.py", line 174, in precompute_text_features
+    text_features = clip_model.encode_text(tokenized_prompts)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/clip/model.py", line 344, in encode_text
+    x = self.token_embedding(text).type(self.dtype)  # [batch_size, n_ctx, d_model]
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torch/nn/modules/sparse.py", line 162, in forward
+    return F.embedding(
+           ^^^^^^^^^^^^
+  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torch/nn/functional.py", line 2233, in embedding
+    return torch.embedding(weight, input, padding_idx, scale_grad_by_freq, sparse)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu! (when checking argument for argument index in method wrapper_CUDA__index_select)
+Files already downloaded and verified
+Using prompt template: The primary color of the image is {}
+Using device: cuda
+Loading CLIP (backbone: ViT-B/32)
+
+
+List of prompts:
+['The primary color of the image is red',
+ 'The primary color of the image is blue',
+ 'The primary color of the image is green']
+Precomputing text features
+Traceback (most recent call last):
+  File "/gpfs/home6/scur1301/uvadlc_practicals_2023/assignment2/part2/.//clipzs.py", line 396, in <module>
+    main()
+  File "/gpfs/home6/scur1301/uvadlc_practicals_2023/assignment2/part2/.//clipzs.py", line 339, in main
+    clipzs = ZeroshotCLIP(args=args, dataset=dataset, template=args.prompt_template)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/gpfs/home6/scur1301/uvadlc_practicals_2023/assignment2/part2/.//clipzs.py", line 132, in __init__
+    text_features = self.precompute_text_features(clip_model, prompts, args.device)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/gpfs/home6/scur1301/uvadlc_practicals_2023/assignment2/part2/.//clipzs.py", line 174, in precompute_text_features
+    text_features = clip_model.encode_text(tokenized_prompts)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/clip/model.py", line 344, in encode_text
+    x = self.token_embedding(text).type(self.dtype)  # [batch_size, n_ctx, d_model]
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torch/nn/modules/sparse.py", line 162, in forward
+    return F.embedding(
+           ^^^^^^^^^^^^
+  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torch/nn/functional.py", line 2233, in embedding
+    return torch.embedding(weight, input, padding_idx, scale_grad_by_freq, sparse)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu! (when checking argument for argument index in method wrapper_CUDA__index_select)
+Files already downloaded and verified
+Using prompt template: The object in this image is {}
+Using device: cuda
+Loading CLIP (backbone: ViT-B/32)
+
+
+List of prompts:
+['The object in this image is human-made', 'The object in this image is nature']
+Precomputing text features
+Traceback (most recent call last):
+  File "/gpfs/home6/scur1301/uvadlc_practicals_2023/assignment2/part2/.//clipzs.py", line 396, in <module>
+    main()
+  File "/gpfs/home6/scur1301/uvadlc_practicals_2023/assignment2/part2/.//clipzs.py", line 339, in main
+    clipzs = ZeroshotCLIP(args=args, dataset=dataset, template=args.prompt_template)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/gpfs/home6/scur1301/uvadlc_practicals_2023/assignment2/part2/.//clipzs.py", line 132, in __init__
+    text_features = self.precompute_text_features(clip_model, prompts, args.device)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/gpfs/home6/scur1301/uvadlc_practicals_2023/assignment2/part2/.//clipzs.py", line 174, in precompute_text_features
+    text_features = clip_model.encode_text(tokenized_prompts)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/clip/model.py", line 344, in encode_text
+    x = self.token_embedding(text).type(self.dtype)  # [batch_size, n_ctx, d_model]
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torch/nn/modules/sparse.py", line 162, in forward
+    return F.embedding(
+           ^^^^^^^^^^^^
+  File "/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torch/nn/functional.py", line 2233, in embedding
+    return torch.embedding(weight, input, padding_idx, scale_grad_by_freq, sparse)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu! (when checking argument for argument index in method wrapper_CUDA__index_select)
+
+JOB STATISTICS
+==============
+Job ID: 4515217
+Cluster: snellius
+User/Group: scur1301/scur1301
+State: RUNNING
+Nodes: 1
+Cores per node: 18
+CPU Utilized: 00:00:00
+CPU Efficiency: 0.00% of 00:21:54 core-walltime
+Job Wall-clock time: 00:01:13
+Memory Utilized: 0.00 MB (estimated maximum)
+Memory Efficiency: 0.00% of 31.25 GB (31.25 GB/node)
+WARNING: Efficiency statistics may be misleading for RUNNING jobs.

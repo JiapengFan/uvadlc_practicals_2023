@@ -171,6 +171,7 @@ class ZeroshotCLIP(nn.Module):
         #   https://github.com/openai/CLIP#api
 
         tokenized_prompts = clip.tokenize(prompts)
+        tokenized_prompts = tokenized_prompts.to(device)
         text_features = clip_model.encode_text(tokenized_prompts)
         text_features_normalized = text_features/text_features.norm(dim=-1, keepdim=True)
 
@@ -377,12 +378,11 @@ def main():
     # - You can use the model_inference method of the ZeroshotCLIP class to get the logits
 
     for imgs, labels in loader:
-        imgs, labels = imgs[:2].to(device), labels[:2].to(device)
-        preds = clipzs.model_inference(imgs).softmax(dim=-1)
+        imgs, labels = imgs.to(device), labels.to(device)
+        preds = clipzs.model_inference(imgs)
         pred_class = (preds.argmax(dim=-1) == labels).float()
         acc = pred_class.mean()
         top1.update(acc, args.batch_size)
-        break
 
     #######################
     # END OF YOUR CODE    #

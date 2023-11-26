@@ -79,13 +79,6 @@ class Learner:
             else:
                 param.requires_grad = False  # Turn off gradients for other parameters
 
-        # Double check
-        enabled = set()
-        for name, param in self.clip.named_parameters():
-            if param.requires_grad:
-                enabled.add(name)
-        print(f"Parameters to be updated:")
-        print(f"Parameters to be updated: {enabled}")
         #######################
         # END OF YOUR CODE    #
         #######################
@@ -215,6 +208,7 @@ class Learner:
         num_batches_per_epoch = len(self.train_loader)
 
         end = time.time()
+        torch.autograd.set_detect_anomaly(True)
         for i, (images, target) in enumerate(tqdm(self.train_loader)):
 
             # Measure data loading time
@@ -238,7 +232,13 @@ class Learner:
             # - Perform a backward pass
             # - Update the parameters
 
-            raise NotImplementedError
+            self.clip.zero_grad()
+            images, target = images.to(self.device), target.to(self.device)
+            output = self.clip(images)
+            loss = self.criterion(output, target)
+            loss.backward()
+            self.optimizer.step()
+
             #######################
             # END OF YOUR CODE    #
             #######################
@@ -303,7 +303,9 @@ class Learner:
                 # - Forward pass (using self.clip)
                 # - Compute the loss (using self.criterion)
 
-                raise NotImplementedError
+                images, target = images.to(device), target.to(device)
+                output = self.clip(images)
+                loss = self.criterion(output, target)
                 #######################
                 # END OF YOUR CODE    #
                 #######################
