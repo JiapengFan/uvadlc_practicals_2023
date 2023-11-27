@@ -122,7 +122,7 @@ def train_model(model, lr, batch_size, epochs, data_dir, checkpoint_name, device
     # PUT YOUR CODE HERE  #
     #######################
 
-    model_path = 'saved_models'
+    model_path = 'save'
 
     # Load the datasets
     cifar10_train, cifar_val = get_train_validation_set(data_dir, augmentation_name=augmentation_name)

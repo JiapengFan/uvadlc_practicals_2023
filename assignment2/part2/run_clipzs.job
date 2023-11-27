@@ -1,13 +1,12 @@
 #!/bin/bash
 
 #SBATCH --partition=gpu
-#SBATCH --gres=gpu:1
+#SBATCH --gpus=1
 #SBATCH --job-name=CLIPZS-CIFAR10
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=3
+#SBATCH --cpus-per-task=18
 #SBATCH --time=04:00:00
-#SBATCH --mem=32000M
-#SBATCH --output=run_clipzs_%A.out
+#SBATCH --output=clipzs_%A.out
 
 module purge
 module load 2022
