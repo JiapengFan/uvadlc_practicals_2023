@@ -16,14 +16,11 @@ source activate dl2023
 
 code_dir=$HOME/uvadlc_practicals_2023/assignment2/part1
 
-echo "Executing with HORIZONTAL_FLIP augmentation..."
+echo "Executing with HORIZONTAL FLIP augmentation..."
 python $code_dir/train.py --augmentation_name horizontal_flip
 
-echo "Executing with VERTICAL_FLIP augmentation..."
+echo "Executing with VERTICAL FLIP augmentation..."
 python $code_dir/train.py --augmentation_name vertical_flip
 
-echo "Executing with ROTATION augmentation..."
-python $code_dir/train.py --augmentation_name rotation
-
-echo "Executing with TEST_NOISE augmentation..."
-python $code_dir/train.py --augmentation_name test_noise
+echo "Executing with GAUSSIAN NOISE augmentation..."
+python $code_dir/train.py --augmentation_name noise

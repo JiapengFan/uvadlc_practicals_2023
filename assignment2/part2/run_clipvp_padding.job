@@ -24,13 +24,12 @@ text_prompt_template="This is a photo of a {}"
 epochs=20
 
 ## Set of experiments on CIFAR-10
-dataset="cifar10"
 root=/scratch-local/$USER
 mkdir -p $root
 
-datasets=(cifar10)
+datasets=('cifar10' 'cifar100')
 methods=(padding)
-prompt_sizes=(1)
+prompt_sizes=(30)
 
 for dataset in "${datasets[@]}"; do
     for i in "${!methods[@]}"; do

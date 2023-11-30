@@ -24,7 +24,7 @@ DATASET = {"cifar10": CIFAR10, "cifar100": CIFAR100}
 
 
 class AddGaussianNoise(torch.nn.Module):
-    def __init__(self, mean=0., std=0.1):
+    def __init__(self, mean=0., std=0.01):
         self.mean = mean
         self.std = std
 
@@ -42,8 +42,10 @@ class AddGaussianNoise(torch.nn.Module):
         # - Return the image with added noise.
 
         normal_noise = torch.randn(img.shape)
-        noise = torch.sqrt(torch.tensor(self.std))*normal_noise + self.mean
+        noise = self.std*normal_noise + self.mean
         new_img = img + noise
+
+        return new_img
 
         #######################
         # END OF YOUR CODE    #

@@ -1,0 +1,69 @@
+============================================================================================== 
+Warning! Mixing Conda and module environments may lead to corruption of the
+user environment. 
+We do not recommend users mixing those two environments unless absolutely
+necessary. Note that 
+SURF does not provide any support for Conda environment.
+For more information, please refer to our software policy page:
+https://servicedesk.surf.nl/wiki/display/WIKI/Software+policy+Snellius+and+Lisa#SoftwarepolicySnelliusandLisa-UseofAnacondaandMinicondaenvironmentsonSnellius 
+
+Remember that many packages have already been installed on the system and can
+be loaded using 
+the 'module load <package__name>' command. If you are uncertain if a package is
+already available 
+on the system, please use 'module avail' or 'module spider' to search for it.
+============================================================================================== 
+/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torch/nn/modules/conv.py:456: UserWarning: Applied workaround for CuDNN issue, install nvrtc.so (Triggered internally at /opt/conda/conda-bld/pytorch_1695392026823/work/aten/src/ATen/native/cudnn/Conv_v8.cpp:80.)
+  return F.conv2d(input, weight, bias, self.stride,
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+Starting training.
+Epoch: 1, Training accuracy: 0.42, Training loss: 2.6103, Validation accuracy: 0.54, Validation loss: 1.8391
+Epoch: 2, Training accuracy: 0.56, Training loss: 1.7138, Validation accuracy: 0.57, Validation loss: 1.6019
+Epoch: 3, Training accuracy: 0.59, Training loss: 1.5380, Validation accuracy: 0.58, Validation loss: 1.5220
+Epoch: 4, Training accuracy: 0.6, Training loss: 1.4552, Validation accuracy: 0.59, Validation loss: 1.4856
+Epoch: 5, Training accuracy: 0.62, Training loss: 1.3965, Validation accuracy: 0.59, Validation loss: 1.4857
+Epoch: 6, Training accuracy: 0.63, Training loss: 1.3534, Validation accuracy: 0.59, Validation loss: 1.4658
+Epoch: 7, Training accuracy: 0.63, Training loss: 1.3241, Validation accuracy: 0.59, Validation loss: 1.4617
+Epoch: 8, Training accuracy: 0.64, Training loss: 1.3015, Validation accuracy: 0.59, Validation loss: 1.4527
+Epoch: 9, Training accuracy: 0.64, Training loss: 1.2832, Validation accuracy: 0.59, Validation loss: 1.4486
+Epoch: 10, Training accuracy: 0.65, Training loss: 1.2621, Validation accuracy: 0.59, Validation loss: 1.4470
+Epoch: 11, Training accuracy: 0.65, Training loss: 1.2492, Validation accuracy: 0.6, Validation loss: 1.4335
+Epoch: 12, Training accuracy: 0.65, Training loss: 1.2411, Validation accuracy: 0.6, Validation loss: 1.4353
+Epoch: 13, Training accuracy: 0.66, Training loss: 1.2287, Validation accuracy: 0.6, Validation loss: 1.4439
+Epoch: 14, Training accuracy: 0.66, Training loss: 1.2143, Validation accuracy: 0.59, Validation loss: 1.4498
+Epoch: 15, Training accuracy: 0.66, Training loss: 1.2062, Validation accuracy: 0.6, Validation loss: 1.4255
+Epoch: 16, Training accuracy: 0.66, Training loss: 1.1937, Validation accuracy: 0.59, Validation loss: 1.4345
+Epoch: 17, Training accuracy: 0.66, Training loss: 1.1860, Validation accuracy: 0.6, Validation loss: 1.4368
+Epoch: 18, Training accuracy: 0.67, Training loss: 1.1800, Validation accuracy: 0.6, Validation loss: 1.4388
+Epoch: 19, Training accuracy: 0.67, Training loss: 1.1676, Validation accuracy: 0.6, Validation loss: 1.4504
+Epoch: 20, Training accuracy: 0.67, Training loss: 1.1647, Validation accuracy: 0.6, Validation loss: 1.4300
+Epoch: 21, Training accuracy: 0.67, Training loss: 1.1559, Validation accuracy: 0.59, Validation loss: 1.4563
+Epoch: 22, Training accuracy: 0.67, Training loss: 1.1538, Validation accuracy: 0.59, Validation loss: 1.4642
+Epoch: 23, Training accuracy: 0.67, Training loss: 1.1449, Validation accuracy: 0.59, Validation loss: 1.4574
+Epoch: 24, Training accuracy: 0.67, Training loss: 1.1402, Validation accuracy: 0.59, Validation loss: 1.4542
+Epoch: 25, Training accuracy: 0.68, Training loss: 1.1420, Validation accuracy: 0.6, Validation loss: 1.4533
+Epoch: 26, Training accuracy: 0.68, Training loss: 1.1321, Validation accuracy: 0.59, Validation loss: 1.4642
+Epoch: 27, Training accuracy: 0.68, Training loss: 1.1276, Validation accuracy: 0.59, Validation loss: 1.4458
+Epoch: 28, Training accuracy: 0.68, Training loss: 1.1273, Validation accuracy: 0.6, Validation loss: 1.4652
+Epoch: 29, Training accuracy: 0.68, Training loss: 1.1154, Validation accuracy: 0.59, Validation loss: 1.4738
+Epoch: 30, Training accuracy: 0.68, Training loss: 1.1155, Validation accuracy: 0.6, Validation loss: 1.4563
+Training finished.
+Loading the best performing model on the validation data at Epoch 14 with validation accuracy 0.5962.
+The test accuracy of the best performing model is 0.0691.
+
+JOB STATISTICS
+==============
+Job ID: 4559928
+Cluster: snellius
+User/Group: scur1301/scur1301
+State: RUNNING
+Nodes: 1
+Cores per node: 18
+CPU Utilized: 00:00:00
+CPU Efficiency: 0.00% of 08:30:36 core-walltime
+Job Wall-clock time: 00:28:22
+Memory Utilized: 0.00 MB (estimated maximum)
+Memory Efficiency: 0.00% of 120.00 GB (120.00 GB/node)
+WARNING: Efficiency statistics may be misleading for RUNNING jobs.

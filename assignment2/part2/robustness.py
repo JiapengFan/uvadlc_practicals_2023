@@ -142,7 +142,6 @@ def parse_option():
 def main():
 
     args = parse_option()
-    print(args)
     learn = Learner(args)
 
     if args.evaluate:

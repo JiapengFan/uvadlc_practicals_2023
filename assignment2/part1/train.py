@@ -184,11 +184,11 @@ def train_model(model, lr, batch_size, epochs, data_dir, checkpoint_name, device
           best_val_epoch = epoch
           best_val_acc = val_acc
 
-        print(f'Epoch: {epoch+1}, Training accuracy: {np.round(training_acc,2)}, Training loss: {training_loss:.4f}, Validation accuracy: {np.round(val_acc,2)}, Validation loss: {val_loss:.4f}')
+        print(f'Epoch: {epoch+1}, Training accuracy: {np.round(training_acc,4)}, Training loss: {training_loss:.4f}, Validation accuracy: {np.round(val_acc,4)}, Validation loss: {val_loss:.4f}')
     print('Training finished.')
 
     # Load the best model on val accuracy and return it.
-    print(f'Loading the best performing model on the validation data at Epoch {best_val_epoch} with validation accuracy {val_acc}.')
+    print(f'Loading the best performing model on the validation data at Epoch {best_val_epoch} with validation accuracy {val_acc*100}.')
     model = load_model(model, model_path, checkpoint_name)
 
     #######################
@@ -228,7 +228,7 @@ def evaluate_model(model, data_loader, device):
         pred_bool = (preds.argmax(dim=-1) == y).detach().cpu().tolist()
         all_pred_bool.extend(pred_bool)
 
-    accuracy = np.mean(all_pred_bool)
+    accuracy = np.mean(all_pred_bool)*100
 
     #######################
     # END OF YOUR CODE    #
@@ -237,7 +237,7 @@ def evaluate_model(model, data_loader, device):
     return accuracy
 
 
-def main(lr, batch_size, epochs, data_dir, seed, augmentation_name, test_noise, resume):
+def main(lr, batch_size, epochs, data_dir, seed, augmentation_name, test_noise, resume, evaluate):
     """
     Main function for training and testing the model.
 
@@ -262,14 +262,15 @@ def main(lr, batch_size, epochs, data_dir, seed, augmentation_name, test_noise, 
     model = get_model()
     model.to(device)
     model_name = model.__class__.__name__
+    model_name = f'{model_name}_{augmentation_name}'
 
     cifar10_test = get_test_set(data_dir, test_noise)
     cifar10_test_dataloader = get_dataloader_test(cifar10_test, batch_size)
 
-    # Train the model if no model to load
     if resume:
         model = load_model(model, 'save', model_name)
-    else:
+    
+    if not evaluate:
         model = train_model(model, lr, batch_size, epochs, data_dir, model_name, device, augmentation_name)
 
     # Evaluate the model on the test set
@@ -304,6 +305,8 @@ if __name__ == '__main__':
                         help='Whether to test the model on noisy images or not.')
     parser.add_argument('--resume', default=False, action="store_true",
                 help='Load trained model.')
+    parser.add_argument('--evaluate', default=False, action="store_true",
+                help='Whether to only evaluate on test dataset.')
 
     args = parser.parse_args()
     kwargs = vars(args)

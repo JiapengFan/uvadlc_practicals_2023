@@ -24,11 +24,10 @@ text_prompt_template="This is a photo of a {}"
 epochs=20
 
 ## Set of experiments on CIFAR-10
-dataset="cifar10"
 root=/scratch-local/$USER
 mkdir -p $root
 
-datasets=(cifar10)
+datasets=('cifar10' 'cifar100')
 methods=(fixed_patch)
 prompt_sizes=(1)
 

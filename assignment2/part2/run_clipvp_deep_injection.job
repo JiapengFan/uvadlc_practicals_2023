@@ -1,0 +1,45 @@
+#!/bin/bash
+
+#SBATCH --partition=gpu
+#SBATCH --gpus=1
+#SBATCH --job-name=CLIPVP-deep-inj
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=18
+#SBATCH --time=04:00:00
+#SBATCH --output=clipvp_deep_inj_%A.out
+
+module purge
+module load 2022
+module load Anaconda3/2022.05
+
+# activate the environment
+source activate dl2023
+
+# Run 1: Visual prompting CLIP on CIFAR-10 with standard text prompt
+code_dir=$HOME/uvadlc_practicals_2023/assignment2/part2
+
+# Standard constants
+arch="ViT-B/32"
+text_prompt_template="This is a photo of a {}"
+epochs=20
+
+## Set of experiments on CIFAR-10
+root=/scratch-local/$USER
+mkdir -p $root
+
+dataset=cifar10
+injection_layers=(1 5 9 10)
+
+for i in "${!injection_layers[@]}"; do
+    echo $i
+    injection_layer=${injection_layers[$i]}
+    echo "Running experiment on $dataset with deep prompt and at injection layer $injection_layer"
+    python $code_dir/main.py \
+        --dataset $dataset \
+        --arch $arch \
+        --text_prompt_template "$text_prompt_template" \
+        --injection_layer $injection_layer \
+        --epochs $epochs \
+        --prompt_type deep_prompt\
+        --root $root
+done

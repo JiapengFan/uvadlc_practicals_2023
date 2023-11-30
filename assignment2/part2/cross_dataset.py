@@ -179,7 +179,11 @@ def main():
         #######################
         # TODO: Define `classnames` as a list of 10 + 100 class labels from CIFAR10 and CIFAR100
 
-        class_names = [i for i in range(110)]
+        cifar10_classes = cifar100_test.classes
+        cifar100_classes = cifar100_test.classes
+
+        classnames = cifar10_classes
+        classnames.extend(cifar100_classes)
         #######################
         # END OF YOUR CODE    #
         #######################
@@ -207,9 +211,9 @@ def main():
 
         with torch.no_grad():
             tokenized_prompts = clip.tokenize(prompts)
-            tokenized_prompts = tokenized_prompts.to(device)
+            tokenized_prompts = tokenized_prompts.to(args.device)
             text_features = clip_model.encode_text(tokenized_prompts)
-            text_features_normalized = text_features/text_features.norm(dim=-1, keepdim=True)
+            text_features = text_features/text_features.norm(dim=-1, keepdim=True)
 
         #######################
         # END OF YOUR CODE    #
@@ -226,8 +230,6 @@ def main():
         # That is, if a class in CIFAR100 corresponded to '4', it should now correspond to '14'
         # Set the result of this to the attribute cifar100_test.targets to override them
 
-        print('\nimportant\n', cifar100_test.targets.shape)
-        print('\nyes\n', cifar100_test.targets)
         cifar100_test.targets = [target + 10 for target in cifar100_test.targets]
         
         #######################
@@ -265,7 +267,7 @@ def main():
         weights = torch.tensor([len(cifar10_test.targets), len(cifar100_test.targets)])
         accs = torch.tensor([acc_cifar10, acc_cifar100])
 
-        weighted_average = torch.sum(weights * accs) / torch.sum(weights)
+        accuracy_all = (torch.sum(weights * accs) / torch.sum(weights))*100
 
         #######################
         # END OF YOUR CODE    #

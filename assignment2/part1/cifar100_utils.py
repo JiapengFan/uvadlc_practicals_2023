@@ -35,7 +35,7 @@ def get_dataset(dataset):
         raise ValueError("dataset should be either cifar100 or cifar10")
 
 class AddGaussianNoise(torch.nn.Module):
-    def __init__(self, mean=0., std=0.1, always_apply=False):
+    def __init__(self, mean=0., std=0.01, always_apply=False):
         self.mean = mean
         self.std = std
         self.always_apply = always_apply
@@ -47,7 +47,7 @@ class AddGaussianNoise(torch.nn.Module):
 
         # TODO: Add Gaussian noise to an image.
         normal_noise = torch.randn(img.shape)
-        noise = torch.sqrt(self.std)*normal_noise + self.mean
+        noise = self.std*normal_noise + self.mean
         new_img = img + noise
 
         # Hints:
@@ -55,7 +55,7 @@ class AddGaussianNoise(torch.nn.Module):
         # - Then, you can transform z s.t. it is sampled from N(self.mean, self.std)
         # - Finally, you can add the noise to the image.
 
-        raise new_img
+        return new_img
         #######################
         # END OF YOUR CODE    #
         #######################
@@ -79,9 +79,7 @@ def add_augmentation(augmentation_name, transform_list):
         new_aug = transforms.RandomHorizontalFlip()
     elif augmentation_name == 'vertical_flip':
         new_aug = transforms.RandomVerticalFlip()
-    elif augmentation_name == 'rotation':
-        new_aug = transforms.RandomRotation()
-    elif augmentation_name == 'test_noise':
+    elif augmentation_name == 'noise':
         new_aug = AddGaussianNoise()
     else:
         raise ValueError('Type of transform not supported')

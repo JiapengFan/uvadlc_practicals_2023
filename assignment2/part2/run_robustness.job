@@ -2,7 +2,7 @@
 
 #SBATCH --partition=gpu
 #SBATCH --gpus=1
-#SBATCH --job-name=Assignment2_part1
+#SBATCH --job-name=robustness
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=18
 #SBATCH --time=00:45:00
@@ -14,24 +14,21 @@ module load Anaconda3/2022.05
 
 source activate dl2023
 
-repo_dir=$HOME/uvadlc_practicals_2023
-code_dir=$repo_dir/assignment2/part2
+code_dir=./assignment2/part2
 
-# Standard constants
 arch="ViT-B/32"
-text_prompt_template="This is a photo of a {}"
-epochs=20
-
-## Set of experiments on CIFAR-10
-dataset="cifar10"
+dataset=cifar100
 root=/scratch-local/$USER
 mkdir -p $root
 
-path_models = $repo_dir/save/models
-path_fixed = $path_models/visual_prompt_fixed_patch_1_cifar10_clip_ViT-B/32_sgd_lr_40_decay_0_bsz_128_warmup_1000_trial_1
-path_padding = $path_models/visual_prompt_padding_1_cifar10_clip_ViT-B/32_sgd_lr_40_decay_0_bsz_128_warmup_1000_trial_1
-path_deep = $path_models/deep_prompt_padding_1_cifar10_clip_ViT-B/32_sgd_lr_40_decay_0_bsz_128_warmup_1000_trial_1
+path_models="./save/models"
+path_fixed="$path_models/visual_prompt_fixed_patch_1_0_cifar10_clip_ViT-B/32_sgd_lr_40_decay_0_bsz_128_warmup_1000_trial_1"
+path_padding="$path_models/visual_prompt_padding_30_0_cifar10_clip_ViT-B/32_sgd_lr_40_decay_0_bsz_128_warmup_1000_trial_1"
+path_deep="$path_models/deep_prompt_padding_30_0_cifar10_clip_ViT-B/32_sgd_lr_40_decay_0_bsz_128_warmup_1000_trial_1"
 
-python $code_dir/robustness.py --arch $arch --dataset $dataset --text_prompt_template "$text_prompt_template" --epochs $epochs --method fixed --root $root --resume "$path_fixed/model_best.pth" --prompt_size 1 --test_noise --evaluate
-python $code_dir/robustness.py --arch $arch --dataset $dataset --text_prompt_template "$text_prompt_template" --epochs $epochs --method padding --root $root --resume "$path_padding/model_best.pth" --prompt_size 1 --test_noise --evaluate
-python $code_dir/robustness.py --arch $arch --dataset $dataset --text_prompt_template "$text_prompt_template" --epochs $epochs --prompt_type deep_prompt --root $root  --resume "$path_deep/model_best.pth" --prompt_size 1 --test_noise --evaluate
+echo "Running robustness experiment of visual prompt on $dataset with fixed patch."
+python $code_dir/robustness.py --arch $arch --dataset $dataset --prompt_size 1 --method fixed_patch --root $root --resume "$path_fixed/model_best.pth.tar" --test_noise --evaluate
+echo "Running robustness experiment of visual prompt on $dataset with padding."
+python $code_dir/robustness.py --arch $arch --dataset $dataset --prompt_size 30 --method padding --root $root --resume "$path_padding/model_best.pth.tar" --test_noise --evaluate
+echo "Running robustness experiment of deep prompt on $dataset."
+python $code_dir/robustness.py --arch $arch --dataset $dataset --prompt_type deep_prompt --root $root  --resume "$path_deep/model_best.pth.tar" --test_noise --evaluate
