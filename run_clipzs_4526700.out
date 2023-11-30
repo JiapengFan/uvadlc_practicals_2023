@@ -1,192 +1,0 @@
-============================================================================================== 
-Warning! Mixing Conda and module environments may lead to corruption of the
-user environment. 
-We do not recommend users mixing those two environments unless absolutely
-necessary. Note that 
-SURF does not provide any support for Conda environment.
-For more information, please refer to our software policy page:
-https://servicedesk.surf.nl/wiki/display/WIKI/Software+policy+Snellius+and+Lisa#SoftwarepolicySnelliusandLisa-UseofAnacondaandMinicondaenvironmentsonSnellius 
-
-Remember that many packages have already been installed on the system and can
-be loaded using 
-the 'module load <package__name>' command. If you are uncertain if a package is
-already available 
-on the system, please use 'module avail' or 'module spider' to search for it.
-============================================================================================== 
-Downloading https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz to /scratch-local/scur1301/cifar-10-python.tar.gz
-  0%|          | 0/170498071 [00:00<?, ?it/s]  0%|          | 65536/170498071 [00:00<07:18, 388425.58it/s]  0%|          | 229376/170498071 [00:00<03:55, 722238.34it/s]  1%|          | 917504/170498071 [00:00<01:16, 2222436.11it/s]  2%|▏         | 3440640/170498071 [00:00<00:19, 8560545.03it/s]  4%|▎         | 6389760/170498071 [00:00<00:11, 14461200.33it/s]  6%|▌         | 10125312/170498071 [00:00<00:08, 18195407.45it/s]  8%|▊         | 14450688/170498071 [00:00<00:06, 24759684.17it/s] 11%|█         | 18382848/170498071 [00:01<00:05, 28725284.69it/s] 13%|█▎        | 22708224/170498071 [00:01<00:04, 32790841.92it/s] 16%|█▌        | 26443776/170498071 [00:01<00:04, 29324612.97it/s] 18%|█▊        | 30769152/170498071 [00:01<00:04, 32933380.26it/s] 21%|██        | 34996224/170498071 [00:01<00:03, 35439454.35it/s] 23%|██▎       | 39124992/170498071 [00:01<00:03, 37056642.79it/s] 25%|██▌       | 42991616/170498071 [00:01<00:03, 32360946.18it/s] 28%|██▊       | 47218688/170498071 [00:01<00:03, 34856521.11it/s] 30%|███       | 51544064/170498071 [00:01<00:03, 37093113.79it/s] 32%|███▏      | 55410688/170498071 [00:02<00:03, 32397548.67it/s] 35%|███▌      | 59736064/170498071 [00:02<00:03, 35147850.08it/s] 37%|███▋      | 63864832/170498071 [00:02<00:02, 36766738.07it/s] 40%|███▉      | 68059136/170498071 [00:02<00:03, 32781034.91it/s] 42%|████▏     | 72351744/170498071 [00:02<00:02, 35342249.16it/s] 45%|████▍     | 76480512/170498071 [00:02<00:02, 36915224.63it/s] 47%|████▋     | 80773120/170498071 [00:02<00:02, 38553507.93it/s] 50%|████▉     | 84770816/170498071 [00:02<00:02, 33468039.61it/s] 52%|█████▏    | 88932352/170498071 [00:03<00:02, 35543816.65it/s] 55%|█████▍    | 93224960/170498071 [00:03<00:02, 37498517.22it/s] 57%|█████▋    | 97124352/170498071 [00:03<00:02, 32737756.20it/s] 60%|█████▉    | 101449728/170498071 [00:03<00:01, 35414938.86it/s] 62%|██████▏   | 105578496/170498071 [00:03<00:01, 36950041.63it/s] 64%|██████▍   | 109543424/170498071 [00:03<00:01, 32526688.38it/s] 67%|██████▋   | 113803264/170498071 [00:03<00:01, 35080585.23it/s] 69%|██████▉   | 117932032/170498071 [00:03<00:01, 36719303.70it/s] 71%|███████▏  | 121765888/170498071 [00:03<00:01, 35353864.85it/s] 74%|███████▎  | 125435904/170498071 [00:04<00:01, 32442702.84it/s] 76%|███████▌  | 129171456/170498071 [00:04<00:01, 33662956.52it/s] 78%|███████▊  | 132972544/170498071 [00:04<00:01, 33379369.21it/s] 80%|████████  | 136544256/170498071 [00:04<00:00, 34007088.28it/s] 82%|████████▏ | 140017664/170498071 [00:04<00:00, 34090224.94it/s] 84%|████████▍ | 143753216/170498071 [00:04<00:00, 32501851.79it/s] 86%|████████▋ | 147292160/170498071 [00:04<00:00, 33230907.71it/s] 89%|████████▊ | 151027712/170498071 [00:04<00:00, 34235513.96it/s] 91%|█████████ | 154599424/170498071 [00:04<00:00, 34638995.88it/s] 93%|█████████▎| 158105600/170498071 [00:05<00:00, 33156396.88it/s] 95%|█████████▍| 161972224/170498071 [00:05<00:00, 34684350.73it/s] 97%|█████████▋| 165478400/170498071 [00:05<00:00, 34372776.19it/s] 99%|█████████▉| 168951808/170498071 [00:05<00:00, 32279411.86it/s]100%|██████████| 170498071/170498071 [00:05<00:00, 31184955.62it/s]
-Extracting /scratch-local/scur1301/cifar-10-python.tar.gz to /scratch-local/scur1301
-Using prompt template: This is a photo of a {}
-Using device: cuda
-Loading CLIP (backbone: ViT-B/32)
-  0%|                                               | 0.00/338M [00:00<?, ?iB/s]  1%|▌                                     | 5.06M/338M [00:00<00:06, 53.1MiB/s]  3%|█▏                                    | 10.1M/338M [00:00<00:06, 52.6MiB/s]  5%|█▋                                    | 15.4M/338M [00:00<00:06, 53.2MiB/s]  6%|██▍                                   | 21.4M/338M [00:00<00:05, 56.3MiB/s]  8%|███                                   | 26.8M/338M [00:00<00:05, 56.2MiB/s] 10%|███▌                                  | 32.1M/338M [00:00<00:06, 53.1MiB/s] 11%|████▎                                 | 37.8M/338M [00:00<00:05, 54.9MiB/s] 13%|████▉                                 | 43.4M/338M [00:00<00:05, 56.0MiB/s] 15%|█████▌                                | 49.3M/338M [00:00<00:05, 57.4MiB/s] 16%|██████▏                               | 55.3M/338M [00:01<00:05, 58.9MiB/s] 18%|██████▊                               | 61.0M/338M [00:01<00:04, 59.0MiB/s] 20%|███████▌                              | 66.6M/338M [00:01<00:04, 57.7MiB/s] 22%|████████▏                             | 73.0M/338M [00:01<00:04, 60.3MiB/s] 24%|█████████▎                            | 82.3M/338M [00:01<00:03, 71.0MiB/s] 26%|██████████                            | 89.1M/338M [00:01<00:03, 65.9MiB/s] 28%|██████████▋                           | 95.4M/338M [00:01<00:04, 63.1MiB/s] 30%|███████████▋                           | 102M/338M [00:01<00:04, 60.7MiB/s] 32%|████████████▍                          | 107M/338M [00:01<00:03, 60.6MiB/s] 34%|█████████████                          | 113M/338M [00:02<00:03, 60.0MiB/s] 35%|█████████████▋                         | 119M/338M [00:02<00:03, 59.4MiB/s] 37%|██████████████▍                        | 125M/338M [00:02<00:03, 58.7MiB/s] 39%|███████████████                        | 130M/338M [00:02<00:03, 57.8MiB/s] 40%|███████████████▋                       | 136M/338M [00:02<00:03, 57.8MiB/s] 42%|████████████████▎                      | 141M/338M [00:02<00:03, 57.3MiB/s] 43%|████████████████▉                      | 147M/338M [00:02<00:03, 57.3MiB/s] 45%|█████████████████▌                     | 152M/338M [00:02<00:03, 52.8MiB/s] 47%|██████████████████▏                    | 157M/338M [00:02<00:03, 51.9MiB/s] 48%|██████████████████▋                    | 162M/338M [00:02<00:03, 51.5MiB/s] 50%|███████████████████▎                   | 167M/338M [00:03<00:03, 47.8MiB/s] 51%|███████████████████▉                   | 172M/338M [00:03<00:03, 49.1MiB/s] 53%|████████████████████▌                  | 178M/338M [00:03<00:03, 50.7MiB/s] 54%|█████████████████████▏                 | 183M/338M [00:03<00:03, 53.1MiB/s] 56%|█████████████████████▋                 | 188M/338M [00:03<00:02, 52.3MiB/s] 57%|██████████████████████▎                | 194M/338M [00:03<00:02, 53.3MiB/s] 59%|██████████████████████▉                | 199M/338M [00:03<00:02, 53.9MiB/s] 61%|███████████████████████▋               | 205M/338M [00:03<00:02, 54.9MiB/s] 62%|████████████████████████▏              | 210M/338M [00:03<00:02, 55.1MiB/s] 64%|████████████████████████▊              | 215M/338M [00:04<00:02, 55.0MiB/s] 65%|█████████████████████████▌             | 221M/338M [00:04<00:02, 56.4MiB/s] 67%|██████████████████████████▏            | 227M/338M [00:04<00:02, 57.4MiB/s] 69%|██████████████████████████▊            | 233M/338M [00:04<00:01, 58.5MiB/s] 71%|███████████████████████████▌           | 238M/338M [00:04<00:01, 57.9MiB/s] 72%|████████████████████████████▏          | 244M/338M [00:04<00:01, 57.8MiB/s] 74%|████████████████████████████▊          | 249M/338M [00:04<00:01, 55.2MiB/s] 75%|█████████████████████████████▍         | 254M/338M [00:04<00:01, 53.5MiB/s] 77%|█████████████████████████████▉         | 260M/338M [00:04<00:01, 52.2MiB/s] 78%|██████████████████████████████▌        | 265M/338M [00:04<00:01, 52.7MiB/s] 80%|███████████████████████████████▏       | 270M/338M [00:05<00:01, 53.4MiB/s] 82%|███████████████████████████████▊       | 275M/338M [00:05<00:01, 52.1MiB/s] 83%|████████████████████████████████▍      | 280M/338M [00:05<00:01, 52.6MiB/s] 85%|████████████████████████████████▉      | 286M/338M [00:05<00:01, 53.2MiB/s] 86%|█████████████████████████████████▌     | 291M/338M [00:05<00:00, 52.7MiB/s] 88%|██████████████████████████████████▏    | 296M/338M [00:05<00:00, 53.0MiB/s] 89%|██████████████████████████████████▊    | 301M/338M [00:05<00:00, 53.9MiB/s] 91%|███████████████████████████████████▍   | 307M/338M [00:05<00:00, 54.7MiB/s] 93%|████████████████████████████████████   | 312M/338M [00:05<00:00, 55.8MiB/s] 94%|████████████████████████████████████▋  | 318M/338M [00:05<00:00, 55.1MiB/s] 96%|█████████████████████████████████████▎ | 323M/338M [00:06<00:00, 55.4MiB/s] 97%|█████████████████████████████████████▉ | 329M/338M [00:06<00:00, 55.9MiB/s] 99%|██████████████████████████████████████▋| 334M/338M [00:06<00:00, 56.9MiB/s]100%|███████████████████████████████████████| 338M/338M [00:06<00:00, 55.8MiB/s]
-
-
-List of prompts:
-['This is a photo of a airplane',
- 'This is a photo of a automobile',
- 'This is a photo of a bird',
- 'This is a photo of a cat',
- 'This is a photo of a deer',
- 'This is a photo of a dog',
- 'This is a photo of a frog',
- 'This is a photo of a horse',
- 'This is a photo of a ship',
- 'This is a photo of a truck']
-Precomputing text features
-Iterating over test set of cifar10
-/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torch/nn/modules/conv.py:456: UserWarning: Applied workaround for CuDNN issue, install nvrtc.so (Triggered internally at /opt/conda/conda-bld/pytorch_1695392026823/work/aten/src/ATen/native/cudnn/Conv_v8.cpp:80.)
-  return F.conv2d(input, weight, bias, self.stride,
-Zero-shot CLIP top-1 accuracy on cifar10/test: 88.90774536132812
-Downloading https://www.cs.toronto.edu/~kriz/cifar-100-python.tar.gz to /scratch-local/scur1301/cifar-100-python.tar.gz
-  0%|          | 0/169001437 [00:00<?, ?it/s]  0%|          | 65536/169001437 [00:00<07:19, 384288.22it/s]  0%|          | 229376/169001437 [00:00<03:54, 719992.27it/s]  1%|          | 917504/169001437 [00:00<01:15, 2218207.95it/s]  2%|▏         | 3342336/169001437 [00:00<00:20, 8273408.09it/s]  4%|▍         | 6619136/169001437 [00:00<00:10, 15169491.80it/s]  6%|▋         | 10813440/169001437 [00:00<00:06, 22849628.97it/s]  8%|▊         | 14221312/169001437 [00:00<00:06, 22639544.06it/s] 11%|█         | 18481152/169001437 [00:01<00:05, 27917193.45it/s] 13%|█▎        | 22609920/169001437 [00:01<00:04, 31574065.74it/s] 16%|█▌        | 26804224/169001437 [00:01<00:04, 34492078.09it/s] 18%|█▊        | 30474240/169001437 [00:01<00:04, 30345871.40it/s] 21%|██        | 34799616/169001437 [00:01<00:03, 33701956.99it/s] 23%|██▎       | 38895616/169001437 [00:01<00:03, 35665240.59it/s] 26%|██▌       | 43122688/169001437 [00:01<00:03, 32028622.00it/s] 28%|██▊       | 47480832/169001437 [00:01<00:03, 34955449.10it/s] 31%|███       | 51707904/169001437 [00:01<00:03, 36904166.09it/s] 33%|███▎      | 55902208/169001437 [00:02<00:02, 38282360.76it/s] 35%|███▌      | 59867136/169001437 [00:02<00:03, 33223747.19it/s] 38%|███▊      | 64094208/169001437 [00:02<00:02, 35534508.04it/s] 40%|████      | 68386816/169001437 [00:02<00:02, 37515205.76it/s] 43%|████▎     | 72286208/169001437 [00:02<00:02, 32699241.58it/s] 45%|████▌     | 76644352/169001437 [00:02<00:02, 35453491.97it/s] 48%|████▊     | 80838656/169001437 [00:02<00:02, 37164076.23it/s] 50%|█████     | 84738048/169001437 [00:02<00:02, 32472560.48it/s] 53%|█████▎    | 88997888/169001437 [00:03<00:02, 35009487.58it/s] 55%|█████▌    | 93224960/169001437 [00:03<00:02, 36917828.47it/s] 58%|█████▊    | 97484800/169001437 [00:03<00:02, 32969841.25it/s] 60%|██████    | 101810176/169001437 [00:03<00:01, 35542091.23it/s] 63%|██████▎   | 106004480/169001437 [00:03<00:01, 37229008.08it/s] 65%|██████▌   | 110297088/169001437 [00:03<00:01, 33237066.19it/s] 68%|██████▊   | 114655232/169001437 [00:03<00:01, 35826552.42it/s] 70%|███████   | 118784000/169001437 [00:03<00:01, 37251496.75it/s] 73%|███████▎  | 123109376/169001437 [00:04<00:01, 33330117.84it/s] 75%|███████▌  | 127434752/169001437 [00:04<00:01, 35819986.53it/s] 78%|███████▊  | 131596288/169001437 [00:04<00:01, 37330611.24it/s] 80%|████████  | 135888896/169001437 [00:04<00:00, 38839448.72it/s] 83%|████████▎ | 139919360/169001437 [00:04<00:00, 33721614.86it/s] 85%|████████▌ | 144048128/169001437 [00:04<00:00, 35652853.00it/s] 88%|████████▊ | 148340736/169001437 [00:04<00:00, 37578306.38it/s] 90%|█████████ | 152240128/169001437 [00:04<00:00, 32749460.20it/s] 93%|█████████▎| 156467200/169001437 [00:04<00:00, 35157503.14it/s] 95%|█████████▌| 160727040/169001437 [00:05<00:00, 37123010.51it/s] 97%|█████████▋| 164593664/169001437 [00:05<00:00, 32407403.62it/s]100%|█████████▉| 168919040/169001437 [00:05<00:00, 35151814.05it/s]100%|██████████| 169001437/169001437 [00:05<00:00, 31766565.68it/s]
-Extracting /scratch-local/scur1301/cifar-100-python.tar.gz to /scratch-local/scur1301
-Using prompt template: This is a photo of a {}
-Using device: cuda
-Loading CLIP (backbone: ViT-B/32)
-
-
-List of prompts:
-['This is a photo of a apple',
- 'This is a photo of a aquarium fish',
- 'This is a photo of a baby',
- 'This is a photo of a bear',
- 'This is a photo of a beaver',
- 'This is a photo of a bed',
- 'This is a photo of a bee',
- 'This is a photo of a beetle',
- 'This is a photo of a bicycle',
- 'This is a photo of a bottle',
- 'This is a photo of a bowl',
- 'This is a photo of a boy',
- 'This is a photo of a bridge',
- 'This is a photo of a bus',
- 'This is a photo of a butterfly',
- 'This is a photo of a camel',
- 'This is a photo of a can',
- 'This is a photo of a castle',
- 'This is a photo of a caterpillar',
- 'This is a photo of a cattle',
- 'This is a photo of a chair',
- 'This is a photo of a chimpanzee',
- 'This is a photo of a clock',
- 'This is a photo of a cloud',
- 'This is a photo of a cockroach',
- 'This is a photo of a couch',
- 'This is a photo of a crab',
- 'This is a photo of a crocodile',
- 'This is a photo of a cup',
- 'This is a photo of a dinosaur',
- 'This is a photo of a dolphin',
- 'This is a photo of a elephant',
- 'This is a photo of a flatfish',
- 'This is a photo of a forest',
- 'This is a photo of a fox',
- 'This is a photo of a girl',
- 'This is a photo of a hamster',
- 'This is a photo of a house',
- 'This is a photo of a kangaroo',
- 'This is a photo of a keyboard',
- 'This is a photo of a lamp',
- 'This is a photo of a lawn mower',
- 'This is a photo of a leopard',
- 'This is a photo of a lion',
- 'This is a photo of a lizard',
- 'This is a photo of a lobster',
- 'This is a photo of a man',
- 'This is a photo of a maple tree',
- 'This is a photo of a motorcycle',
- 'This is a photo of a mountain',
- 'This is a photo of a mouse',
- 'This is a photo of a mushroom',
- 'This is a photo of a oak tree',
- 'This is a photo of a orange',
- 'This is a photo of a orchid',
- 'This is a photo of a otter',
- 'This is a photo of a palm tree',
- 'This is a photo of a pear',
- 'This is a photo of a pickup truck',
- 'This is a photo of a pine tree',
- 'This is a photo of a plain',
- 'This is a photo of a plate',
- 'This is a photo of a poppy',
- 'This is a photo of a porcupine',
- 'This is a photo of a possum',
- 'This is a photo of a rabbit',
- 'This is a photo of a raccoon',
- 'This is a photo of a ray',
- 'This is a photo of a road',
- 'This is a photo of a rocket',
- 'This is a photo of a rose',
- 'This is a photo of a sea',
- 'This is a photo of a seal',
- 'This is a photo of a shark',
- 'This is a photo of a shrew',
- 'This is a photo of a skunk',
- 'This is a photo of a skyscraper',
- 'This is a photo of a snail',
- 'This is a photo of a snake',
- 'This is a photo of a spider',
- 'This is a photo of a squirrel',
- 'This is a photo of a streetcar',
- 'This is a photo of a sunflower',
- 'This is a photo of a sweet pepper',
- 'This is a photo of a table',
- 'This is a photo of a tank',
- 'This is a photo of a telephone',
- 'This is a photo of a television',
- 'This is a photo of a tiger',
- 'This is a photo of a tractor',
- 'This is a photo of a train',
- 'This is a photo of a trout',
- 'This is a photo of a tulip',
- 'This is a photo of a turtle',
- 'This is a photo of a wardrobe',
- 'This is a photo of a whale',
- 'This is a photo of a willow tree',
- 'This is a photo of a wolf',
- 'This is a photo of a woman',
- 'This is a photo of a worm']
-Precomputing text features
-Iterating over test set of cifar100
-/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torch/nn/modules/conv.py:456: UserWarning: Applied workaround for CuDNN issue, install nvrtc.so (Triggered internally at /opt/conda/conda-bld/pytorch_1695392026823/work/aten/src/ATen/native/cudnn/Conv_v8.cpp:80.)
-  return F.conv2d(input, weight, bias, self.stride,
-Zero-shot CLIP top-1 accuracy on cifar100/test: 63.1190071105957
-/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torch/nn/modules/conv.py:456: UserWarning: Applied workaround for CuDNN issue, install nvrtc.so (Triggered internally at /opt/conda/conda-bld/pytorch_1695392026823/work/aten/src/ATen/native/cudnn/Conv_v8.cpp:80.)
-  return F.conv2d(input, weight, bias, self.stride,
-Files already downloaded and verified
-Using prompt template: The primary color of the image is {}
-Using device: cuda
-Loading CLIP (backbone: ViT-B/32)
-
-
-List of prompts:
-['The primary color of the image is red',
- 'The primary color of the image is blue',
- 'The primary color of the image is green']
-Precomputing text features
-/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torch/nn/modules/conv.py:456: UserWarning: Applied workaround for CuDNN issue, install nvrtc.so (Triggered internally at /opt/conda/conda-bld/pytorch_1695392026823/work/aten/src/ATen/native/cudnn/Conv_v8.cpp:80.)
-  return F.conv2d(input, weight, bias, self.stride,
-Files already downloaded and verified
-Using prompt template: The object in this image is {}
-Using device: cuda
-Loading CLIP (backbone: ViT-B/32)
-
-
-List of prompts:
-['The object in this image is human-made', 'The object in this image is nature']
-Precomputing text features
-
-JOB STATISTICS
-==============
-Job ID: 4526700
-Cluster: snellius
-User/Group: scur1301/scur1301
-State: COMPLETED (exit code 0)
-Nodes: 1
-Cores per node: 18
-CPU Utilized: 00:02:17
-CPU Efficiency: 8.85% of 00:25:48 core-walltime
-Job Wall-clock time: 00:01:26
-Memory Utilized: 2.41 GB
-Memory Efficiency: 7.70% of 31.25 GB

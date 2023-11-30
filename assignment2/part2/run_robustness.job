@@ -14,18 +14,24 @@ module load Anaconda3/2022.05
 
 source activate dl2023
 
-repo_dir=$HOME/uvadlc_practicals_2023/assignment2/part2
+repo_dir=$HOME/uvadlc_practicals_2023
 code_dir=$repo_dir/assignment2/part2
 
+# Standard constants
+arch="ViT-B/32"
+text_prompt_template="This is a photo of a {}"
+epochs=20
+
+## Set of experiments on CIFAR-10
+dataset="cifar10"
 root=/scratch-local/$USER
-
-path_models = $repo_dir/save/models
-path_fixed = $path_modelssave/visual_prompt_fixed_patch_1_cifar10_clip_ViT-B/32_sgd_lr_40_decay_0_bsz_128_warmup_1000_trial_1
-path_padding = $path_modelssave/visual_prompt_padding_1_cifar10_clip_ViT-B/32_sgd_lr_40_decay_0_bsz_128_warmup_1000_trial_1
-path_deep = $path_models/deep_prompt_padding_1_cifar10_clip_ViT-B/32_sgd_lr_40_decay_0_bsz_128_warmup_1000_trial_1
-
 mkdir -p $root
 
-python $code_dir/robustness.py --dataset cifar10 --epochs 20 --method fixed --root $root --resume $path_fixed/model_best.pth.tar --test_noise --evaluate
-python $code_dir/robustness.py --dataset cifar10 --epochs 20 --method padding --root $root --resume $path_padding/model_best.pth.tar --test_noise --evaluate
-python $code_dir/robustness.py --dataset cifar10 --epochs 20 --prompt_type deep_prompt --root $root  --resume $path_deep/model_best.pth.tar --test_noise --evaluate
+path_models = $repo_dir/save/models
+path_fixed = $path_models/visual_prompt_fixed_patch_1_cifar10_clip_ViT-B/32_sgd_lr_40_decay_0_bsz_128_warmup_1000_trial_1
+path_padding = $path_models/visual_prompt_padding_1_cifar10_clip_ViT-B/32_sgd_lr_40_decay_0_bsz_128_warmup_1000_trial_1
+path_deep = $path_models/deep_prompt_padding_1_cifar10_clip_ViT-B/32_sgd_lr_40_decay_0_bsz_128_warmup_1000_trial_1
+
+python $code_dir/robustness.py --arch $arch --dataset $dataset --text_prompt_template "$text_prompt_template" --epochs $epochs --method fixed --root $root --resume "$path_fixed/model_best.pth" --prompt_size 1 --test_noise --evaluate
+python $code_dir/robustness.py --arch $arch --dataset $dataset --text_prompt_template "$text_prompt_template" --epochs $epochs --method padding --root $root --resume "$path_padding/model_best.pth" --prompt_size 1 --test_noise --evaluate
+python $code_dir/robustness.py --arch $arch --dataset $dataset --text_prompt_template "$text_prompt_template" --epochs $epochs --prompt_type deep_prompt --root $root  --resume "$path_deep/model_best.pth" --prompt_size 1 --test_noise --evaluate

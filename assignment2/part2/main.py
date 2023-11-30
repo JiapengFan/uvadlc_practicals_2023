@@ -112,6 +112,8 @@ def parse_option():
 
     args = parser.parse_args()
 
+    raise Exception(f'RESUME: {args.resume}')
+
     args.num_workers = min(args.num_workers, os.cpu_count())
 
     args.filename = "{}_{}_{}_{}_{}_{}_{}_lr_{}_decay_{}_bsz_{}_warmup_{}_trial_{}".format(

@@ -237,7 +237,7 @@ def evaluate_model(model, data_loader, device):
     return accuracy
 
 
-def main(lr, batch_size, epochs, data_dir, seed, augmentation_name, test_noise):
+def main(lr, batch_size, epochs, data_dir, seed, augmentation_name, test_noise, resume):
     """
     Main function for training and testing the model.
 
@@ -266,8 +266,11 @@ def main(lr, batch_size, epochs, data_dir, seed, augmentation_name, test_noise):
     cifar10_test = get_test_set(data_dir, test_noise)
     cifar10_test_dataloader = get_dataloader_test(cifar10_test, batch_size)
 
-    # Train the model
-    model = train_model(model, lr, batch_size, epochs, data_dir, model_name, device, augmentation_name)
+    # Train the model if no model to load
+    if resume:
+        model = load_model(model, 'save', model_name)
+    else:
+        model = train_model(model, lr, batch_size, epochs, data_dir, model_name, device, augmentation_name)
 
     # Evaluate the model on the test set
     acc = evaluate_model(model, cifar10_test_dataloader, device)
@@ -299,6 +302,8 @@ if __name__ == '__main__':
                         help='Augmentation to use.')
     parser.add_argument('--test_noise', default=False, action="store_true",
                         help='Whether to test the model on noisy images or not.')
+    parser.add_argument('--resume', default=False, action="store_true",
+                help='Load trained model.')
 
     args = parser.parse_args()
     kwargs = vars(args)

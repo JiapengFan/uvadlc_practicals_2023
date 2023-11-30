@@ -1,0 +1,29 @@
+#!/bin/bash
+
+#SBATCH --partition=gpu
+#SBATCH --gpus=1
+#SBATCH --job-name=aug
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=18
+#SBATCH --time=05:00:00
+#SBATCH --output=aug_output_%A.out
+
+module purge
+module load 2022
+module load Anaconda3/2022.05
+
+source activate dl2023
+
+code_dir=$HOME/uvadlc_practicals_2023/assignment2/part1
+
+echo "Executing with HORIZONTAL_FLIP augmentation..."
+python $code_dir/train.py --augmentation_name horizontal_flip
+
+echo "Executing with VERTICAL_FLIP augmentation..."
+python $code_dir/train.py --augmentation_name vertical_flip
+
+echo "Executing with ROTATION augmentation..."
+python $code_dir/train.py --augmentation_name rotation
+
+echo "Executing with TEST_NOISE augmentation..."
+python $code_dir/train.py --augmentation_name test_noise
