@@ -179,11 +179,12 @@ def main():
         #######################
         # TODO: Define `classnames` as a list of 10 + 100 class labels from CIFAR10 and CIFAR100
 
-        cifar10_classes = cifar100_test.classes
+        cifar10_classes = cifar10_test.classes
         cifar100_classes = cifar100_test.classes
 
         classnames = cifar10_classes
         classnames.extend(cifar100_classes)
+        print('Num classes total:', len(classnames))
         #######################
         # END OF YOUR CODE    #
         #######################
@@ -264,10 +265,15 @@ def main():
         # - accurary_all = acc_cifar10 * (% of cifar10 samples) \
         #                  + acc_cifar100 * (% of cifar100 samples)
 
+        print(f"TOP1 Accuracy on cifar100 is: {acc_cifar100}")
+        print(f"TOP1 Accuracy on cifra10 is: {acc_cifar10}")
+        print(f"Num samples cifra10 is: {len(cifar10_test.targets)}")
+        print(f"Num samples cifra100 is: {len(cifar100_test.targets)}")
+
         weights = torch.tensor([len(cifar10_test.targets), len(cifar100_test.targets)])
         accs = torch.tensor([acc_cifar10, acc_cifar100])
 
-        accuracy_all = (torch.sum(weights * accs) / torch.sum(weights))*100
+        accuracy_all = (torch.sum(weights * accs) / torch.sum(weights))
 
         #######################
         # END OF YOUR CODE    #

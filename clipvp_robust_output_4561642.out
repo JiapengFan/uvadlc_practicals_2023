@@ -1,0 +1,406 @@
+============================================================================================== 
+Warning! Mixing Conda and module environments may lead to corruption of the
+user environment. 
+We do not recommend users mixing those two environments unless absolutely
+necessary. Note that 
+SURF does not provide any support for Conda environment.
+For more information, please refer to our software policy page:
+https://servicedesk.surf.nl/wiki/display/WIKI/Software+policy+Snellius+and+Lisa#SoftwarepolicySnelliusandLisa-UseofAnacondaandMinicondaenvironmentsonSnellius 
+
+Remember that many packages have already been installed on the system and can
+be loaded using 
+the 'module load <package__name>' command. If you are uncertain if a package is
+already available 
+on the system, please use 'module avail' or 'module spider' to search for it.
+============================================================================================== 
+Running robustness experiment of visual prompt on cifar100 with fixed patch.
+Files already downloaded and verified
+Files already downloaded and verified
+Building custom CLIP
+Loading CLIP (backbone: ViT-B/32)
+List of prompts:
+['This is a photo of a apple',
+ 'This is a photo of a aquarium fish',
+ 'This is a photo of a baby',
+ 'This is a photo of a bear',
+ 'This is a photo of a beaver',
+ 'This is a photo of a bed',
+ 'This is a photo of a bee',
+ 'This is a photo of a beetle',
+ 'This is a photo of a bicycle',
+ 'This is a photo of a bottle',
+ 'This is a photo of a bowl',
+ 'This is a photo of a boy',
+ 'This is a photo of a bridge',
+ 'This is a photo of a bus',
+ 'This is a photo of a butterfly',
+ 'This is a photo of a camel',
+ 'This is a photo of a can',
+ 'This is a photo of a castle',
+ 'This is a photo of a caterpillar',
+ 'This is a photo of a cattle',
+ 'This is a photo of a chair',
+ 'This is a photo of a chimpanzee',
+ 'This is a photo of a clock',
+ 'This is a photo of a cloud',
+ 'This is a photo of a cockroach',
+ 'This is a photo of a couch',
+ 'This is a photo of a crab',
+ 'This is a photo of a crocodile',
+ 'This is a photo of a cup',
+ 'This is a photo of a dinosaur',
+ 'This is a photo of a dolphin',
+ 'This is a photo of a elephant',
+ 'This is a photo of a flatfish',
+ 'This is a photo of a forest',
+ 'This is a photo of a fox',
+ 'This is a photo of a girl',
+ 'This is a photo of a hamster',
+ 'This is a photo of a house',
+ 'This is a photo of a kangaroo',
+ 'This is a photo of a keyboard',
+ 'This is a photo of a lamp',
+ 'This is a photo of a lawn mower',
+ 'This is a photo of a leopard',
+ 'This is a photo of a lion',
+ 'This is a photo of a lizard',
+ 'This is a photo of a lobster',
+ 'This is a photo of a man',
+ 'This is a photo of a maple tree',
+ 'This is a photo of a motorcycle',
+ 'This is a photo of a mountain',
+ 'This is a photo of a mouse',
+ 'This is a photo of a mushroom',
+ 'This is a photo of a oak tree',
+ 'This is a photo of a orange',
+ 'This is a photo of a orchid',
+ 'This is a photo of a otter',
+ 'This is a photo of a palm tree',
+ 'This is a photo of a pear',
+ 'This is a photo of a pickup truck',
+ 'This is a photo of a pine tree',
+ 'This is a photo of a plain',
+ 'This is a photo of a plate',
+ 'This is a photo of a poppy',
+ 'This is a photo of a porcupine',
+ 'This is a photo of a possum',
+ 'This is a photo of a rabbit',
+ 'This is a photo of a raccoon',
+ 'This is a photo of a ray',
+ 'This is a photo of a road',
+ 'This is a photo of a rocket',
+ 'This is a photo of a rose',
+ 'This is a photo of a sea',
+ 'This is a photo of a seal',
+ 'This is a photo of a shark',
+ 'This is a photo of a shrew',
+ 'This is a photo of a skunk',
+ 'This is a photo of a skyscraper',
+ 'This is a photo of a snail',
+ 'This is a photo of a snake',
+ 'This is a photo of a spider',
+ 'This is a photo of a squirrel',
+ 'This is a photo of a streetcar',
+ 'This is a photo of a sunflower',
+ 'This is a photo of a sweet pepper',
+ 'This is a photo of a table',
+ 'This is a photo of a tank',
+ 'This is a photo of a telephone',
+ 'This is a photo of a television',
+ 'This is a photo of a tiger',
+ 'This is a photo of a tractor',
+ 'This is a photo of a train',
+ 'This is a photo of a trout',
+ 'This is a photo of a tulip',
+ 'This is a photo of a turtle',
+ 'This is a photo of a wardrobe',
+ 'This is a photo of a whale',
+ 'This is a photo of a willow tree',
+ 'This is a photo of a wolf',
+ 'This is a photo of a woman',
+ 'This is a photo of a worm']
+=> loading checkpoint './save/models/visual_prompt_fixed_patch_1_0_cifar10_clip_ViT-B/32_sgd_lr_40_decay_0_bsz_128_warmup_1000_trial_1/model_best.pth.tar'
+=> loaded checkpoint './save/models/visual_prompt_fixed_patch_1_0_cifar10_clip_ViT-B/32_sgd_lr_40_decay_0_bsz_128_warmup_1000_trial_1/model_best.pth.tar' (epoch 3)
+Turning off gradients in both the image and the text encoder
+Parameters to be updated:
+"Parameters to be updated: {'prompt_learner.patch'}"
+Number of prompt parameters:  3
+Model evaluation w/ random noise
+  0%|          | 0/79 [00:00<?, ?it/s]/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torch/nn/modules/conv.py:456: UserWarning: Applied workaround for CuDNN issue, install nvrtc.so (Triggered internally at /opt/conda/conda-bld/pytorch_1695392026823/work/aten/src/ATen/native/cudnn/Conv_v8.cpp:80.)
+  return F.conv2d(input, weight, bias, self.stride,
+  1%|▏         | 1/79 [00:01<02:28,  1.91s/it]  5%|▌         | 4/79 [00:02<00:29,  2.50it/s]  9%|▉         | 7/79 [00:02<00:14,  4.81it/s] 13%|█▎        | 10/79 [00:02<00:09,  7.35it/s] 16%|█▋        | 13/79 [00:02<00:06,  9.94it/s] 20%|██        | 16/79 [00:02<00:05, 12.43it/s] 24%|██▍       | 19/79 [00:02<00:04, 14.65it/s] 28%|██▊       | 22/79 [00:02<00:03, 16.48it/s] 32%|███▏      | 25/79 [00:02<00:03, 17.98it/s] 35%|███▌      | 28/79 [00:03<00:02, 19.22it/s] 39%|███▉      | 31/79 [00:03<00:02, 20.17it/s] 43%|████▎     | 34/79 [00:03<00:02, 20.73it/s] 47%|████▋     | 37/79 [00:03<00:01, 21.16it/s] 51%|█████     | 40/79 [00:03<00:01, 21.59it/s] 54%|█████▍    | 43/79 [00:03<00:01, 21.90it/s] 58%|█████▊    | 46/79 [00:03<00:01, 22.05it/s] 62%|██████▏   | 49/79 [00:04<00:01, 22.20it/s] 66%|██████▌   | 52/79 [00:04<00:01, 22.33it/s] 70%|██████▉   | 55/79 [00:04<00:01, 22.58it/s] 73%|███████▎  | 58/79 [00:04<00:00, 22.91it/s] 77%|███████▋  | 61/79 [00:04<00:00, 23.13it/s] 81%|████████  | 64/79 [00:04<00:00, 23.35it/s] 85%|████████▍ | 67/79 [00:04<00:00, 23.51it/s] 89%|████████▊ | 70/79 [00:04<00:00, 23.57it/s] 92%|█████████▏| 73/79 [00:05<00:00, 23.01it/s] 96%|█████████▌| 76/79 [00:05<00:00, 23.09it/s]100%|██████████| 79/79 [00:05<00:00, 21.94it/s]100%|██████████| 79/79 [00:05<00:00, 14.53it/s]
+Validate: [ 0/79]	Time  1.914 ( 1.914)	Loss 1.2178e+00 (1.2178e+00)	Prompt Acc@1  69.53 ( 69.53)
+Validate: [10/79]	Time  0.043 ( 0.214)	Loss 1.4912e+00 (1.5358e+00)	Prompt Acc@1  57.03 ( 59.80)
+Validate: [20/79]	Time  0.043 ( 0.133)	Loss 1.5850e+00 (1.5143e+00)	Prompt Acc@1  62.50 ( 60.27)
+Validate: [30/79]	Time  0.044 ( 0.104)	Loss 1.6221e+00 (1.5181e+00)	Prompt Acc@1  62.50 ( 60.06)
+Validate: [40/79]	Time  0.044 ( 0.090)	Loss 1.3857e+00 (1.5224e+00)	Prompt Acc@1  63.28 ( 60.27)
+Validate: [50/79]	Time  0.044 ( 0.081)	Loss 1.7588e+00 (1.5317e+00)	Prompt Acc@1  59.38 ( 60.11)
+Validate: [60/79]	Time  0.042 ( 0.075)	Loss 1.8184e+00 (1.5266e+00)	Prompt Acc@1  58.59 ( 60.35)
+Validate: [70/79]	Time  0.045 ( 0.070)	Loss 1.7061e+00 (1.5242e+00)	Prompt Acc@1  57.03 ( 60.23)
+ * Prompt Acc@1 60.420
+Running robustness experiment of visual prompt on cifar100 with padding.
+Files already downloaded and verified
+Files already downloaded and verified
+Building custom CLIP
+Loading CLIP (backbone: ViT-B/32)
+List of prompts:
+['This is a photo of a apple',
+ 'This is a photo of a aquarium fish',
+ 'This is a photo of a baby',
+ 'This is a photo of a bear',
+ 'This is a photo of a beaver',
+ 'This is a photo of a bed',
+ 'This is a photo of a bee',
+ 'This is a photo of a beetle',
+ 'This is a photo of a bicycle',
+ 'This is a photo of a bottle',
+ 'This is a photo of a bowl',
+ 'This is a photo of a boy',
+ 'This is a photo of a bridge',
+ 'This is a photo of a bus',
+ 'This is a photo of a butterfly',
+ 'This is a photo of a camel',
+ 'This is a photo of a can',
+ 'This is a photo of a castle',
+ 'This is a photo of a caterpillar',
+ 'This is a photo of a cattle',
+ 'This is a photo of a chair',
+ 'This is a photo of a chimpanzee',
+ 'This is a photo of a clock',
+ 'This is a photo of a cloud',
+ 'This is a photo of a cockroach',
+ 'This is a photo of a couch',
+ 'This is a photo of a crab',
+ 'This is a photo of a crocodile',
+ 'This is a photo of a cup',
+ 'This is a photo of a dinosaur',
+ 'This is a photo of a dolphin',
+ 'This is a photo of a elephant',
+ 'This is a photo of a flatfish',
+ 'This is a photo of a forest',
+ 'This is a photo of a fox',
+ 'This is a photo of a girl',
+ 'This is a photo of a hamster',
+ 'This is a photo of a house',
+ 'This is a photo of a kangaroo',
+ 'This is a photo of a keyboard',
+ 'This is a photo of a lamp',
+ 'This is a photo of a lawn mower',
+ 'This is a photo of a leopard',
+ 'This is a photo of a lion',
+ 'This is a photo of a lizard',
+ 'This is a photo of a lobster',
+ 'This is a photo of a man',
+ 'This is a photo of a maple tree',
+ 'This is a photo of a motorcycle',
+ 'This is a photo of a mountain',
+ 'This is a photo of a mouse',
+ 'This is a photo of a mushroom',
+ 'This is a photo of a oak tree',
+ 'This is a photo of a orange',
+ 'This is a photo of a orchid',
+ 'This is a photo of a otter',
+ 'This is a photo of a palm tree',
+ 'This is a photo of a pear',
+ 'This is a photo of a pickup truck',
+ 'This is a photo of a pine tree',
+ 'This is a photo of a plain',
+ 'This is a photo of a plate',
+ 'This is a photo of a poppy',
+ 'This is a photo of a porcupine',
+ 'This is a photo of a possum',
+ 'This is a photo of a rabbit',
+ 'This is a photo of a raccoon',
+ 'This is a photo of a ray',
+ 'This is a photo of a road',
+ 'This is a photo of a rocket',
+ 'This is a photo of a rose',
+ 'This is a photo of a sea',
+ 'This is a photo of a seal',
+ 'This is a photo of a shark',
+ 'This is a photo of a shrew',
+ 'This is a photo of a skunk',
+ 'This is a photo of a skyscraper',
+ 'This is a photo of a snail',
+ 'This is a photo of a snake',
+ 'This is a photo of a spider',
+ 'This is a photo of a squirrel',
+ 'This is a photo of a streetcar',
+ 'This is a photo of a sunflower',
+ 'This is a photo of a sweet pepper',
+ 'This is a photo of a table',
+ 'This is a photo of a tank',
+ 'This is a photo of a telephone',
+ 'This is a photo of a television',
+ 'This is a photo of a tiger',
+ 'This is a photo of a tractor',
+ 'This is a photo of a train',
+ 'This is a photo of a trout',
+ 'This is a photo of a tulip',
+ 'This is a photo of a turtle',
+ 'This is a photo of a wardrobe',
+ 'This is a photo of a whale',
+ 'This is a photo of a willow tree',
+ 'This is a photo of a wolf',
+ 'This is a photo of a woman',
+ 'This is a photo of a worm']
+=> loading checkpoint './save/models/visual_prompt_padding_30_0_cifar10_clip_ViT-B/32_sgd_lr_40_decay_0_bsz_128_warmup_1000_trial_1/model_best.pth.tar'
+=> loaded checkpoint './save/models/visual_prompt_padding_30_0_cifar10_clip_ViT-B/32_sgd_lr_40_decay_0_bsz_128_warmup_1000_trial_1/model_best.pth.tar' (epoch 20)
+Turning off gradients in both the image and the text encoder
+Parameters to be updated:
+("Parameters to be updated: {'prompt_learner.pad_up', "
+ "'prompt_learner.pad_right', 'prompt_learner.pad_left', "
+ "'prompt_learner.pad_down'}")
+Number of prompt parameters:  69840
+Model evaluation w/ random noise
+  0%|          | 0/79 [00:00<?, ?it/s]/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torch/nn/modules/conv.py:456: UserWarning: Applied workaround for CuDNN issue, install nvrtc.so (Triggered internally at /opt/conda/conda-bld/pytorch_1695392026823/work/aten/src/ATen/native/cudnn/Conv_v8.cpp:80.)
+  return F.conv2d(input, weight, bias, self.stride,
+  1%|▏         | 1/79 [00:01<02:01,  1.56s/it]  5%|▌         | 4/79 [00:01<00:24,  3.00it/s]  9%|▉         | 7/79 [00:01<00:12,  5.63it/s] 13%|█▎        | 10/79 [00:01<00:08,  8.33it/s] 16%|█▋        | 13/79 [00:02<00:05, 11.02it/s] 20%|██        | 16/79 [00:02<00:04, 13.48it/s] 24%|██▍       | 19/79 [00:02<00:03, 15.37it/s] 28%|██▊       | 22/79 [00:02<00:03, 16.76it/s] 32%|███▏      | 25/79 [00:02<00:02, 18.19it/s] 35%|███▌      | 28/79 [00:02<00:02, 19.42it/s] 39%|███▉      | 31/79 [00:02<00:02, 20.27it/s] 43%|████▎     | 34/79 [00:03<00:02, 20.75it/s] 47%|████▋     | 37/79 [00:03<00:01, 21.22it/s] 51%|█████     | 40/79 [00:03<00:01, 21.69it/s] 54%|█████▍    | 43/79 [00:03<00:01, 22.01it/s] 58%|█████▊    | 46/79 [00:03<00:01, 22.10it/s] 62%|██████▏   | 49/79 [00:03<00:01, 22.19it/s] 66%|██████▌   | 52/79 [00:03<00:01, 22.35it/s] 70%|██████▉   | 55/79 [00:03<00:01, 22.56it/s] 73%|███████▎  | 58/79 [00:04<00:00, 22.87it/s] 77%|███████▋  | 61/79 [00:04<00:00, 23.11it/s] 81%|████████  | 64/79 [00:04<00:00, 23.30it/s] 85%|████████▍ | 67/79 [00:04<00:00, 23.40it/s] 89%|████████▊ | 70/79 [00:04<00:00, 23.11it/s] 92%|█████████▏| 73/79 [00:04<00:00, 23.12it/s] 96%|█████████▌| 76/79 [00:04<00:00, 23.06it/s]100%|██████████| 79/79 [00:05<00:00, 22.71it/s]100%|██████████| 79/79 [00:05<00:00, 15.47it/s]
+Validate: [ 0/79]	Time  1.559 ( 1.559)	Loss 1.5332e+00 (1.5332e+00)	Prompt Acc@1  60.94 ( 60.94)
+Validate: [10/79]	Time  0.044 ( 0.183)	Loss 2.3926e+00 (2.1634e+00)	Prompt Acc@1  40.62 ( 45.67)
+Validate: [20/79]	Time  0.046 ( 0.117)	Loss 2.1289e+00 (2.0838e+00)	Prompt Acc@1  39.84 ( 46.50)
+Validate: [30/79]	Time  0.045 ( 0.094)	Loss 2.2539e+00 (2.0871e+00)	Prompt Acc@1  40.62 ( 46.80)
+Validate: [40/79]	Time  0.044 ( 0.082)	Loss 1.9268e+00 (2.0864e+00)	Prompt Acc@1  49.22 ( 46.57)
+Validate: [50/79]	Time  0.044 ( 0.075)	Loss 2.2930e+00 (2.0701e+00)	Prompt Acc@1  39.06 ( 46.66)
+Validate: [60/79]	Time  0.042 ( 0.069)	Loss 2.2676e+00 (2.0660e+00)	Prompt Acc@1  37.50 ( 46.77)
+Validate: [70/79]	Time  0.043 ( 0.066)	Loss 2.2383e+00 (2.0693e+00)	Prompt Acc@1  41.41 ( 47.04)
+ * Prompt Acc@1 47.390
+Running robustness experiment of deep prompt on cifar100.
+Files already downloaded and verified
+Files already downloaded and verified
+Building custom CLIP
+Loading CLIP (backbone: ViT-B/32)
+List of prompts:
+['This is a photo of a apple',
+ 'This is a photo of a aquarium fish',
+ 'This is a photo of a baby',
+ 'This is a photo of a bear',
+ 'This is a photo of a beaver',
+ 'This is a photo of a bed',
+ 'This is a photo of a bee',
+ 'This is a photo of a beetle',
+ 'This is a photo of a bicycle',
+ 'This is a photo of a bottle',
+ 'This is a photo of a bowl',
+ 'This is a photo of a boy',
+ 'This is a photo of a bridge',
+ 'This is a photo of a bus',
+ 'This is a photo of a butterfly',
+ 'This is a photo of a camel',
+ 'This is a photo of a can',
+ 'This is a photo of a castle',
+ 'This is a photo of a caterpillar',
+ 'This is a photo of a cattle',
+ 'This is a photo of a chair',
+ 'This is a photo of a chimpanzee',
+ 'This is a photo of a clock',
+ 'This is a photo of a cloud',
+ 'This is a photo of a cockroach',
+ 'This is a photo of a couch',
+ 'This is a photo of a crab',
+ 'This is a photo of a crocodile',
+ 'This is a photo of a cup',
+ 'This is a photo of a dinosaur',
+ 'This is a photo of a dolphin',
+ 'This is a photo of a elephant',
+ 'This is a photo of a flatfish',
+ 'This is a photo of a forest',
+ 'This is a photo of a fox',
+ 'This is a photo of a girl',
+ 'This is a photo of a hamster',
+ 'This is a photo of a house',
+ 'This is a photo of a kangaroo',
+ 'This is a photo of a keyboard',
+ 'This is a photo of a lamp',
+ 'This is a photo of a lawn mower',
+ 'This is a photo of a leopard',
+ 'This is a photo of a lion',
+ 'This is a photo of a lizard',
+ 'This is a photo of a lobster',
+ 'This is a photo of a man',
+ 'This is a photo of a maple tree',
+ 'This is a photo of a motorcycle',
+ 'This is a photo of a mountain',
+ 'This is a photo of a mouse',
+ 'This is a photo of a mushroom',
+ 'This is a photo of a oak tree',
+ 'This is a photo of a orange',
+ 'This is a photo of a orchid',
+ 'This is a photo of a otter',
+ 'This is a photo of a palm tree',
+ 'This is a photo of a pear',
+ 'This is a photo of a pickup truck',
+ 'This is a photo of a pine tree',
+ 'This is a photo of a plain',
+ 'This is a photo of a plate',
+ 'This is a photo of a poppy',
+ 'This is a photo of a porcupine',
+ 'This is a photo of a possum',
+ 'This is a photo of a rabbit',
+ 'This is a photo of a raccoon',
+ 'This is a photo of a ray',
+ 'This is a photo of a road',
+ 'This is a photo of a rocket',
+ 'This is a photo of a rose',
+ 'This is a photo of a sea',
+ 'This is a photo of a seal',
+ 'This is a photo of a shark',
+ 'This is a photo of a shrew',
+ 'This is a photo of a skunk',
+ 'This is a photo of a skyscraper',
+ 'This is a photo of a snail',
+ 'This is a photo of a snake',
+ 'This is a photo of a spider',
+ 'This is a photo of a squirrel',
+ 'This is a photo of a streetcar',
+ 'This is a photo of a sunflower',
+ 'This is a photo of a sweet pepper',
+ 'This is a photo of a table',
+ 'This is a photo of a tank',
+ 'This is a photo of a telephone',
+ 'This is a photo of a television',
+ 'This is a photo of a tiger',
+ 'This is a photo of a tractor',
+ 'This is a photo of a train',
+ 'This is a photo of a trout',
+ 'This is a photo of a tulip',
+ 'This is a photo of a turtle',
+ 'This is a photo of a wardrobe',
+ 'This is a photo of a whale',
+ 'This is a photo of a willow tree',
+ 'This is a photo of a wolf',
+ 'This is a photo of a woman',
+ 'This is a photo of a worm']
+=> loading checkpoint './save/models/deep_prompt_padding_30_0_cifar10_clip_ViT-B/32_sgd_lr_40_decay_0_bsz_128_warmup_1000_trial_1/model_best.pth.tar'
+=> loaded checkpoint './save/models/deep_prompt_padding_30_0_cifar10_clip_ViT-B/32_sgd_lr_40_decay_0_bsz_128_warmup_1000_trial_1/model_best.pth.tar' (epoch 19)
+Turning off gradients in both the image and the text encoder
+Parameters to be updated:
+"Parameters to be updated: {'deep_prompt'}"
+Number of prompt parameters:  3072
+Model evaluation w/ random noise
+  0%|          | 0/79 [00:00<?, ?it/s]/home/scur1301/.conda/envs/dl2023/lib/python3.11/site-packages/torch/nn/modules/conv.py:456: UserWarning: Applied workaround for CuDNN issue, install nvrtc.so (Triggered internally at /opt/conda/conda-bld/pytorch_1695392026823/work/aten/src/ATen/native/cudnn/Conv_v8.cpp:80.)
+  return F.conv2d(input, weight, bias, self.stride,
+  1%|▏         | 1/79 [00:01<02:02,  1.57s/it]  4%|▍         | 3/79 [00:01<00:33,  2.24it/s]  8%|▊         | 6/79 [00:01<00:14,  5.01it/s] 11%|█▏        | 9/79 [00:01<00:08,  7.80it/s] 15%|█▌        | 12/79 [00:02<00:06, 10.53it/s] 19%|█▉        | 15/79 [00:02<00:04, 13.06it/s] 23%|██▎       | 18/79 [00:02<00:04, 15.00it/s] 27%|██▋       | 21/79 [00:02<00:03, 16.39it/s] 30%|███       | 24/79 [00:02<00:03, 17.91it/s] 34%|███▍      | 27/79 [00:02<00:02, 19.00it/s] 38%|███▊      | 30/79 [00:02<00:02, 19.84it/s] 42%|████▏     | 33/79 [00:03<00:02, 20.34it/s] 46%|████▌     | 36/79 [00:03<00:02, 20.70it/s] 49%|████▉     | 39/79 [00:03<00:01, 21.22it/s] 53%|█████▎    | 42/79 [00:03<00:01, 21.54it/s] 57%|█████▋    | 45/79 [00:03<00:01, 21.72it/s] 61%|██████    | 48/79 [00:03<00:01, 21.85it/s] 65%|██████▍   | 51/79 [00:03<00:01, 21.96it/s] 68%|██████▊   | 54/79 [00:03<00:01, 22.15it/s] 72%|███████▏  | 57/79 [00:04<00:00, 22.52it/s] 76%|███████▌  | 60/79 [00:04<00:00, 22.77it/s] 80%|███████▉  | 63/79 [00:04<00:00, 22.97it/s] 84%|████████▎ | 66/79 [00:04<00:00, 22.51it/s] 87%|████████▋ | 69/79 [00:04<00:00, 22.54it/s] 91%|█████████ | 72/79 [00:04<00:00, 22.53it/s] 95%|█████████▍| 75/79 [00:04<00:00, 22.45it/s] 99%|█████████▊| 78/79 [00:05<00:00, 22.55it/s]100%|██████████| 79/79 [00:05<00:00, 15.23it/s]
+Validate: [ 0/79]	Time  1.568 ( 1.568)	Loss 2.0430e+00 (2.0430e+00)	Prompt Acc@1  46.09 ( 46.09)
+Validate: [10/79]	Time  0.045 ( 0.185)	Loss 2.4668e+00 (2.3281e+00)	Prompt Acc@1  36.72 ( 42.26)
+Validate: [20/79]	Time  0.054 ( 0.120)	Loss 2.3691e+00 (2.2692e+00)	Prompt Acc@1  39.84 ( 43.45)
+Validate: [30/79]	Time  0.048 ( 0.096)	Loss 2.4551e+00 (2.2657e+00)	Prompt Acc@1  35.94 ( 42.89)
+Validate: [40/79]	Time  0.045 ( 0.083)	Loss 2.0742e+00 (2.2767e+00)	Prompt Acc@1  44.53 ( 42.63)
+Validate: [50/79]	Time  0.046 ( 0.076)	Loss 2.4375e+00 (2.2979e+00)	Prompt Acc@1  46.09 ( 42.46)
+Validate: [60/79]	Time  0.043 ( 0.071)	Loss 2.5547e+00 (2.3036e+00)	Prompt Acc@1  41.41 ( 42.49)
+Validate: [70/79]	Time  0.045 ( 0.067)	Loss 2.3945e+00 (2.2990e+00)	Prompt Acc@1  43.75 ( 42.67)
+ * Prompt Acc@1 42.990
+
+JOB STATISTICS
+==============
+Job ID: 4561642
+Cluster: snellius
+User/Group: scur1301/scur1301
+State: COMPLETED (exit code 0)
+Nodes: 1
+Cores per node: 18
+CPU Utilized: 00:04:35
+CPU Efficiency: 25.89% of 00:17:42 core-walltime
+Job Wall-clock time: 00:00:59
+Memory Utilized: 1.59 GB
+Memory Efficiency: 1.33% of 120.00 GB

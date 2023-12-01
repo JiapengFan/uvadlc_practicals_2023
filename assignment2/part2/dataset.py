@@ -24,7 +24,7 @@ DATASET = {"cifar10": CIFAR10, "cifar100": CIFAR100}
 
 
 class AddGaussianNoise(torch.nn.Module):
-    def __init__(self, mean=0., std=0.01):
+    def __init__(self, mean=0., std=0.1):
         self.mean = mean
         self.std = std
 

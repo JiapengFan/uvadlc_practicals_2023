@@ -35,7 +35,7 @@ def get_dataset(dataset):
         raise ValueError("dataset should be either cifar100 or cifar10")
 
 class AddGaussianNoise(torch.nn.Module):
-    def __init__(self, mean=0., std=0.01, always_apply=False):
+    def __init__(self, mean=0., std=0.1, always_apply=False):
         self.mean = mean
         self.std = std
         self.always_apply = always_apply
@@ -81,6 +81,8 @@ def add_augmentation(augmentation_name, transform_list):
         new_aug = transforms.RandomVerticalFlip()
     elif augmentation_name == 'noise':
         new_aug = AddGaussianNoise()
+    elif augmentation_name == 'test_noise':
+        new_aug = AddGaussianNoise(always_apply=True)
     else:
         raise ValueError('Type of transform not supported')
 
