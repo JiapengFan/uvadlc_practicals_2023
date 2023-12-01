@@ -254,7 +254,6 @@ class SoftMaxModule(object):
         #######################
         num_classes = self.out.shape[1]
         dx = np.einsum('iq,iq,jq->ij', dout, self.out, np.eye(num_classes)) - np.einsum('iq,iq,ij->ij', dout, self.out, self.out)
-        # dx = np.multiply(self.out, dout - np.multiply(dout, self.out)@np.ones(shape=(num_classes, num_classes)))
         #######################
         # END OF YOUR CODE    #
         #######################

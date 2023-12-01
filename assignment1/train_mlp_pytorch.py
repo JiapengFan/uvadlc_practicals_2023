@@ -198,6 +198,7 @@ def train(hidden_dims, lr, use_batch_norm, batch_size, epochs, seed, data_dir):
     best_val_epoch = -1
     print('Starting training.')
     for epoch in range(epochs):
+        
         epoch_loss_val = 0
         epoch_acc_val = 0
         epoch_loss_train = 0
@@ -223,7 +224,7 @@ def train(hidden_dims, lr, use_batch_norm, batch_size, epochs, seed, data_dir):
                 pred_class = (preds.argmax(dim=-1) == y).float()
                 val_loss = loss_module(preds, y)
                 epoch_acc_val += weights_val[i] * pred_class.mean()
-                epoch_loss_val += weights_val[i] * val_loss.detach().numpy()
+                epoch_loss_val += weights_val[i] * val_loss.detach().cpu().numpy()
 
         training_acc = epoch_acc_train/weights_train_sum
         training_loss = epoch_loss_train/weights_train_sum

@@ -240,7 +240,7 @@ def train(hidden_dims, lr, batch_size, epochs, seed, data_dir):
         x, y = sample
         prob = model.forward(x.reshape(x.shape[0], -1))
         pred_class = np.argmax(prob, axis=1)
-        epoch_acc_train += weights_train[i] * np.equal(pred_class, y).mean()
+        epoch_acc_train += weights_train[i] * np.equal(pred_class, y).mean().detach().cpu().numpy()
         epoch_loss_train += weights_train[i] * loss_module.forward(prob, y)
         dout = loss_module.backward(prob, y)
         model.backward(dout)
