@@ -53,8 +53,10 @@ class CNNEncoder(nn.Module):
             nn.Conv2d(2*c_hid, 2*c_hid, kernel_size=3, padding=1, stride=2), # 7x7 => 4x4
             act_fn(),
             nn.Flatten(), # Image grid to single feature vector
-            nn.Linear(2*16*c_hid, z_dim)
         )
+        
+        self.mean_layer = nn.Linear(2*16*c_hid, z_dim)
+        self.logstd_layer = nn.Linear(2*16*c_hid, z_dim)
         #######################
         # END OF YOUR CODE    #
         #######################
@@ -72,9 +74,11 @@ class CNNEncoder(nn.Module):
         #######################
         # PUT YOUR CODE HERE  #
         #######################
-        mean = None
-        log_std = None
-        raise NotImplementedError
+        x = self.net(x)
+        
+        mean = self.mean_layer(x)
+        log_std = self.logstd_layer(x)
+
         #######################
         # END OF YOUR CODE    #
         #######################
@@ -103,18 +107,20 @@ class CNNDecoder(nn.Module):
         act_fn = nn.GELU
         
         c_hid = num_filters
+        self.linear = nn.Sequential(
+            nn.Linear(z_dim, 2*num_input_channels*c_hid),
+            act_fn()
+        )
         self.net = nn.Sequential(
-            nn.Linear(z_dim, 2*16*c_hid),
-            act_fn(),
-            nn.ConvTranspose2d(2*c_hid, 2*c_hid, kernel_size=3), # 4x4 => 7x7
+            nn.ConvTranspose2d(2*c_hid, 2*c_hid, kernel_size=3, stride=3, padding=3, output_padding=1), # 4x4 => 7x7
             act_fn(),
             nn.Conv2d(2*c_hid, 2*c_hid, kernel_size=3, padding=1),
             act_fn(),
-            nn.ConvTranspose2d(2*c_hid, c_hid, kernel_size=3, output_padding=1, padding=1, stride=2), # 7x7 => 14x14
+            nn.ConvTranspose2d(2*c_hid, c_hid, kernel_size=3, stride=3, padding=4, output_padding=1), # 7x7 => 14x14
             act_fn(),
             nn.Conv2d(c_hid, c_hid, kernel_size=3, padding=1),
             act_fn(),
-            nn.ConvTranspose2d(c_hid, num_input_channels, kernel_size=3, output_padding=1, padding=1, stride=2), # 14x14 => 28x28
+            nn.ConvTranspose2d(c_hid, num_input_channels, kernel_size=3, stride=2, dilation=2, padding=2, output_padding=1) # 14x14 => 28x28
         )
         #######################
         # END OF YOUR CODE    #
@@ -133,7 +139,9 @@ class CNNDecoder(nn.Module):
         #######################
         # PUT YOUR CODE HERE  #
         #######################
-        x = self.net(z)
+        x = self.linear(z)
+        x = x.reshape(x.shape[0], -1, 4, 4)
+        x = self.net(x)
         #######################
         # END OF YOUR CODE    #
         #######################

@@ -14,12 +14,13 @@
 # Date Created: 2022-11-25
 ################################################################################
 
+import matplotlib.pyplot as plt
 import unittest
 import numpy as np
 import torch
 import torch.nn as nn
 
-from utils import sample_reparameterize, KLD, elbo_to_bpd
+from utils import sample_reparameterize, KLD, elbo_to_bpd, visualize_manifold
 from cnn_encoder_decoder import CNNEncoder, CNNDecoder
 # import train_torch
 import train_pl
@@ -241,8 +242,18 @@ class TestVAE(unittest.TestCase):
         self.assertLessEqual(abs(bpd.item() - true_bpd), 1e-5,
                              msg="The BPD output for zero-initialized networks must be %f, but is %f." % (true_bpd, bpd.item()))
 
+class TestManifold(unittest.TestCase):
+    
+    def test_manifold(self):
+        grid_size = 20
 
+        def dummy_decoder(z):
+            return torch.randn((grid_size**2, 16, 28, 28))
 
+        img_grid = visualize_manifold(dummy_decoder, grid_size)
+    
+        plt.imshow(img_grid)
+        plt.show()
 
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(TestKLD)
@@ -254,8 +265,11 @@ if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(TestBPD)
     unittest.TextTestRunner(verbosity=2).run(suite)
 
-    # suite = unittest.TestLoader().loadTestsFromTestCase(TestCNNEncoderDecoder)
-    # unittest.TextTestRunner(verbosity=2).run(suite)
+    suite = unittest.TestLoader().loadTestsFromTestCase(TestCNNEncoderDecoder)
+    unittest.TextTestRunner(verbosity=2).run(suite)
 
-    # suite = unittest.TestLoader().loadTestsFromTestCase(TestVAE)
-    # unittest.TextTestRunner(verbosity=2).run(suite)
+    suite = unittest.TestLoader().loadTestsFromTestCase(TestVAE)
+    unittest.TextTestRunner(verbosity=2).run(suite)
+    
+    suite = unittest.TestLoader().loadTestsFromTestCase(TestManifold)
+    unittest.TextTestRunner(verbosity=2).run(suite)

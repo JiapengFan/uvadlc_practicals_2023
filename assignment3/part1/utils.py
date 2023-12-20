@@ -17,7 +17,7 @@
 import torch
 from torchvision.utils import make_grid
 import numpy as np
-
+import torch.nn.functional as F
 
 def sample_reparameterize(mean, std):
     """
@@ -35,8 +35,16 @@ def sample_reparameterize(mean, std):
     #######################
     # PUT YOUR CODE HERE  #
     #######################
-    D = len(mean)
-    z = std @ torch.normal(torch.zeros(D), torch.eye(D)) + mean
+    if len(mean.shape) == 1:
+        D = len(mean)
+        B = 1
+    else:
+        D = mean.shape[1]
+        B = len(mean)
+
+    sample = torch.randn(B, D)
+
+    z = std * sample + mean
     
     #######################
     # END OF YOUR CODE    #
@@ -45,6 +53,7 @@ def sample_reparameterize(mean, std):
 
 
 def KLD(mean, log_std):
+    
     """
     Calculates the Kullback-Leibler divergence of given distributions to unit Gaussians over the last dimension.
     See the definition of the regularization loss in Section 1.4 for the formula.
@@ -59,7 +68,7 @@ def KLD(mean, log_std):
     #######################
     # PUT YOUR CODE HERE  #
     #######################
-    KLD = (1/2)*(torch.exp(2*log_std) + mean**2-1-2*log_std).sum()
+    KLD = (1/2)*(torch.exp(2*log_std) + mean**2-1-2*log_std).sum(axis=1)
     #######################
     # END OF YOUR CODE    #
     #######################
@@ -78,7 +87,7 @@ def elbo_to_bpd(elbo, img_shape):
     #######################
     # PUT YOUR CODE HERE  #
     #######################
-    bpd = elbo*torch.log2(torch.exp(1))/(img_shape.prod())
+    bpd = elbo*torch.log2(torch.exp(torch.tensor(1.0)))/torch.prod(torch.tensor(img_shape[1:]))
     #######################
     # END OF YOUR CODE    #
     #######################
@@ -110,14 +119,20 @@ def visualize_manifold(decoder, grid_size=20):
     # PUT YOUR CODE HERE  #
     #######################
 
-    # lst = torch.range(0.5/grid_size, 1, 1/grid_size)
-    # grid_latent = torch.meshgrid(lst, lst)
-    # for i, latent in enumerate(grid_latent):
-    #     if i == 0:
-    #         img = decoder(latent)
-    #         img.shape
+    percentiles = torch.arange(0.5/grid_size, 1, 1.0/grid_size)
+    grid = torch.meshgrid(percentiles, percentiles)
 
-    img_grid = 0
+    # We have the input as dim [grid_size*2, 2]
+    latent = torch.stack(grid, dim=-1).view(grid_size**2, 2)
+    logits = decoder(latent)
+
+    # Reshape to [grid_size**2*28*28, 16] before passing to softmax
+    probs = F.softmax(logits.view(-1, 16), dim=-1)
+
+    imgs_gen = torch.multinomial(probs,1).view(grid_size**2, 1, 28, 28)
+
+    # Get channel to last dim for plt
+    img_grid = make_grid(imgs_gen, nrow=grid_size).permute(1, 2, 0)
     #######################
     # END OF YOUR CODE    #
     #######################
