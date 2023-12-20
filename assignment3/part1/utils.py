@@ -35,8 +35,9 @@ def sample_reparameterize(mean, std):
     #######################
     # PUT YOUR CODE HERE  #
     #######################
-    z = None
-    raise NotImplementedError
+    D = len(mean)
+    z = std @ torch.normal(torch.zeros(D), torch.eye(D)) + mean
+    
     #######################
     # END OF YOUR CODE    #
     #######################
@@ -58,8 +59,7 @@ def KLD(mean, log_std):
     #######################
     # PUT YOUR CODE HERE  #
     #######################
-    KLD = None
-    raise NotImplementedError
+    KLD = (1/2)*(torch.exp(2*log_std) + mean**2-1-2*log_std).sum()
     #######################
     # END OF YOUR CODE    #
     #######################
@@ -78,8 +78,7 @@ def elbo_to_bpd(elbo, img_shape):
     #######################
     # PUT YOUR CODE HERE  #
     #######################
-    bpd = None
-    raise NotImplementedError
+    bpd = elbo*torch.log2(torch.exp(1))/(img_shape.prod())
     #######################
     # END OF YOUR CODE    #
     #######################
@@ -110,11 +109,17 @@ def visualize_manifold(decoder, grid_size=20):
     #######################
     # PUT YOUR CODE HERE  #
     #######################
-    img_grid = None
-    raise NotImplementedError
+
+    # lst = torch.range(0.5/grid_size, 1, 1/grid_size)
+    # grid_latent = torch.meshgrid(lst, lst)
+    # for i, latent in enumerate(grid_latent):
+    #     if i == 0:
+    #         img = decoder(latent)
+    #         img.shape
+
+    img_grid = 0
     #######################
     # END OF YOUR CODE    #
     #######################
 
     return img_grid
-

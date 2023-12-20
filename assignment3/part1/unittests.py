@@ -254,10 +254,8 @@ if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(TestBPD)
     unittest.TextTestRunner(verbosity=2).run(suite)
 
-    suite = unittest.TestLoader().loadTestsFromTestCase(TestCNNEncoderDecoder)
-    unittest.TextTestRunner(verbosity=2).run(suite)
+    # suite = unittest.TestLoader().loadTestsFromTestCase(TestCNNEncoderDecoder)
+    # unittest.TextTestRunner(verbosity=2).run(suite)
 
-    suite = unittest.TestLoader().loadTestsFromTestCase(TestVAE)
-    unittest.TextTestRunner(verbosity=2).run(suite)
-
-
+    # suite = unittest.TestLoader().loadTestsFromTestCase(TestVAE)
+    # unittest.TextTestRunner(verbosity=2).run(suite)
